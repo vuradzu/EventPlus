@@ -43,7 +43,7 @@ public sealed class AccessTokenGenerator(IOptions<JwtOptions> optionsAccessor, I
         {
             new(Claims.Id, user.Id.ToString()),
             new(Claims.Username, user.UserName),
-            new(Claims.Image, user.ProfilePhotoUrl ?? ""),
+            new(Claims.Avatar, user.Avatar ?? ""),
             new(Claims.FirstName, user.FirstName),
         };
 

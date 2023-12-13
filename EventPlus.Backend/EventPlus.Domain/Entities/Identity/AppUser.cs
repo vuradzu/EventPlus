@@ -16,7 +16,7 @@ public sealed class AppUser : IdentityUser<long>, IEntity
     public override string? NormalizedEmail { get; set; }
 
     public string? Description { get; set; }
-    public string? ProfilePhotoUrl { get; set; }
+    public string? Avatar { get; set; }
 
     public DateTimeOffset Registered { get; set; } = DateTimeOffset.UtcNow;
 

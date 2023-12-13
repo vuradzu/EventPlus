@@ -42,7 +42,7 @@ public sealed class JwtService(
             Username = user.UserName,
             FirstName = user.FirstName,
             LastName = user.LastName,
-            ProfilePhotoUrl = user.ProfilePhotoUrl,
+            Avatar = user.Avatar,
             Token = accessToken,
             TokenExpires = accessTokenExpires,
             RefreshToken = refreshToken,

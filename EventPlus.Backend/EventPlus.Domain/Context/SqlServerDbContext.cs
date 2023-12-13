@@ -1,19 +1,20 @@
 using EventPlus.Domain.Conversions;
+using EventPlus.Domain.Entities.Base;
 using EventPlus.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using NeerCore.Data.EntityFramework.Extensions;
 
 namespace EventPlus.Domain.Context;
 
-public class SqlServerDbContext : IdentityDbContext<AppUser, AppRole, long, AppUserClaim,
+public partial class SqlServerDbContext : IdentityDbContext<AppUser, AppRole, long, AppUserClaim,
     AppUserRole, AppUserLogin, AppRoleClaim, AppToken>, ISqlServerDatabase
 {
     public SqlServerDbContext(DbContextOptions options) : base(options)
     {
     }
-
-
+    
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

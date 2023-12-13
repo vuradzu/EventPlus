@@ -14,5 +14,5 @@ public sealed record JwtResult
 
     public DateTimeOffset TokenExpires { get; init; }
     public DateTimeOffset RefreshTokenExpires { get; init; }
-    public string? ProfilePhotoUrl { get; set; }
+    public string? Avatar { get; set; }
 }

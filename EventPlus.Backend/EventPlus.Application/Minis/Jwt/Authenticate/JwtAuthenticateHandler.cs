@@ -16,10 +16,11 @@ public class JwtAuthenticateHandler(
     ISqlServerDatabase database,
     UserManager<AppUser> userManager,
     IAuthValidator validator,
-    IJwtService jwtService)
-    : IMinisHandler<JwtAuthenticateRequest, JwtResult>
+    IJwtService jwtService,
+    IServiceProvider serviceProvider)
+    : MinisHandler<JwtAuthenticateRequest, JwtResult>(serviceProvider)
 {
-    public async Task<JwtResult> Handle(JwtAuthenticateRequest request, CancellationToken ct)
+    public override async Task<JwtResult> Handle(JwtAuthenticateRequest request, CancellationToken ct)
     {
         // try to get provider login info
         var loginInfo = await GetUserLoginInfoAsync(request.ProviderKey, request.Provider, ct);
@@ -56,7 +57,7 @@ public class JwtAuthenticateHandler(
             FirstName = request.FirstName!,
             LastName = request.LastName,
             Email = request.Email,
-            ProfilePhotoUrl = request.ProfilePhotoUrl,
+            Avatar = request.Avatar,
             EmailConfirmed = request.Provider is not ProviderType.Telegram,
         };
 
