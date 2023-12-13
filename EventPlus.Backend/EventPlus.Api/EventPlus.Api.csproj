@@ -6,4 +6,40 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\net8.0\EventPlus.Api.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\net8.0\EventPlus.Api.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MicroElements.Swashbuckle.FluentValidation" Version="6.0.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
+      <PackageReference Include="NeerCore" Version="2.0.1" />
+      <PackageReference Include="NeerCore.Api" Version="2.0.1" />
+      <PackageReference Include="NeerCore.Logging.NLog" Version="2.0.1" />
+      <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
+      <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\EventPlus.Infrastructure\EventPlus.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Update="appsettings.Development.json">
+        <DependentUpon>appsettings.json</DependentUpon>
+      </Content>
+      <Content Update="appsettings.Local.json">
+        <DependentUpon>appsettings.json</DependentUpon>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Options\" />
+    </ItemGroup>
+
 </Project>
