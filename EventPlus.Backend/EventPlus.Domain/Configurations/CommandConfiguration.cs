@@ -12,5 +12,4 @@ public class CommandConfiguration: IEntityTypeConfiguration<Command>
         builder.Property(c => c.Name).AsSmallText();
         builder.Property(c => c.Description).AsLargeText();
     }
-    
 }

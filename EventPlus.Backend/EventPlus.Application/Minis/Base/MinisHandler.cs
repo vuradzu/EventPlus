@@ -20,6 +20,8 @@ public abstract class MinisHandler<TRequest>(IServiceProvider serviceProvider)
 {
     private ISqlServerDatabase? _database;
     protected ISqlServerDatabase Database => _database ??= serviceProvider.GetRequiredService<ISqlServerDatabase>();
+    private IUserProvider? _userProvider;
+    protected IUserProvider UserProvider => _userProvider ??= serviceProvider.GetRequiredService<IUserProvider>();
 
     public abstract Task Handle(TRequest request, CancellationToken ct);
 }

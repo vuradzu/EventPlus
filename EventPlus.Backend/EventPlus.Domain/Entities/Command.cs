@@ -17,8 +17,10 @@ public class Command : ICreatableEntity<long>, ISoftDeletable
     public DateTime Created { get; } = DateTime.UtcNow;
     public DateTime? Deleted { get; set; }
     
+    
     public ICollection<InviteCode>? InviteCodes { get; set; }
     public ICollection<CommandMember>? CommandMembers { get; set; }
+    
     
     public AppUser? Creator { get; set; }
 }

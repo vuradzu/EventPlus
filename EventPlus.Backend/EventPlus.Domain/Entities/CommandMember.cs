@@ -11,7 +11,7 @@ public class CommandMember : IEntity<long>
     public string? Avatar { get; set; }
 
     public long CommandId { get; set; }
-    public required long AppUserId { get; set; }
+    public long AppUserId { get; set; }
 
     public Command? Command { get; set; }
     public AppUser? AppUser { get; set; }

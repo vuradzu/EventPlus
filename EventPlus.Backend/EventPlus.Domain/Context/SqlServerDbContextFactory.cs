@@ -11,7 +11,7 @@ public class SqlServerDbContextFactory : DbContextFactoryBase<SqlServerDbContext
     public override string[] SettingsPaths => new[]
     {
         "appsettings.Local.json", // for project
-        "../../app/EventPlus.Api/appsettings.Local.json" // relative path for migrations
+        "../EventPlus.Api/appsettings.Local.json" // relative path for migrations
     };
 
     public override SqlServerDbContext CreateDbContext(string[] args) => new(CreateContextOptions());

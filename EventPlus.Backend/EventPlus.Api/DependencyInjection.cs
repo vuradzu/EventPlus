@@ -25,6 +25,7 @@ public static class DependencyInjection
         services.AddAuthorization();
 
         services.AddNeerApiServices();
+        services.AddAllServices(o => o.ResolveInternalImplementations = true);
         services.AddNeerControllers()
             .AddMvcOptions(options => { options.Filters.Add<SuccessStatusCodesFilter>(); });
 

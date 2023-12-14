@@ -1,5 +1,7 @@
 using EventPlus.Domain.Entities.Base;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace EventPlus.Domain.Context;
 

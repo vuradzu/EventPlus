@@ -1,9 +1,10 @@
 using EventPlus.Application.Minis.Base;
+using EventPlus.Application.Minis.Commands.Invite.Create;
 using EventPlus.Application.Minis.Commands.Invite.Models;
+using EventPlus.Core.Exceptions;
 using EventPlus.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using NeerCore.Exceptions;
-using NetHub.Core.Exceptions;
 
 namespace EventPlus.Application.Minis.Commands.Invite;
 
@@ -12,7 +13,8 @@ public class CreateInviteHandler(IServiceProvider serviceProvider)
 {
     public override async Task<InviteCodeModel> Handle(CreateInviteRequest request, CancellationToken ct)
     {
-        var userId = UserProvider.UserId;
+        // var userId = UserProvider.UserId;
+        var userId = 1;
 
         var command = await Database.Set<Command>()
             .SingleOrDefaultAsync(c => c.Id == request.CommandId, ct);
@@ -30,6 +32,8 @@ public class CreateInviteHandler(IServiceProvider serviceProvider)
         var codeEntity = new InviteCode
         {
             Code = code,
+            UsersAllowed = request.UsersAllowed,
+            ValidUntil = request.ValidUntil,
             CommandId = request.CommandId,
             CreatorId = userId
         };
