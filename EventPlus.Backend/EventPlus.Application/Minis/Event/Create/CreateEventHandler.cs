@@ -12,25 +12,15 @@ public class CreateEventHandler(IServiceProvider serviceProvider)
 {
     public override async Task<EventModel> Handle(CreateEventRequest request, CancellationToken ct)
     {
-        var user = await Database.Set<AppUser>().FirstAsync(u => u.Id == 1, ct);
+        // var userId = UserProvider.UserId;
+        var userId = 1;
         
         var eventEntity = request.Adapt<Event>();
-        eventEntity.CreatorId = user.Id;
-        eventEntity.EventMembers = new List<EventMember>
-        {
-            new()
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                AppUserId = user.Id,
-                Avatar = user.Avatar
-            }
-        };
         
-        var commandEntry = await Database.Set<Event>().AddAsync(eventEntity, ct);
+        var eventEntry = await Database.Set<Event>().AddAsync(eventEntity, ct);
 
         await Database.SaveChangesAsync(ct);
 
-        return commandEntry.Entity.Adapt<EventModel>();
+        return eventEntry.Entity.Adapt<EventModel>();
     }
 }

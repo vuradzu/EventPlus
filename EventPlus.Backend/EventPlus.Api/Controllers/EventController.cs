@@ -9,14 +9,11 @@ public class EventController : Controller
     /// <summary>
     /// Create new Event
     /// </summary>
-    [HttpPost]
-    public async Task<EventModel> Create([FromBody] CreateEventRequest request,
+    [HttpPost("/{commandId}")]
+    public async Task<EventModel> Create([FromRoute] long commandId, [FromBody] CreateEventRequest request,
         [FromServices] CreateEventHandler handler, CancellationToken ct)
     {
-        return await handler.Handle(request, ct);
+        return await handler.Handle(request with {CommandId = commandId}, ct);
     }
     
-    /// <summary>
-    /// Create new Event
-    /// </summary>
 }

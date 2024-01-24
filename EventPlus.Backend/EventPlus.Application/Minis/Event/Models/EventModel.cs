@@ -1,4 +1,5 @@
 ﻿using EventPlus.Domain.Entities;
+using EventPlus.Domain.Enums;
 
 namespace EventPlus.Application.Minis.Commands.Models;
 
@@ -9,8 +10,11 @@ public class EventModel
     public required string Title { get; init; }
     public string? Description { get; init; }
     
-    public required Priority Priority {get; init;}
-    public required DateTime DateTime { get; init; }
+    public long CreatorId { get; set; }
+    public long CommandId { get; set; }
+    
+    public required Priority Priority { get; init; }
+    public required DateTime Date { get; init; }
 
     public DateTime Created { get; init; }
 }

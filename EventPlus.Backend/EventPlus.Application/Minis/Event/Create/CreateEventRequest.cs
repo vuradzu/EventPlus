@@ -2,16 +2,20 @@
 using EventPlus.Application.Minis.Commands.Create;
 using EventPlus.Application.Minis.Commands.Models;
 using EventPlus.Domain.Entities;
+using EventPlus.Domain.Enums;
 using FluentValidation;
 
 namespace EventPlus.Application.Minis.Events.Create;
 
-public class CreateEventRequest : IMinisRequest<EventModel>
+public record CreateEventRequest : IMinisRequest<EventModel>
 {
     public required string Title { get; set; }
     public string? Description { get; set; } 
+    
+    public long CommandId { get; set; }
+    
     public required Priority Priority {get; set;}
-    public required DateTime DateTime { get; set; }
+    public required DateTime Date { get; set; }
 }
 
 //== Papizje dodelau ==//

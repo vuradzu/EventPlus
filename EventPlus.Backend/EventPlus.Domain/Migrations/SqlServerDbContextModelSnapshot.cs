@@ -108,6 +108,47 @@ namespace EventPlus.Domain.Migrations
                     b.ToTable("CommandMember");
                 });
 
+            modelBuilder.Entity("EventPlus.Domain.Entities.Event", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("CommandId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CreatorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Deleted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommandId");
+
+                    b.HasIndex("CreatorId");
+
+                    b.ToTable("Event");
+                });
+
             modelBuilder.Entity("EventPlus.Domain.Entities.Identity.AppDevice", b =>
                 {
                     b.Property<long>("Id")
@@ -459,6 +500,21 @@ namespace EventPlus.Domain.Migrations
                     b.Navigation("Command");
                 });
 
+            modelBuilder.Entity("EventPlus.Domain.Entities.Event", b =>
+                {
+                    b.HasOne("EventPlus.Domain.Entities.Command", null)
+                        .WithMany("Events")
+                        .HasForeignKey("CommandId");
+
+                    b.HasOne("EventPlus.Domain.Entities.Identity.AppUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
+                });
+
             modelBuilder.Entity("EventPlus.Domain.Entities.Identity.AppRoleClaim", b =>
                 {
                     b.HasOne("EventPlus.Domain.Entities.Identity.AppRole", "Role")
@@ -540,6 +596,8 @@ namespace EventPlus.Domain.Migrations
             modelBuilder.Entity("EventPlus.Domain.Entities.Command", b =>
                 {
                     b.Navigation("CommandMembers");
+
+                    b.Navigation("Events");
 
                     b.Navigation("InviteCodes");
                 });

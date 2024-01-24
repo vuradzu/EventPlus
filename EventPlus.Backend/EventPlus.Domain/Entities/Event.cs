@@ -2,14 +2,10 @@
 using System.ComponentModel.DataAnnotations;
 using EventPlus.Domain.Entities.Base;
 using EventPlus.Domain.Entities.Identity;
+using EventPlus.Domain.Enums;
 using NeerCore.Data.Abstractions;
 
 namespace EventPlus.Domain.Entities;
-
-public enum Priority
-{
-    Low, Medium, Hight
-}
 
 public class Event : ICreatableEntity<long>, ISoftDeletable
 {
@@ -19,14 +15,12 @@ public class Event : ICreatableEntity<long>, ISoftDeletable
     public string? Description { get; set; }
     
     public required Priority Priority {get; set;}
-    public required DateTime DateTime { get; set; }
+    public required DateTime Date { get; set; }
     
     public long CreatorId { get; set; }
     
     public DateTime Created { get; } = DateTime.UtcNow;
     public DateTime? Deleted { get; set; }
-    
-    public ICollection<EventMember>? EventMembers { get; set; }
     
     public AppUser? Creator { get; set; }
 }
