@@ -1,7 +1,6 @@
-﻿using EventPlus.Domain.Entities;
-using EventPlus.Domain.Enums;
+﻿using EventPlus.Domain.Enums;
 
-namespace EventPlus.Application.Minis.Commands.Models;
+namespace EventPlus.Application.Minis.Events.Models;
 
 public class EventModel
 {

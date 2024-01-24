@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using EventPlus.Domain.Entities.Base;
 using EventPlus.Domain.Entities.Identity;
 using NeerCore.Data.Abstractions;
@@ -11,9 +10,9 @@ public class Command : ICreatableEntity<long>, ISoftDeletable
     public required string Name { get; set; }
     public string? Description { get; set; }
     public string? Avatar { get; set; }
-    
+
     public long CreatorId { get; set; }
-    
+
     public DateTime Created { get; } = DateTime.UtcNow;
     public DateTime? Deleted { get; set; }
     
