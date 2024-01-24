@@ -20,7 +20,7 @@ public class Command : ICreatableEntity<long>, ISoftDeletable
     
     public ICollection<InviteCode>? InviteCodes { get; set; }
     public ICollection<CommandMember>? CommandMembers { get; set; }
-    
+    public ICollection<Event>? Events { get; set; }
     
     public AppUser? Creator { get; set; }
 }
