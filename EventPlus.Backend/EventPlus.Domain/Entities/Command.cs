@@ -23,9 +23,3 @@ public class Command : ICreatableEntity<long>, ISoftDeletable
     
     public AppUser? Creator { get; set; }
 }
-
-public class Command2: ICreatableEntity<long>{
-    public  long Id { get; set; }
-    public required string Name { get; set; }
-    public DateTime Created { get; } = DateTime.Now;
-}

@@ -1,6 +1,6 @@
 ﻿namespace EventPlus.Domain.Enums;
 
-public enum Priority
+public enum Priority: byte
 {
-    Low, Medium, Hight
+    Low, Medium, High
 }
