@@ -1,5 +1,7 @@
 ﻿using EventPlus.Application.Minis.Events.Create;
 using EventPlus.Application.Minis.Events.Delete;
+using EventPlus.Application.Minis.Events.Get.GetAll;
+using EventPlus.Application.Minis.Events.Get.GetOne;
 using EventPlus.Application.Minis.Events.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +23,7 @@ public class EventController : Controller
     {
         return await handler.Handle(request, ct);
     }
-
+    
     /// <summary>
     /// Delete Event
     /// </summary>
@@ -31,4 +33,25 @@ public class EventController : Controller
     {
         await handler.Handle(new DeleteEventRequest{Id = id}, ct);
     }
+    
+    /// <summary>
+    /// Get All Events
+    /// </summary>
+    [HttpGet("by-command/{commandId}")]
+    public async Task<ICollection<EventModel>> GetAll([FromRoute] long commandId,
+        [FromServices] GetAllEventHandler handler, CancellationToken ct)
+    {
+        return await handler.Handle(new GetAllEventRequest{CommandId = commandId}, ct);
+    }
+    
+    /// <summary>
+    /// Get One Events
+    /// </summary>
+    [HttpGet("{id}")]
+    public async Task<EventModel> GetOne([FromRoute] long id,
+        [FromServices] GetOneEventHandler handler, CancellationToken ct)
+    {
+        return await handler.Handle(new GetOneEventRequest{Id = id}, ct);
+    }
+    
 }
