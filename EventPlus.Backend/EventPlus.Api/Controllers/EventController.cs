@@ -1,5 +1,5 @@
-﻿using EventPlus.Application.Minis.Commands.Models;
-using EventPlus.Application.Minis.Events.Create;
+﻿using EventPlus.Application.Minis.Events.Create;
+using EventPlus.Application.Minis.Events.Delete;
 using EventPlus.Application.Minis.Events.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,5 +20,15 @@ public class EventController : Controller
         [FromServices] CreateEventHandler handler, CancellationToken ct)
     {
         return await handler.Handle(request, ct);
+    }
+
+    /// <summary>
+    /// Delete Event
+    /// </summary>
+    [HttpDelete("{id}")]
+    public async Task Delete([FromRoute] long id,
+        [FromServices] DeleteEventHandler handler, CancellationToken ct)
+    {
+        await handler.Handle(new DeleteEventRequest{Id = id}, ct);
     }
 }

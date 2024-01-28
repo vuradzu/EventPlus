@@ -13,7 +13,7 @@ public class CreateCommandHandler(IServiceProvider serviceProvider)
     public override async Task<CommandModel> Handle(CreateCommandRequest request, CancellationToken ct)
     {
         // var user = await UserProvider.GetUserAsync();
-        var user = await Database.Set<AppUser>().FirstAsync(u => u.Id == 1, ct);
+        var user = await Database.Set<AppUser>().FirstAsync(u => u.Id == 11, ct);
         
         var commandEntity = request.Adapt<Command>();
 
