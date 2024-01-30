@@ -24,8 +24,6 @@ public class CreateEventHandler(IServiceProvider serviceProvider)
 
         var eventEntity = request.Adapt<Event>();
 
-        eventEntity.CreatorId = 11;
-
         var eventEntry = await Database.Set<Event>().AddAsync(eventEntity, ct);
 
         await Database.SaveChangesAsync(ct);
