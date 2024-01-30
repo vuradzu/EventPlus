@@ -1,6 +1,7 @@
 ﻿using EventPlus.Application.Minis.Base;
 using EventPlus.Application.Minis.Commands.Models;
 using EventPlus.Application.Minis.Events.Models;
+using EventPlus.Core.Exceptions;
 using EventPlus.Domain.Entities;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
@@ -13,16 +14,13 @@ public class CreateEventHandler(IServiceProvider serviceProvider)
 {
     public override async Task<EventModel> Handle(CreateEventRequest request, CancellationToken ct)
     {
-        // var userId = UserProvider.UserId;
-        var userId = 11;
+        var userId = UserProvider.UserId;
 
         var command = await Database.Set<Command>().FirstOrDefaultAsync(c => c.Id == request.CommandId, ct);
 
-        if (command is null)
-            throw new NotFoundException("No such command");
+        if (command is null) throw new NotFoundException("No such command");
 
-        // if (command.CreatorId != userId)
-        // throw new PermissionsException();
+        if (command.CreatorId != userId) throw new PermissionsException();
 
         var eventEntity = request.Adapt<Event>();
 

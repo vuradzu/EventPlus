@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EventPlus.Application.Minis.Events.Get.GetAll;
 
-public class GetAllEventRequest : IMinisRequest<ICollection<EventModel>>
+public class GetAllEventsRequest : IMinisRequest<ICollection<EventModel>>
 {
        public required long CommandId { get; set; }
 }

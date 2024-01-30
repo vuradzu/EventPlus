@@ -35,17 +35,17 @@ public class EventController : Controller
     }
     
     /// <summary>
-    /// Get All Events
+    /// Get All Events by Command
     /// </summary>
     [HttpGet("by-command/{commandId}")]
     public async Task<ICollection<EventModel>> GetAll([FromRoute] long commandId,
-        [FromServices] GetAllEventHandler handler, CancellationToken ct)
+        [FromServices] GetAllEventsHandler handler, CancellationToken ct)
     {
-        return await handler.Handle(new GetAllEventRequest{CommandId = commandId}, ct);
+        return await handler.Handle(new GetAllEventsRequest{CommandId = commandId}, ct);
     }
     
     /// <summary>
-    /// Get One Events
+    /// Get One Event
     /// </summary>
     [HttpGet("{id}")]
     public async Task<EventModel> GetOne([FromRoute] long id,
