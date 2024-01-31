@@ -10,6 +10,8 @@ public partial class SqlServerDbContext(DbContextOptions options)
     : IdentityDbContext<AppUser, AppRole, long, AppUserClaim,
         AppUserRole, AppUserLogin, AppRoleClaim, AppToken>(options), ISqlServerDatabase
 {
+    public long? UserId { get; set; }
+    
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

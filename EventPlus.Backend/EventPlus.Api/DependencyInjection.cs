@@ -20,6 +20,7 @@ public static class DependencyInjection
             o.Extended500ExceptionMessage = environment.IsDevelopment());
 
         services.AddHttpClient();
+        services.ConfigureAllOptions();
 
         services.AddJwtAuthentication();
         services.AddAuthorization();
@@ -31,7 +32,6 @@ public static class DependencyInjection
 
         services.Configure<ApiBehaviorOptions>(options => { options.SuppressInferBindingSourcesForParameters = true; });
 
-        services.ConfigureAllOptions();
         services.AddCustomSwagger();
         services.AddCustomFluentValidation();
 

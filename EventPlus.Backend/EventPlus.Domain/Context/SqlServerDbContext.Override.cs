@@ -1,7 +1,6 @@
 using EventPlus.Domain.Entities.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace EventPlus.Domain.Context;
 
@@ -63,6 +62,40 @@ public partial class SqlServerDbContext
         }
 
         base.RemoveRange(deletableEntities);
+    }
+
+    #endregion
+
+    #region SaveChanges
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancel = default)
+    {
+        ChangeTracker.DetectChanges();
+
+        var modified = ChangeTracker.Entries()
+            .Where(t => t.State == EntityState.Modified)
+            .Where(t => t.Entity is IUpdatable)
+            .ToArray();
+
+        foreach (var entry in modified)
+        {
+            if (entry.Entity is ISoftDeletable)
+            {
+                var deletedPropertyName = nameof(ISoftDeletable.Deleted);
+
+                var originalValue = entry.Property(deletedPropertyName).OriginalValue;
+                var currentValue = entry.Property(deletedPropertyName).CurrentValue;
+
+                if (originalValue is null && currentValue is not null)
+                    continue;
+            }
+
+
+            ((IUpdatable)entry.Entity).Updated = DateTime.UtcNow;
+            ((IUpdatable)entry.Entity).UpdatedBy = UserId;
+        }
+
+        return await base.SaveChangesAsync(cancel);
     }
 
     #endregion

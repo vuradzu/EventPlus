@@ -7,24 +7,40 @@ namespace EventPlus.Application.Minis.Base;
 /// <summary>
 /// Minis handler
 /// </summary>
-/// <param name="serviceProvider"></param>
 /// <typeparam name="TRequest">Request type</typeparam>
 /// <typeparam name="TResult">Result type</typeparam>
-public abstract class MinisHandler<TRequest, TResult>(IServiceProvider serviceProvider)
-    where TRequest : IMinisRequest<TResult>
+public abstract class MinisHandler<TRequest, TResult> where TRequest : IMinisRequest<TResult>
 {
     private ISqlServerDatabase? _database;
     private IUserProvider? _userProvider;
-    
+    private readonly IServiceProvider _serviceProvider;
+
+    /// <summary>
+    /// Minis handler
+    /// </summary>
+    /// <param name="serviceProvider"></param>
+    /// <typeparam name="TRequest">Request type</typeparam>
+    /// <typeparam name="TResult">Result type</typeparam>
+    protected MinisHandler(IServiceProvider serviceProvider)
+    {
+        _serviceProvider = serviceProvider;
+
+        var userId = UserProvider.TryGetUserId();
+        if (userId is not null)
+        {
+            Database.UserId = userId;
+        }
+    }
+
     /// <summary>
     /// Database context instance
     /// </summary>
-    protected ISqlServerDatabase Database => _database ??= serviceProvider.GetRequiredService<ISqlServerDatabase>();
+    protected ISqlServerDatabase Database => _database ??= _serviceProvider.GetRequiredService<ISqlServerDatabase>();
     
     /// <summary>
     /// User provider instance
     /// </summary>
-    protected IUserProvider UserProvider => _userProvider ??= serviceProvider.GetRequiredService<IUserProvider>();
+    protected IUserProvider UserProvider => _userProvider ??= _serviceProvider.GetRequiredService<IUserProvider>();
 
     /// <summary>
     /// Main method to handle a request
@@ -38,23 +54,38 @@ public abstract class MinisHandler<TRequest, TResult>(IServiceProvider servicePr
 /// <summary>
 /// Minis handler without response
 /// </summary>
-/// <param name="serviceProvider"></param>
 /// <typeparam name="TRequest">Request type</typeparam>
-public abstract class MinisHandler<TRequest>(IServiceProvider serviceProvider)
-    where TRequest : IMinisRequest
+public abstract class MinisHandler<TRequest> where TRequest : IMinisRequest
 {
     private ISqlServerDatabase? _database;
     
     /// <summary>
     /// Database context instance
     /// </summary>
-    protected ISqlServerDatabase Database => _database ??= serviceProvider.GetRequiredService<ISqlServerDatabase>();
+    protected ISqlServerDatabase Database => _database ??= _serviceProvider.GetRequiredService<ISqlServerDatabase>();
     private IUserProvider? _userProvider;
-    
+    private readonly IServiceProvider _serviceProvider;
+
+    /// <summary>
+    /// Minis handler without response
+    /// </summary>
+    /// <param name="serviceProvider"></param>
+    /// <typeparam name="TRequest">Request type</typeparam>
+    protected MinisHandler(IServiceProvider serviceProvider)
+    {
+        _serviceProvider = serviceProvider;
+        
+        var userId = UserProvider.TryGetUserId();
+        if (userId is not null)
+        {
+            Database.UserId = userId;
+        }
+    }
+
     /// <summary>
     /// User provider instance
     /// </summary>
-    protected IUserProvider UserProvider => _userProvider ??= serviceProvider.GetRequiredService<IUserProvider>();
+    protected IUserProvider UserProvider => _userProvider ??= _serviceProvider.GetRequiredService<IUserProvider>();
 
     /// <summary>
     /// Main method to handle a request

@@ -1,5 +1,4 @@
-﻿using EventPlus.Application.Minis.Commands.Models;
-using EventPlus.Application.Minis.Events.Create;
+﻿using EventPlus.Application.Minis.Events.Create;
 using EventPlus.Application.Minis.Events.Models;
 using Microsoft.AspNetCore.Mvc;
 
