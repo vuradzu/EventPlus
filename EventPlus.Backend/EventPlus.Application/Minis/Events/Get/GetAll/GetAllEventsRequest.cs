@@ -14,6 +14,6 @@ internal sealed class GetAllEventsValidator : AbstractValidator<GetAllEventsRequ
        public GetAllEventsValidator()
        {
               RuleFor(i => i.CommandId)
-                     .NotEmpty().NotNull().WithMessage("There is no such Command");
+                     .NotEmpty().NotNull().WithMessage("Invalid Id");
        }
 }

@@ -14,6 +14,6 @@ internal sealed class GetOneEventValidator : AbstractValidator<GetOneEventReques
     public GetOneEventValidator()
     {
         RuleFor(i => i.Id)
-            .NotEmpty().NotNull().WithMessage("There is no such Event");
+            .NotEmpty().NotNull().WithMessage("Invalid Id");
     }
 }
