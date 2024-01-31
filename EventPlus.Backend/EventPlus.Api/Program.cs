@@ -1,6 +1,7 @@
 using EventPlus.Api;
 using EventPlus.Application;
 using EventPlus.Domain;
+using EventPlus.Domain.Entities.Identity;
 using EventPlus.Infrastructure;
 using NeerCore.Api.Extensions;
 using NeerCore.Api.Swagger.Extensions;
@@ -22,7 +23,7 @@ try
     logger.Debug("Configuring web application");
     // JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
     ConfigureWebApp(app);
-
+    
     app.Run();
 }
 catch (Exception e)

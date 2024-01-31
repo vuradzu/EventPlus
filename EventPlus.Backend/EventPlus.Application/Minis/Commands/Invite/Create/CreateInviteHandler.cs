@@ -1,12 +1,11 @@
 using EventPlus.Application.Minis.Base;
-using EventPlus.Application.Minis.Commands.Invite.Create;
 using EventPlus.Application.Minis.Commands.Invite.Models;
 using EventPlus.Core.Exceptions;
 using EventPlus.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using NeerCore.Exceptions;
 
-namespace EventPlus.Application.Minis.Commands.Invite;
+namespace EventPlus.Application.Minis.Commands.Invite.Create;
 
 public class CreateInviteHandler(IServiceProvider serviceProvider)
     : MinisHandler<CreateInviteRequest, InviteCodeModel>(serviceProvider)
