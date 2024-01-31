@@ -13,6 +13,6 @@ internal sealed class DeleteEventValidator : AbstractValidator<DeleteEventReques
     public DeleteEventValidator()
     {
         RuleFor(i => i.Id)
-            .NotEmpty().NotNull().WithMessage("There is no such id");
+            .NotEmpty().NotNull().WithMessage("Invalid Id");
     }
 }
