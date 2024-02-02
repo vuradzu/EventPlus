@@ -21,6 +21,6 @@ public class Event : ICreatableEntity<long>, ISoftDeletable
     public DateTime Created { get; } = DateTime.UtcNow;
     public DateTime? Deleted { get; set; }
     
-    public AppUser? Command { get; set; }
+    public Command? Command { get; set; }
     public AppUser? Creator { get; set; }
 }

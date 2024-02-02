@@ -4,6 +4,7 @@ using EventPlus.Domain.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventPlus.Domain.Migrations
 {
     [DbContext(typeof(SqlServerDbContext))]
-    partial class SqlServerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240202172607_EventRelationsFix")]
+    partial class EventRelationsFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,7 +61,7 @@ namespace EventPlus.Domain.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.ToTable("Command", (string)null);
+                    b.ToTable("Command");
                 });
 
             modelBuilder.Entity("EventPlus.Domain.Entities.CommandMember", b =>
@@ -94,7 +97,7 @@ namespace EventPlus.Domain.Migrations
 
                     b.HasIndex("CommandId");
 
-                    b.ToTable("CommandMember", (string)null);
+                    b.ToTable("CommandMember");
                 });
 
             modelBuilder.Entity("EventPlus.Domain.Entities.Event", b =>
@@ -135,7 +138,7 @@ namespace EventPlus.Domain.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.ToTable("Event", (string)null);
+                    b.ToTable("Event");
                 });
 
             modelBuilder.Entity("EventPlus.Domain.Entities.Identity.AppDevice", b =>
@@ -456,7 +459,7 @@ namespace EventPlus.Domain.Migrations
 
                     b.HasKey("CommandId", "Code");
 
-                    b.ToTable("InviteCode", (string)null);
+                    b.ToTable("InviteCode");
                 });
 
             modelBuilder.Entity("EventPlus.Domain.Entities.Command", b =>
