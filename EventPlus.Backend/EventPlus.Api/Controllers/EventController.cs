@@ -3,6 +3,7 @@ using EventPlus.Application.Minis.Events.Delete;
 using EventPlus.Application.Minis.Events.Get.GetAll;
 using EventPlus.Application.Minis.Events.Get.GetOne;
 using EventPlus.Application.Minis.Events.Models;
+using EventPlus.Application.Minis.Events.Update;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventPlus.Api.Controllers;
@@ -54,4 +55,13 @@ public class EventController : Controller
         return await handler.Handle(new GetOneEventRequest{Id = id}, ct);
     }
     
+    /// <summary>
+    /// Update Event
+    /// </summary>
+    [HttpPut("{id}")]
+    public async Task Update([FromBody] UpdateEventRequest request,
+        [FromServices] UpdateEventHandler handler, CancellationToken ct)
+    {
+        await handler.Handle(request, ct);
+    }
 }
