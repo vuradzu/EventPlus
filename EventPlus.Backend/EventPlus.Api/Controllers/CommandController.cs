@@ -1,4 +1,5 @@
 using EventPlus.Application.Minis.Commands.Create;
+using EventPlus.Application.Minis.Commands.Delete;
 using EventPlus.Application.Minis.Commands.Invite;
 using EventPlus.Application.Minis.Commands.Invite.Create;
 using EventPlus.Application.Minis.Commands.Invite.Models;
@@ -46,5 +47,12 @@ public class CommandController : Controller
     public async Task UseInvite([FromRoute] string code, [FromServices] UseInviteHandler handler, CancellationToken ct)
     {
         await handler.Handle(new UseInviteRequest(code), ct);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task Delete([FromRoute] long id,
+        [FromServices] DeleteCommandHandler handler, CancellationToken ct)
+    {
+        await handler.Handle(new DeleteCommandRequest{Id = id}, ct);
     }
 }
