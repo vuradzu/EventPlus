@@ -1,4 +1,5 @@
 using EventPlus.Application.Minis.Commands.Avatar;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventPlus.Api.Controllers;
@@ -6,6 +7,7 @@ namespace EventPlus.Api.Controllers;
 /// <summary>
 /// Users controller
 /// </summary>
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class UserController: Controller

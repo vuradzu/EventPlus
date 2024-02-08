@@ -20,6 +20,7 @@ public partial class SqlServerDbContext(DbContextOptions options)
         builder.ApplyConfigurationsFromAssembly(GetType().Assembly);
         builder.AddLocalizedStrings(GetType().Assembly);
         builder.UseSoftDeletableEntities();
+        builder.ApplyAllDataSeeders();
     }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder builder)

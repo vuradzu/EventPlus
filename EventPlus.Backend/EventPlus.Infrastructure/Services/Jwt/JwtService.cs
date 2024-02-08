@@ -30,11 +30,11 @@ public sealed class JwtService(
     private HttpContext HttpContext => httpContextAccessor.HttpContext!;
 
 
-    public async Task<JwtResult> GenerateAsync(AppUser user, CancellationToken ct)
+    public async Task<JwtResult> GenerateAsync(AppUser user, long? commandId = null, CancellationToken ct = default)
     {
         var device = await GetUserDeviceAsync(ct);
 
-        var (accessToken, accessTokenExpires) = await accessTokenGenerator.GenerateAsync(user, ct);
+        var (accessToken, accessTokenExpires) = await accessTokenGenerator.GenerateAsync(user, commandId, ct);
         var (refreshToken, refreshTokenExpires) = await refreshTokenGenerator.GenerateAsync(user, device, ct);
 
         return new JwtResult
@@ -50,7 +50,7 @@ public sealed class JwtService(
         };
     }
 
-    public async Task<JwtResult> RefreshAsync(string refreshToken, CancellationToken ct)
+    public async Task<JwtResult> RefreshAsync(string refreshToken, long? commandId = null, CancellationToken ct = default)
     {
         var refreshTokens = database.Set<AppToken>();
 
@@ -62,7 +62,7 @@ public sealed class JwtService(
         if (!IsRefreshTokenValid(token))
             throw new ForbidException("Provided token is not a valid refresh token");
 
-        var result = await GenerateAsync(token.User!, ct);
+        var result = await GenerateAsync(token.User!, commandId, ct);
         token.User = null;
 
         refreshTokens.Remove(token);
