@@ -13,6 +13,7 @@ public class JwtAuthenticateRequest:  IMinisRequest<JwtResult>
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public string? Avatar { get; set; }
+    public long? CommandId { get; set; }
     public Dictionary<string, string?> ProviderMetadata { get; set; } = default!;
     public ProviderType Provider { get; set; }
     public string ProviderKey { get; set; } = default!;

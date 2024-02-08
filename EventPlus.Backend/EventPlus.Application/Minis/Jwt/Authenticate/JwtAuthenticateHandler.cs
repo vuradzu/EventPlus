@@ -36,7 +36,7 @@ public class JwtAuthenticateHandler(
             await ValidateUserAsync(request, ct);
 
         // if validation passed - generate and return tokens
-        return await jwtService.GenerateAsync(user, ct);
+        return await jwtService.GenerateAsync(user, request.CommandId, ct);
     }
     
     private async Task<IdentityUserLogin<long>?> GetUserLoginInfoAsync(string key, ProviderType provider, CancellationToken ct)
