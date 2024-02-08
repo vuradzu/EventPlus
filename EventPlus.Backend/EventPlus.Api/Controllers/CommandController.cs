@@ -50,6 +50,9 @@ public class CommandController : Controller
         await handler.Handle(new UseInviteRequest(code), ct);
     }
 
+    /// <summary>
+    /// Delete Command
+    /// </summary>
     [HttpDelete("{id}")]
     public async Task Delete([FromRoute] long id,
         [FromServices] DeleteCommandHandler handler, CancellationToken ct)
@@ -57,11 +60,14 @@ public class CommandController : Controller
         await handler.Handle(new DeleteCommandRequest{Id = id}, ct);
     }
     
-    [HttpGet("{userId}")]
-    public async Task<ICollection<CommandModel>> GetAll([FromRoute] long userId,
+    /// <summary>
+    /// Get All Commands by user
+    /// </summary>
+    [HttpGet]
+    public async Task<ICollection<CommandModel>> GetAll(
         [FromServices] GetAllCommandsHandler handler, CancellationToken ct)
     {
-        return await handler.Handle(new GetAllCommandsRequest{Id = userId}, ct);
+        return await handler.Handle(new GetAllCommandsRequest(), ct);
     }
 
 }

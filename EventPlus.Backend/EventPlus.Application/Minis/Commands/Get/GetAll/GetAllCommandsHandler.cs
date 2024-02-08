@@ -12,8 +12,10 @@ public class GetAllCommandsHandler(IServiceProvider serviceProvider)
 {
     public override async Task<ICollection<CommandModel>> Handle(GetAllCommandsRequest request, CancellationToken ct)
     {
+        var userId = UserProvider.UserId;
+        
         var commands = await Database.Set<CommandMember>()
-            .Where(cm => cm.AppUserId == request.Id)
+            .Where(cm => cm.AppUserId == userId)
             .Include(cm => cm.Command)
             .Select(cm => cm.Command)
             .ProjectToType<CommandModel>()
