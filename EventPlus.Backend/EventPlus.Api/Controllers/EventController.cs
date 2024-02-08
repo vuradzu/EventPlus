@@ -63,6 +63,7 @@ public class EventController : Controller
     /// <summary>
     /// Update Event
     /// </summary>
+    [Authorize(Policy = Policies.HasManageEventPermission)]
     [HttpPut("{id}")]
     public async Task Update([FromBody] UpdateEventRequest request,
         [FromServices] UpdateEventHandler handler, CancellationToken ct)

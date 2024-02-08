@@ -56,6 +56,7 @@ public class CommandController : Controller
     /// <summary>
     /// Delete Command
     /// </summary>
+    [Authorize(Policy = Policies.HasManageCommandPermission)]
     [HttpDelete("{id}")]
     public async Task Delete([FromRoute] long id,
         [FromServices] DeleteCommandHandler handler, CancellationToken ct)
@@ -72,5 +73,4 @@ public class CommandController : Controller
     {
         return await handler.Handle(new GetAllCommandsRequest(), ct);
     }
-
 }
