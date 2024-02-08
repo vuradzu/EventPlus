@@ -1,5 +1,6 @@
 using EventPlus.Application.Minis.Commands.Create;
 using EventPlus.Application.Minis.Commands.Delete;
+using EventPlus.Application.Minis.Commands.Get.GetAll;
 using EventPlus.Application.Minis.Commands.Invite;
 using EventPlus.Application.Minis.Commands.Invite.Create;
 using EventPlus.Application.Minis.Commands.Invite.Models;
@@ -55,4 +56,12 @@ public class CommandController : Controller
     {
         await handler.Handle(new DeleteCommandRequest{Id = id}, ct);
     }
+    
+    [HttpGet("{userId}")]
+    public async Task<ICollection<CommandModel>> GetAll([FromRoute] long userId,
+        [FromServices] GetAllCommandsHandler handler, CancellationToken ct)
+    {
+        return await handler.Handle(new GetAllCommandsRequest{Id = userId}, ct);
+    }
+
 }

@@ -1,5 +1,4 @@
 ﻿using EventPlus.Application.Minis.Base;
-using EventPlus.Application.Minis.Commands.Models;
 using EventPlus.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using NeerCore.Exceptions;
