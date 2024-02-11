@@ -13,4 +13,5 @@ public struct Claims
     public const string Registered = nameof(Registered);
     public const string PhoneNumber = nameof(PhoneNumber);
     public const string Permissions = nameof(Permissions);
+    public const string CommandId = nameof(CommandId);
 }

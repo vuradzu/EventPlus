@@ -4,7 +4,6 @@ using EventPlus.Application.Options;
 using EventPlus.Application.Services.Jwt.Models;
 using EventPlus.Core.Constants;
 using EventPlus.Domain.Context;
-using EventPlus.Domain.Entities;
 using EventPlus.Domain.Entities.Authorization;
 using EventPlus.Domain.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -56,6 +55,8 @@ public sealed class AccessTokenGenerator(IOptions<JwtOptions> optionsAccessor, I
             
             claims.AddRange(roles.Select(role => new Claim(Claims.Role, role)));
             claims.AddRange(permissions.Select(permission => new Claim(Claims.Permissions, permission)));
+            
+            claims.Add(new Claim(Claims.CommandId, commandId.Value.ToString()));
         }
         
         return claims;

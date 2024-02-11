@@ -1,4 +1,6 @@
 using System.Reflection;
+using EventPlus.Api.Filters;
+using EventPlus.Core.Attributes;
 using EventPlus.Core.Constants;
 using Microsoft.AspNetCore.Authorization;
 using NetHub.Shared.Api;
@@ -27,16 +29,24 @@ internal static class PolicyAuthorizationOptionsExtensions
 
         // READ
         options.AddPolicy(readPolicy,
-            p => p.RequireClaim(Claims.Permissions,
-                readPermissionName,
-                managePermissionName,
-                CommandPermissionsMetadata.AdminPermission));
+            p =>
+            {
+                p.RequireClaim(Claims.Permissions,
+                    readPermissionName,
+                    managePermissionName,
+                    CommandPermissionsMetadata.AdminPermission);
+                p.UseCommandIdRequirement();
+            });
 
         // MANAGE
         options.AddPolicy(managePolicy,
-            p => p.RequireClaim(Claims.Permissions,
-                managePermissionName,
-                CommandPermissionsMetadata.AdminPermission));
+            p =>
+            {
+                p.RequireClaim(Claims.Permissions,
+                    managePermissionName,
+                    CommandPermissionsMetadata.AdminPermission);
+                p.UseCommandIdRequirement();
+            });
     }
 
     internal static void AddReadManagePolicy(
@@ -55,11 +65,19 @@ internal static class PolicyAuthorizationOptionsExtensions
 
         // READ
         options.AddPolicy(readPolicy,
-            p => p.RequireClaim(Claims.Permissions, readPermissionNames));
+            p =>
+            {
+                p.RequireClaim(Claims.Permissions, readPermissionNames);
+                p.UseCommandIdRequirement();
+            });
 
         // MANAGE
         options.AddPolicy(managePolicy,
-            p => p.RequireClaim(Claims.Permissions, managePermissionNames));
+            p =>
+            {
+                p.RequireClaim(Claims.Permissions, managePermissionNames);
+                p.UseCommandIdRequirement();
+            });
     }
 
     internal static void AddManagePolicy(this AuthorizationOptions options,
@@ -72,6 +90,15 @@ internal static class PolicyAuthorizationOptionsExtensions
 
         // MANAGE
         options.AddPolicy(managePolicy,
-            p => p.RequireClaim(Claims.Permissions, managePermissionNames));
+            p =>
+            {
+                p.RequireClaim(Claims.Permissions, managePermissionNames);
+                p.UseCommandIdRequirement();
+            });
+    }
+
+    private static void UseCommandIdRequirement(this AuthorizationPolicyBuilder policyBuilder)
+    {
+        policyBuilder.Requirements.Add(new CommandIdRequirement());
     }
 }

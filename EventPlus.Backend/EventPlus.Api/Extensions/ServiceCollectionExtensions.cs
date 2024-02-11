@@ -1,3 +1,4 @@
+using EventPlus.Api.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace EventPlus.Api.Extensions;
@@ -14,6 +15,7 @@ public static class ServiceCollectionExtensions
             // options.OperationFilter<FormContentTypeSchemaOperationFilter>();
             // Schema Filters
             // options.SchemaFilter<MultiSourceFilter>();
+            options.OperationFilter<SwaggerAddCommandHeaderFilter>();
             options.EnableAnnotations();
             options.SupportNonNullableReferenceTypes();
         });
