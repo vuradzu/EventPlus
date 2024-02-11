@@ -1,3 +1,4 @@
+using EventPlus.Core.Constants;
 using EventPlus.Domain.Entities.Identity;
 
 namespace EventPlus.Application.Services;
@@ -9,4 +10,5 @@ public interface IUserProvider
     long? TryGetUserId();
     Task<AppUser> GetUserAsync();
     Task<AppUser?> TryGetUserAsync();
+    string? GetClaimValue(string claim);
 }

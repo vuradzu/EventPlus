@@ -61,4 +61,11 @@ internal sealed class UserProvider : IUserProvider
 
         return user;
     }
+
+    public string? GetClaimValue(string claim)
+    {
+        var claimExists = User.TryGetClaim(claim, out var claimValue);
+
+        return claimExists ? claimValue?.Value : null;
+    }
 }

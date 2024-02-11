@@ -1,4 +1,5 @@
 using System.Reflection;
+using EventPlus.Core.Attributes;
 using EventPlus.Core.Constants;
 using Microsoft.AspNetCore.Authorization;
 using NetHub.Shared.Api;

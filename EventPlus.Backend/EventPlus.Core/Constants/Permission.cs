@@ -1,3 +1,5 @@
+using EventPlus.Core.Attributes;
+
 namespace EventPlus.Core.Constants;
 
 /// <summary>
@@ -55,11 +57,4 @@ public enum CommandPermissions
 
     [CommandPermissionInfo("mt.rol+", "Roles")]
     ManageRoles = 21
-}
-
-[AttributeUsage(AttributeTargets.Field)]
-public sealed class CommandPermissionInfoAttribute(string key, string displayName) : Attribute
-{
-    public string Key { get; set; } = key;
-    public string DisplayName { get; set; } = displayName;
 }

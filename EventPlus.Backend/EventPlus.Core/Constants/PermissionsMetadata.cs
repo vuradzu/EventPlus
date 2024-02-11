@@ -1,3 +1,4 @@
+using EventPlus.Core.Attributes;
 using EventPlus.Core.Constants;
 using EventPlus.Core.Extensions;
 
