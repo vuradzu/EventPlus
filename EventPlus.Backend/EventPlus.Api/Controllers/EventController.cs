@@ -43,7 +43,6 @@ public class EventController : Controller
     /// <summary>
     /// Get All Events by Command
     /// </summary>
-    [Authorize(Policy = Policies.HasManageEventPermission)]
     [HttpGet("by-command/{commandId}")]
     public async Task<ICollection<EventModel>> GetAll([FromRoute] long commandId,
         [FromServices] GetAllEventsHandler handler, CancellationToken ct)
@@ -54,7 +53,6 @@ public class EventController : Controller
     /// <summary>
     /// Get One Event
     /// </summary>
-    [Authorize(Policy = Policies.HasManageEventPermission)]
     [HttpGet("{id}")]
     public async Task<EventModel> GetOne([FromRoute] long id,
         [FromServices] GetOneEventHandler handler, CancellationToken ct)

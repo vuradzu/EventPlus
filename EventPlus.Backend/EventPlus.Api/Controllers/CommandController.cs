@@ -90,6 +90,7 @@ public class CommandController : Controller
     /// <summary>
     /// Set user avatar, can be file or link
     /// </summary>
+    [Authorize(Policy = Policies.HasManageCommandPermission)]
     [HttpPut("avatar")]
     public async Task<string> SetAvatar(SetCommandAvatarRequest request, [FromServices] SetCommandAvatarHandler handler,
         CancellationToken ct)
