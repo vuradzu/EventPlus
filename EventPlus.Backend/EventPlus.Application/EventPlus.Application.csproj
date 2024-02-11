@@ -32,7 +32,7 @@
     </ItemGroup>
     
     <ItemGroup>
-      <Folder Include="Minis\User\" />
+      <Folder Include="Minis\Users\" />
       <Folder Include="Services\Jwt\" />
     </ItemGroup>
     

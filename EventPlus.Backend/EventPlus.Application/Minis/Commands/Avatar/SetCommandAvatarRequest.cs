@@ -1,4 +1,5 @@
 using EventPlus.Application.Minis.Base;
+using EventPlus.Application.Minis.Users.Avatar;
 using EventPlus.Core.Constants;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;

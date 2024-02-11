@@ -1,4 +1,5 @@
 using EventPlus.Application.Minis.Commands.Avatar;
+using EventPlus.Application.Minis.Users.Avatar;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

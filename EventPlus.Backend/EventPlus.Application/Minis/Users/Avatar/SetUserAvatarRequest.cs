@@ -4,7 +4,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EventPlus.Application.Minis.Commands.Avatar;
+namespace EventPlus.Application.Minis.Users.Avatar;
 
 public class SetUserAvatarRequest : IMinisRequest<string>
 {

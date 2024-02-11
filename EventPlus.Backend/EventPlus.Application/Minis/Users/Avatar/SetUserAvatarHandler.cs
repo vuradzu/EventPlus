@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using NeerCore.Exceptions;
 
-namespace EventPlus.Application.Minis.Commands.Avatar;
+namespace EventPlus.Application.Minis.Users.Avatar;
 
 public class SetUserAvatarHandler(IServiceProvider serviceProvider) : MinisHandler<SetUserAvatarRequest, string>(serviceProvider)
 {
