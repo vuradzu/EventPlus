@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EventPlus.Application.Minis.Commands.Avatar;
 
-public class SetAvatarRequest : IMinisRequest<string>
+public class SetUserAvatarRequest : IMinisRequest<string>
 {
     [FromQuery] public string? Link { get; init; }
 
     [FromForm] public IFormFile? File { get; init; }
 }
 
-public class SetAvatarValidator : AbstractValidator<SetAvatarRequest>
+public class SetUserAvatarValidator : AbstractValidator<SetUserAvatarRequest>
 {
-    public SetAvatarValidator()
+    public SetUserAvatarValidator()
     {
         When(sa => sa.Link is not null, () =>
         {

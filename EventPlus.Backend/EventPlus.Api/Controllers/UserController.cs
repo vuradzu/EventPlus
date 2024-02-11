@@ -14,7 +14,7 @@ public class UserController: Controller
     /// Set user avatar, can be file or link
     /// </summary>
     [HttpPut("avatar")]
-    public async Task<string> SetAvatar(SetAvatarRequest request, [FromServices] SetAvatarHandler handler,
+    public async Task<string> SetAvatar(SetUserAvatarRequest request, [FromServices] SetUserAvatarHandler handler,
         CancellationToken ct)
     {
         return await handler.Handle(request, ct);
