@@ -23,7 +23,7 @@ public static class DependencyInjection
         services.ConfigureAllOptions();
 
         services.AddJwtAuthentication();
-        services.AddAuthorization();
+        services.AddPoliciesAuthorization();
 
         services.AddNeerApiServices();
         services.AddAllServices(o => o.ResolveInternalImplementations = true);

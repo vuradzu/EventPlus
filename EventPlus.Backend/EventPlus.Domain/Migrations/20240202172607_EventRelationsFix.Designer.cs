@@ -4,6 +4,7 @@ using EventPlus.Domain.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventPlus.Domain.Migrations
 {
     [DbContext(typeof(SqlServerDbContext))]
-    partial class SqlServerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240202172607_EventRelationsFix")]
+    partial class EventRelationsFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,167 +24,6 @@ namespace EventPlus.Domain.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("EventPlus.Domain.Entities.Authorization.CommandMemberPermission", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("MemberId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("PermissionId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MemberId");
-
-                    b.HasIndex("PermissionId");
-
-                    b.ToTable("CommandMemberPermission");
-                });
-
-            modelBuilder.Entity("EventPlus.Domain.Entities.Authorization.CommandMemberRole", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("MemberId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("RoleId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MemberId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("CommandMemberRole");
-                });
-
-            modelBuilder.Entity("EventPlus.Domain.Entities.Authorization.CommandPermission", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CommandPermission");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Title = "mt.cmd+"
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            Title = "mt.cmd.usr+"
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            Title = "mt.evt+"
-                        });
-                });
-
-            modelBuilder.Entity("EventPlus.Domain.Entities.Authorization.CommandRole", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CommandRole");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Title = "Admin"
-                        });
-                });
-
-            modelBuilder.Entity("EventPlus.Domain.Entities.Authorization.CommandRolePermission", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("PermissionId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("RoleId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PermissionId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("CommandRolePermission");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            PermissionId = 1L,
-                            RoleId = 1L
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            PermissionId = 2L,
-                            RoleId = 1L
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            PermissionId = 3L,
-                            RoleId = 1L
-                        },
-                        new
-                        {
-                            Id = 4L,
-                            PermissionId = 4L,
-                            RoleId = 1L
-                        },
-                        new
-                        {
-                            Id = 5L,
-                            PermissionId = 5L,
-                            RoleId = 1L
-                        });
-                });
 
             modelBuilder.Entity("EventPlus.Domain.Entities.Command", b =>
                 {
@@ -620,63 +462,6 @@ namespace EventPlus.Domain.Migrations
                     b.ToTable("InviteCode");
                 });
 
-            modelBuilder.Entity("EventPlus.Domain.Entities.Authorization.CommandMemberPermission", b =>
-                {
-                    b.HasOne("EventPlus.Domain.Entities.CommandMember", "Member")
-                        .WithMany("CommandMemberPermissions")
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EventPlus.Domain.Entities.Authorization.CommandPermission", "Permission")
-                        .WithMany()
-                        .HasForeignKey("PermissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Member");
-
-                    b.Navigation("Permission");
-                });
-
-            modelBuilder.Entity("EventPlus.Domain.Entities.Authorization.CommandMemberRole", b =>
-                {
-                    b.HasOne("EventPlus.Domain.Entities.CommandMember", "Member")
-                        .WithMany("CommandMemberRoles")
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EventPlus.Domain.Entities.Authorization.CommandRole", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Member");
-
-                    b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("EventPlus.Domain.Entities.Authorization.CommandRolePermission", b =>
-                {
-                    b.HasOne("EventPlus.Domain.Entities.Authorization.CommandPermission", "Permission")
-                        .WithMany()
-                        .HasForeignKey("PermissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EventPlus.Domain.Entities.Authorization.CommandRole", "Role")
-                        .WithMany("RolePermissions")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Permission");
-
-                    b.Navigation("Role");
-                });
-
             modelBuilder.Entity("EventPlus.Domain.Entities.Command", b =>
                 {
                     b.HasOne("EventPlus.Domain.Entities.Identity.AppUser", "Creator")
@@ -804,11 +589,6 @@ namespace EventPlus.Domain.Migrations
                     b.Navigation("Command");
                 });
 
-            modelBuilder.Entity("EventPlus.Domain.Entities.Authorization.CommandRole", b =>
-                {
-                    b.Navigation("RolePermissions");
-                });
-
             modelBuilder.Entity("EventPlus.Domain.Entities.Command", b =>
                 {
                     b.Navigation("CommandMembers");
@@ -816,13 +596,6 @@ namespace EventPlus.Domain.Migrations
                     b.Navigation("Events");
 
                     b.Navigation("InviteCodes");
-                });
-
-            modelBuilder.Entity("EventPlus.Domain.Entities.CommandMember", b =>
-                {
-                    b.Navigation("CommandMemberPermissions");
-
-                    b.Navigation("CommandMemberRoles");
                 });
 
             modelBuilder.Entity("EventPlus.Domain.Entities.Identity.AppRole", b =>

@@ -4,6 +4,7 @@ using EventPlus.Domain.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventPlus.Domain.Migrations
 {
     [DbContext(typeof(SqlServerDbContext))]
-    partial class SqlServerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240208215136_RolesAndPermissions")]
+    partial class RolesAndPermissions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,23 +87,6 @@ namespace EventPlus.Domain.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CommandPermission");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Title = "mt.cmd+"
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            Title = "mt.cmd.usr+"
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            Title = "mt.evt+"
-                        });
                 });
 
             modelBuilder.Entity("EventPlus.Domain.Entities.Authorization.CommandRole", b =>
@@ -119,13 +105,6 @@ namespace EventPlus.Domain.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CommandRole");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Title = "Admin"
-                        });
                 });
 
             modelBuilder.Entity("EventPlus.Domain.Entities.Authorization.CommandRolePermission", b =>
@@ -149,38 +128,6 @@ namespace EventPlus.Domain.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("CommandRolePermission");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            PermissionId = 1L,
-                            RoleId = 1L
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            PermissionId = 2L,
-                            RoleId = 1L
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            PermissionId = 3L,
-                            RoleId = 1L
-                        },
-                        new
-                        {
-                            Id = 4L,
-                            PermissionId = 4L,
-                            RoleId = 1L
-                        },
-                        new
-                        {
-                            Id = 5L,
-                            PermissionId = 5L,
-                            RoleId = 1L
-                        });
                 });
 
             modelBuilder.Entity("EventPlus.Domain.Entities.Command", b =>

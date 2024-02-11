@@ -5,7 +5,7 @@ using NeerCore.Data.Abstractions;
 
 namespace EventPlus.Domain.Entities;
 
-public class Event : ICreatableEntity<long>, ISoftDeletable
+public class Event : ICreatableEntity<long>, ISoftDeletable, IUpdatable
 {
     public long Id { get; set; }
     
@@ -20,7 +20,9 @@ public class Event : ICreatableEntity<long>, ISoftDeletable
     
     public DateTime Created { get; } = DateTime.UtcNow;
     public DateTime? Deleted { get; set; }
-    
-    public AppUser? Command { get; set; }
+    public DateTime? Updated { get; set; }
+    public Command? Command { get; set; }
     public AppUser? Creator { get; set; }
+
+    public long? UpdatedBy { get; set; }
 }

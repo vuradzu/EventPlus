@@ -9,6 +9,6 @@ public class JwtRefreshTokenHandler(IJwtService jwtService, IServiceProvider ser
 {
     public override async Task<JwtResult> Handle(JwtRefreshTokenRequest request, CancellationToken ct)
     {
-        return await jwtService.RefreshAsync(request.RefreshToken, ct);
+        return await jwtService.RefreshAsync(request.RefreshToken, request.CommandId, ct);
     }
 }

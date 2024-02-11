@@ -5,6 +5,6 @@ namespace EventPlus.Application.Services;
 
 public interface IJwtService
 {
-    Task<JwtResult> GenerateAsync(AppUser user, CancellationToken ct = default);
-    Task<JwtResult> RefreshAsync(string refreshToken, CancellationToken ct = default);
+    Task<JwtResult> GenerateAsync(AppUser user, long? commandId = null, CancellationToken ct = default);
+    Task<JwtResult> RefreshAsync(string refreshToken, long? commandId = null, CancellationToken ct = default);
 }

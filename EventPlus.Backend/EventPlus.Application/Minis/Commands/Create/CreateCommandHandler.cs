@@ -1,7 +1,8 @@
 using EventPlus.Application.Minis.Base;
 using EventPlus.Application.Minis.Commands.Models;
+using EventPlus.Core.Constants;
 using EventPlus.Domain.Entities;
-using EventPlus.Domain.Entities.Identity;
+using EventPlus.Domain.Entities.Authorization;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,8 +14,10 @@ public class CreateCommandHandler(IServiceProvider serviceProvider)
     public override async Task<CommandModel> Handle(CreateCommandRequest request, CancellationToken ct)
     {
         var user = await UserProvider.GetUserAsync();
-        
+
         var commandEntity = request.Adapt<Command>();
+
+        var adminRole = await Database.Set<CommandRole>().SingleAsync(r => r.Title == CommandRoles.Admin, ct);
 
         commandEntity.CreatorId = user.Id;
         commandEntity.CommandMembers = new List<CommandMember>
@@ -24,7 +27,8 @@ public class CreateCommandHandler(IServiceProvider serviceProvider)
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 AppUserId = user.Id,
-                Avatar = user.Avatar
+                Avatar = user.Avatar,
+                CommandMemberRoles = [new CommandMemberRole { RoleId = adminRole.Id }]
             }
         };
 

@@ -1,3 +1,4 @@
+using EventPlus.Domain.Entities.Authorization;
 using EventPlus.Domain.Entities.Identity;
 using NeerCore.Data.Abstractions;
 
@@ -17,4 +18,7 @@ public class CommandMember : IEntity<long>
     public AppUser? AppUser { get; set; }
 
     public DateTime MemberSince { get; set; } = DateTime.UtcNow;
+    
+    public ICollection<CommandMemberRole>? CommandMemberRoles { get; set; }
+    public ICollection<CommandMemberPermission>? CommandMemberPermissions { get; set; }
 }
