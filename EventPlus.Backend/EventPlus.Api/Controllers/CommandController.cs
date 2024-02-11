@@ -79,6 +79,7 @@ public class CommandController : Controller
     /// <summary>
     /// Update Command
     /// </summary>
+    [Authorize(Policy = Policies.HasManageCommandPermission)]
     [HttpPut("{id}")]
     public async Task Update([FromBody] UpdateCommandRequest request,
         [FromServices] UpdateCommandHandler handler, CancellationToken ct)

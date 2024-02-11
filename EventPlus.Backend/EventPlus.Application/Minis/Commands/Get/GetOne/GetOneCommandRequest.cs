@@ -9,9 +9,9 @@ public class GetOneCommandRequest : IMinisRequest<CommandModel>
     public required long Id { get; set; }
 }
 
-internal sealed class GetOneComamndValidator : AbstractValidator<GetOneCommandRequest>
+internal sealed class GetOneCommandValidator : AbstractValidator<GetOneCommandRequest>
 {
-    public GetOneComamndValidator()
+    public GetOneCommandValidator()
     {
         RuleFor(i => i.Id)
             .NotEmpty().NotNull().WithMessage("Invalid Id");

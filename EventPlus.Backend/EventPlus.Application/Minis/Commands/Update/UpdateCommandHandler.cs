@@ -18,17 +18,9 @@ public class UpdateCommandHandler(IServiceProvider serviceProvider)
             .FirstOrDefaultAsync(ct);
         
         if (command is null) throw new NotFoundException("No such Command");
-        
-        var isMember = await Database.Set<CommandMember>()
-            .Where(cm => cm.CommandId == request.Id)
-            .Where(cm => cm.AppUserId == userId)
-            .FirstOrDefaultAsync(ct) is not null;
-        
-        if (!isMember) throw new PermissionsException();
 
         command.Name = request.Name;
         command.Description = request.Description;
-        command.Avatar = request.Avatar;
         
         await Database.SaveChangesAsync(ct);
     }

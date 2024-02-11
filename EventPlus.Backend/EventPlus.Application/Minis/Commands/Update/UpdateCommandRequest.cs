@@ -8,5 +8,4 @@ public class UpdateCommandRequest : IMinisRequest
     [FromRoute] public long Id { get; set; } 
     public required string Name { get; init; }
     public string? Description { get; init; }
-    public string? Avatar { get; init; }
 }
