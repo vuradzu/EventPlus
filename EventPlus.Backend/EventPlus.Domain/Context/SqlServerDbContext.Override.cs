@@ -12,7 +12,8 @@ public partial class SqlServerDbContext
     {
         if (entity is not ISoftDeletable softDeletableEntity) return base.Remove(entity);
 
-        softDeletableEntity.Deleted = DateTime.UtcNow;
+        if (softDeletableEntity.Deleted is null)
+            softDeletableEntity.Deleted = DateTime.UtcNow;
 
         return base.Entry(entity);
     }
@@ -21,7 +22,8 @@ public partial class SqlServerDbContext
     {
         if (entity is not ISoftDeletable softDeletableEntity) return base.Remove(entity);
 
-        softDeletableEntity.Deleted = DateTime.UtcNow;
+        if (softDeletableEntity.Deleted is null)
+            softDeletableEntity.Deleted = DateTime.UtcNow;
 
         return base.Entry(entity);
     }
@@ -40,7 +42,8 @@ public partial class SqlServerDbContext
 
         foreach (var softDeletableEntity in softDeletableEntities)
         {
-            softDeletableEntity.Deleted = DateTime.UtcNow;
+            if (softDeletableEntity.Deleted is null)
+                softDeletableEntity.Deleted = DateTime.UtcNow;
         }
 
         base.RemoveRange(deletableEntities);
@@ -58,7 +61,8 @@ public partial class SqlServerDbContext
 
         foreach (var softDeletableEntity in softDeletableEntities)
         {
-            softDeletableEntity.Deleted = DateTime.UtcNow;
+            if (softDeletableEntity.Deleted is null)
+                softDeletableEntity.Deleted = DateTime.UtcNow;
         }
 
         base.RemoveRange(deletableEntities);
