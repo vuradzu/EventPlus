@@ -1,3 +1,4 @@
+using EventPlus.Application.Minis.Commands.Avatar;
 using EventPlus.Application.Minis.Commands.Create;
 using EventPlus.Application.Minis.Commands.Delete;
 using EventPlus.Application.Minis.Commands.Get.GetAll;
@@ -5,6 +6,7 @@ using EventPlus.Application.Minis.Commands.Invite.Create;
 using EventPlus.Application.Minis.Commands.Invite.Models;
 using EventPlus.Application.Minis.Commands.Invite.Use;
 using EventPlus.Application.Minis.Commands.Models;
+using EventPlus.Application.Minis.Commands.Update;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NetHub.Shared.Api.Constants;
@@ -72,5 +74,25 @@ public class CommandController : Controller
         [FromServices] GetAllCommandsHandler handler, CancellationToken ct)
     {
         return await handler.Handle(new GetAllCommandsRequest(), ct);
+    }    
+    
+    /// <summary>
+    /// Update Command
+    /// </summary>
+    [HttpPut("{id}")]
+    public async Task Update([FromBody] UpdateCommandRequest request,
+        [FromServices] UpdateCommandHandler handler, CancellationToken ct)
+    {
+        await handler.Handle(request, ct);
+    }
+    
+    /// <summary>
+    /// Set user avatar, can be file or link
+    /// </summary>
+    [HttpPut("avatar")]
+    public async Task<string> SetAvatar(SetCommandAvatarRequest request, [FromServices] SetCommandAvatarHandler handler,
+        CancellationToken ct)
+    {
+        return await handler.Handle(request, ct);
     }
 }
