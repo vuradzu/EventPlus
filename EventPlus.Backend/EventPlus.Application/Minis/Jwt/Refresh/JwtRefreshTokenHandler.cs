@@ -7,7 +7,7 @@ namespace EventPlus.Application.Minis.Jwt.Refresh;
 public class JwtRefreshTokenHandler(IJwtService jwtService, IServiceProvider serviceProvider)
     : MinisHandler<JwtRefreshTokenRequest, JwtResult>(serviceProvider)
 {
-    public override async Task<JwtResult> Handle(JwtRefreshTokenRequest request, CancellationToken ct)
+    protected override async Task<JwtResult> Process(JwtRefreshTokenRequest request, CancellationToken ct)
     {
         return await jwtService.RefreshAsync(request.RefreshToken, request.CommandId, ct);
     }

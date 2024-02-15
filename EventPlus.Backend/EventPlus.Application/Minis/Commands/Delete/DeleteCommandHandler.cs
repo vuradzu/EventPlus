@@ -1,5 +1,4 @@
 ﻿using EventPlus.Application.Minis.Base;
-using EventPlus.Application.Minis.Commands.Models;
 using EventPlus.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using NeerCore.Exceptions;
@@ -9,7 +8,7 @@ namespace EventPlus.Application.Minis.Commands.Delete;
 public class DeleteCommandHandler(IServiceProvider serviceProvider)
     : MinisHandler<DeleteCommandRequest>(serviceProvider)
 {
-    public override async Task Handle(DeleteCommandRequest request, CancellationToken ct)
+    protected override async Task Process(DeleteCommandRequest request, CancellationToken ct)
     {
         var command = await Database.Set<Command>().FirstOrDefaultAsync(e => e.Id == request.Id, ct);
         

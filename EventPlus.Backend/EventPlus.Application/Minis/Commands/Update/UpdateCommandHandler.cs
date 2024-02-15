@@ -9,10 +9,8 @@ namespace EventPlus.Application.Minis.Commands.Update;
 public class UpdateCommandHandler(IServiceProvider serviceProvider)
     : MinisHandler<UpdateCommandRequest>(serviceProvider)
 {
-    public override async Task Handle(UpdateCommandRequest request, CancellationToken ct)
+    protected override async Task Process(UpdateCommandRequest request, CancellationToken ct)
     {
-        var userId = UserProvider.UserId;
-                
         var command = await Database.Set<Command>()
             .Where(c => c.Id == request.Id)
             .FirstOrDefaultAsync(ct);

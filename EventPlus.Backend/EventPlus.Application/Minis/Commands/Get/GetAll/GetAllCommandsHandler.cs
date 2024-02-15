@@ -10,7 +10,7 @@ namespace EventPlus.Application.Minis.Commands.Get.GetAll;
 public class GetAllCommandsHandler(IServiceProvider serviceProvider)
     : MinisHandler<GetAllCommandsRequest, ICollection<CommandModel>>(serviceProvider)
 {
-    public override async Task<ICollection<CommandModel>> Handle(GetAllCommandsRequest request, CancellationToken ct)
+    protected override async Task<ICollection<CommandModel>> Process(GetAllCommandsRequest request, CancellationToken ct)
     {
         var userId = UserProvider.UserId;
         

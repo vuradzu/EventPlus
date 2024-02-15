@@ -11,7 +11,7 @@ namespace EventPlus.Application.Minis.Events.Create;
 public class CreateEventHandler(IServiceProvider serviceProvider)
     : MinisHandler<CreateEventRequest, EventModel>(serviceProvider)
 {
-    public override async Task<EventModel> Handle(CreateEventRequest request, CancellationToken ct)
+    protected override async Task<EventModel> Process(CreateEventRequest request, CancellationToken ct)
     {
         var userId = UserProvider.UserId;
 

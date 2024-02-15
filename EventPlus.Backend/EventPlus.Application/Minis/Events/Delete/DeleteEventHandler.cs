@@ -8,7 +8,7 @@ namespace EventPlus.Application.Minis.Events.Delete;
 public class DeleteEventHandler(IServiceProvider serviceProvider)
     : MinisHandler<DeleteEventRequest>(serviceProvider)
 {
-    public override async Task Handle(DeleteEventRequest request, CancellationToken ct)
+    protected override async Task Process(DeleteEventRequest request, CancellationToken ct)
     {
         var @event = await Database.Set<Event>().FirstOrDefaultAsync(e => e.Id == request.Id, ct);
         

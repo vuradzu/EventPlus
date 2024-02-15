@@ -10,7 +10,7 @@ namespace EventPlus.Application.Minis.Commands.Invite.Create;
 public class CreateInviteHandler(IServiceProvider serviceProvider)
     : MinisHandler<CreateInviteRequest, InviteCodeModel>(serviceProvider)
 {
-    public override async Task<InviteCodeModel> Handle(CreateInviteRequest request, CancellationToken ct)
+    protected override async Task<InviteCodeModel> Process(CreateInviteRequest request, CancellationToken ct)
     {
         // var userId = UserProvider.UserId;
         var userId = 1;

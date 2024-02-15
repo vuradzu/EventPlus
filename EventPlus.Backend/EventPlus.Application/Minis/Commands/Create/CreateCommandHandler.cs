@@ -11,7 +11,7 @@ namespace EventPlus.Application.Minis.Commands.Create;
 public class CreateCommandHandler(IServiceProvider serviceProvider)
     : MinisHandler<CreateCommandRequest, CommandModel>(serviceProvider)
 {
-    public override async Task<CommandModel> Handle(CreateCommandRequest request, CancellationToken ct)
+    protected override async Task<CommandModel> Process(CreateCommandRequest request, CancellationToken ct)
     {
         var user = await UserProvider.GetUserAsync();
 

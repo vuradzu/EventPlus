@@ -20,7 +20,7 @@ public class JwtAuthenticateHandler(
     IServiceProvider serviceProvider)
     : MinisHandler<JwtAuthenticateRequest, JwtResult>(serviceProvider)
 {
-    public override async Task<JwtResult> Handle(JwtAuthenticateRequest request, CancellationToken ct)
+    protected override async Task<JwtResult> Process(JwtAuthenticateRequest request, CancellationToken ct)
     {
         // try to get provider login info
         var loginInfo = await GetUserLoginInfoAsync(request.ProviderKey, request.Provider, ct);

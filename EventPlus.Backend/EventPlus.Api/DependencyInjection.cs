@@ -33,18 +33,8 @@ public static class DependencyInjection
         services.Configure<ApiBehaviorOptions>(options => { options.SuppressInferBindingSourcesForParameters = true; });
 
         services.AddCustomSwagger();
-        services.AddCustomFluentValidation();
 
 
         return services;
-    }
-
-    private static void AddCustomFluentValidation(this IServiceCollection services)
-    {
-        services.AddFluentValidationAutoValidation(fv =>
-            fv.DisableDataAnnotationsValidation = true);
-        services.AddFluentValidationClientsideAdapters();
-        services.AddValidatorsFromAssemblyContaining<JwtOptions>(ServiceLifetime.Transient);
-        services.AddFluentValidationRulesToSwagger();
     }
 }

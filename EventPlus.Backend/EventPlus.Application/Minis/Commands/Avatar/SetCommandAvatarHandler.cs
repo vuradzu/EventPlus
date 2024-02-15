@@ -1,6 +1,5 @@
 using EventPlus.Application.Minis.Base;
 using EventPlus.Domain.Entities;
-using EventPlus.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using NeerCore.Exceptions;
@@ -9,7 +8,7 @@ namespace EventPlus.Application.Minis.Commands.Avatar;
 
 public class SetCommandAvatarHandler(IServiceProvider serviceProvider) : MinisHandler<SetCommandAvatarRequest, string>(serviceProvider)
 {
-    public override async Task<string> Handle(SetCommandAvatarRequest request, CancellationToken ct)
+    protected override async Task<string> Process(SetCommandAvatarRequest request, CancellationToken ct)
     {
         var command = await Database.Set<Command>().SingleOrDefaultAsync(u => u.Id == request.Id, ct);
 

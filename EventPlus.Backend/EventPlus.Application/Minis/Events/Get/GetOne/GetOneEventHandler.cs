@@ -11,7 +11,7 @@ namespace EventPlus.Application.Minis.Events.Get.GetOne;
 public class GetOneEventHandler(IServiceProvider serviceProvider)
     : MinisHandler<GetOneEventRequest, EventModel>(serviceProvider)
 {
-    public override async Task<EventModel> Handle(GetOneEventRequest request, CancellationToken ct)
+    protected override async Task<EventModel> Process(GetOneEventRequest request, CancellationToken ct)
     {
         var userId = UserProvider.UserId;
         

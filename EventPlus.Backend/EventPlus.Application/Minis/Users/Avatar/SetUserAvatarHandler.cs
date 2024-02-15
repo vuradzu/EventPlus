@@ -8,7 +8,7 @@ namespace EventPlus.Application.Minis.Users.Avatar;
 
 public class SetUserAvatarHandler(IServiceProvider serviceProvider) : MinisHandler<SetUserAvatarRequest, string>(serviceProvider)
 {
-    public override async Task<string> Handle(SetUserAvatarRequest request, CancellationToken ct)
+    protected override async Task<string> Process(SetUserAvatarRequest request, CancellationToken ct)
     {
         var user = await Database.Set<AppUser>().SingleOrDefaultAsync(u => u.Id == UserProvider.UserId, ct);
 

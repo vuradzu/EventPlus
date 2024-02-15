@@ -8,7 +8,7 @@ namespace EventPlus.Application.Minis.Commands.Invite.Use;
 
 public class UseInviteHandler(IServiceProvider serviceProvider) : MinisHandler<UseInviteRequest>(serviceProvider)
 {
-    public override async Task Handle(UseInviteRequest request, CancellationToken ct)
+    protected override async Task Process(UseInviteRequest request, CancellationToken ct)
     {
         // var user = await UserProvider.GetUserAsync();
         var user = await Database.Set<AppUser>().FirstAsync(u => u.Id == 1, ct);

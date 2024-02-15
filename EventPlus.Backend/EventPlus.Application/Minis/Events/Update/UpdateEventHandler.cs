@@ -9,7 +9,7 @@ namespace EventPlus.Application.Minis.Events.Update;
 public class UpdateEventHandler(IServiceProvider serviceProvider)
     : MinisHandler<UpdateEventRequest>(serviceProvider)
 {
-    public override async Task Handle(UpdateEventRequest request, CancellationToken ct)
+    protected override async Task Process(UpdateEventRequest request, CancellationToken ct)
     {
         var userId = UserProvider.UserId;
 
