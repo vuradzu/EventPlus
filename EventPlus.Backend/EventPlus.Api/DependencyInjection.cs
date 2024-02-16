@@ -28,7 +28,11 @@ public static class DependencyInjection
         services.AddNeerApiServices();
         services.AddAllServices(o => o.ResolveInternalImplementations = true);
         services.AddNeerControllers()
-            .AddMvcOptions(options => { options.Filters.Add<SuccessStatusCodesFilter>(); });
+            .AddMvcOptions(options =>
+            {
+                options.Filters.Add<UnifiedResponseFilter>();
+                options.Filters.Add<SuccessStatusCodesFilter>();
+            });
 
         services.Configure<ApiBehaviorOptions>(options => { options.SuppressInferBindingSourcesForParameters = true; });
 
