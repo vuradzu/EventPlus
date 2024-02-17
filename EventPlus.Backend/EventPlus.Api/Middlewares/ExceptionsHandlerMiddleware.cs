@@ -36,13 +36,22 @@ public sealed class ExceptionsHandlerMiddleware : IMiddleware
         }
         catch (Exception ex)
         {
-            await ProcessCommonExceptionAsync(context, ex);
+            await ProcessExceptionAsync(context, ex);
         }
     }
 
-    private async Task ProcessCommonExceptionAsync(HttpContext context, Exception e)
+    private async Task ProcessExceptionAsync(HttpContext context, Exception e)
     {
-        _logger.LogError(e, "Unhandled Server Error");
+        var logErrorMessage = e switch
+        {
+            HttpException he => he.StatusCode >= HttpStatusCode.InternalServerError
+                ? "Internal Server Error"
+                : e.Message,
+            ValidationException => "Invalid model received",
+            _ => "Unhandled Server Error"
+        };
+        
+        _logger.LogError(e, logErrorMessage);
 
         var messages = e switch
         {

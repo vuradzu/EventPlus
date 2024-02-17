@@ -29,11 +29,11 @@ public abstract class AutoFluentValidationMixin
         return validatorInstance!.Validate(validationContextInstance);
     }
     
-    private Type? FindValidatorType(Assembly assembly, Type evt)
+    private Type? FindValidatorType(Assembly assembly, Type validatorType)
     {
         ArgumentNullException.ThrowIfNull(assembly);
-        ArgumentNullException.ThrowIfNull(evt);
+        ArgumentNullException.ThrowIfNull(validatorType);
 
-        return assembly.GetTypes().FirstOrDefault(t => t.IsSubclassOf(evt));
+        return assembly.GetTypes().FirstOrDefault(t => t.IsSubclassOf(validatorType));
     }
 }

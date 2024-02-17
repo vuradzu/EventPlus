@@ -11,7 +11,7 @@ namespace EventPlus.Application.Minis.Base;
 /// </summary>
 /// <typeparam name="TRequest">Request type</typeparam>
 /// <typeparam name="TResult">Result type</typeparam>
-public abstract class MinisHandler<TRequest, TResult>(IServiceProvider serviceProvider): AutoFluentValidationMixin 
+public abstract class MinisHandler<TRequest, TResult>(IServiceProvider serviceProvider) : AutoFluentValidationMixin
     where TRequest : IMinisRequest<TResult>
 {
     private ISqlServerDatabase? _database;
@@ -40,18 +40,26 @@ public abstract class MinisHandler<TRequest, TResult>(IServiceProvider servicePr
     protected IUserProvider UserProvider => _userProvider ??= serviceProvider.GetRequiredService<IUserProvider>();
 
     /// <summary>
-    /// Main method to process a request
+    /// Custom business logic
     /// </summary>
     /// <param name="request">The request</param>
     /// <param name="ct">Cancellation token</param>
+    /// <returns>Instance of the TResult type</returns>
     protected abstract Task<TResult> Process(TRequest request, CancellationToken ct);
 
+    /// <summary>
+    /// Main method to validate and handle a request
+    /// </summary>
+    /// <param name="request">The request</param>
+    /// <param name="ct">Cancellation token</param>
+    /// <returns>Instance of the TResult type</returns>
+    /// <exception cref="ValidationException">If validation doesn't pass, ValidationException will be thrown</exception>
     public Task<TResult> Handle(TRequest request, CancellationToken ct)
     {
         var validationResult = AutoValidate(request);
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
-            
+
         return Process(request, ct);
     }
 }
@@ -60,7 +68,7 @@ public abstract class MinisHandler<TRequest, TResult>(IServiceProvider servicePr
 /// Minis handler without response
 /// </summary>
 /// <typeparam name="TRequest">Request type</typeparam>
-public abstract class MinisHandler<TRequest>(IServiceProvider serviceProvider): AutoFluentValidationMixin 
+public abstract class MinisHandler<TRequest>(IServiceProvider serviceProvider) : AutoFluentValidationMixin
     where TRequest : IMinisRequest
 {
     private ISqlServerDatabase? _database;
@@ -82,25 +90,32 @@ public abstract class MinisHandler<TRequest>(IServiceProvider serviceProvider): 
             return _database;
         }
     }
-    
+
     /// <summary>
     /// User provider instance
     /// </summary>
     protected IUserProvider UserProvider => _userProvider ??= serviceProvider.GetRequiredService<IUserProvider>();
 
     /// <summary>
-    /// Main method to process a request
+    /// Custom business logic
     /// </summary>
     /// <param name="request">The request</param>
     /// <param name="ct">Cancellation token</param>
     protected abstract Task Process(TRequest request, CancellationToken ct);
 
+
+    /// <summary>
+    /// Main method to validate and handle a request
+    /// </summary>
+    /// <param name="request">The request</param>
+    /// <param name="ct">Cancellation token</param>
+    /// <exception cref="ValidationException">If validation doesn't pass, ValidationException will be thrown</exception>
     public Task Handle(TRequest request, CancellationToken ct)
     {
         var validationResult = AutoValidate(request);
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
-            
+
         return Process(request, ct);
     }
 }
