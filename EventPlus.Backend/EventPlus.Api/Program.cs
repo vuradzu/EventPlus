@@ -1,7 +1,7 @@
 using EventPlus.Api;
+using EventPlus.Api.Middlewares;
 using EventPlus.Application;
 using EventPlus.Domain;
-using EventPlus.Domain.Entities.Identity;
 using EventPlus.Infrastructure;
 using NeerCore.Api.Extensions;
 using NeerCore.Api.Swagger.Extensions;
@@ -65,7 +65,7 @@ static void ConfigureWebApp(WebApplication app)
         app.ForceRedirect(from: "/", to: "/swagger");
     }
 
-    app.UseNeerExceptionHandler();
+    app.UseMiddleware<ExceptionsHandlerMiddleware>();
     app.UseHttpsRedirection();
 
     app.UseAuthentication();

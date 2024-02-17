@@ -1,9 +1,6 @@
 using EventPlus.Api.Extensions;
 using EventPlus.Api.Filters;
-using EventPlus.Application.Options;
-using FluentValidation;
-using FluentValidation.AspNetCore;
-using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
+using EventPlus.Api.Middlewares;
 using Microsoft.AspNetCore.Mvc;
 using NeerCore.Api.Extensions;
 using NeerCore.DependencyInjection.Extensions;
@@ -30,13 +27,15 @@ public static class DependencyInjection
         services.AddNeerControllers()
             .AddMvcOptions(options =>
             {
-                options.Filters.Add<UnifiedResponseFilter>();
+                options.Filters.Add<ArrayCountFilter>();
                 options.Filters.Add<SuccessStatusCodesFilter>();
             });
 
         services.Configure<ApiBehaviorOptions>(options => { options.SuppressInferBindingSourcesForParameters = true; });
 
         services.AddCustomSwagger();
+
+        services.AddTransient<ExceptionsHandlerMiddleware>();
 
 
         return services;
