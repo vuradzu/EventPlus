@@ -2,6 +2,7 @@ using EventPlus.Application.Minis.Commands.Avatar;
 using EventPlus.Application.Minis.Commands.Create;
 using EventPlus.Application.Minis.Commands.Delete;
 using EventPlus.Application.Minis.Commands.Get.GetAll;
+using EventPlus.Application.Minis.Commands.Get.GetOne;
 using EventPlus.Application.Minis.Commands.Invite.Create;
 using EventPlus.Application.Minis.Commands.Invite.Models;
 using EventPlus.Application.Minis.Commands.Invite.Use;
@@ -75,6 +76,16 @@ public class CommandController : Controller
     {
         return await handler.Handle(new GetAllCommandsRequest(), ct);
     }    
+    
+    /// <summary>
+    /// Get Command by id
+    /// </summary>
+    [HttpGet("{id}")]
+    public async Task<CommandModel> GetOne([FromRoute] long id,
+        [FromServices] GetOneCommandHandler handler, CancellationToken ct)
+    {
+        return await handler.Handle(new GetOneCommandRequest{Id = id}, ct);
+    }   
     
     /// <summary>
     /// Update Command
