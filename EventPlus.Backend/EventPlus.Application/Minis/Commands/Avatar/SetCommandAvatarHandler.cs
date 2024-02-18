@@ -1,12 +1,14 @@
 using EventPlus.Application.Minis.Base;
+using EventPlus.Application.Services.S3;
+using EventPlus.Core.Constants;
 using EventPlus.Domain.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using NeerCore.Exceptions;
 
 namespace EventPlus.Application.Minis.Commands.Avatar;
 
-public class SetCommandAvatarHandler(IServiceProvider serviceProvider) : MinisHandler<SetCommandAvatarRequest, string>(serviceProvider)
+public class SetCommandAvatarHandler(IServiceProvider serviceProvider, IS3Service s3Service)
+    : MinisHandler<SetCommandAvatarRequest, string>(serviceProvider)
 {
     protected override async Task<string> Process(SetCommandAvatarRequest request, CancellationToken ct)
     {
@@ -15,27 +17,19 @@ public class SetCommandAvatarHandler(IServiceProvider serviceProvider) : MinisHa
         if (command is null)
             throw new ValidationFailedException("No such Command");
 
-        string newAvatar = string.Empty;
-        
-        if (request.File is not null)
-        {
-            newAvatar = await LoadImageToS3Bucket(request.File);
-        }
+        if (command.Avatar is not null)
+            await s3Service.DeleteFile(BucketTypes.Commands, command.Avatar);
 
-        if (request.Link is not null)
-        {
-            newAvatar = request.Link;
-        }
+        var newAvatar = await s3Service.UploadFile(
+            BucketTypes.Commands,
+            S3BucketsTree.CommandsBucket.Avatars,
+            request.File,
+            command.Id.ToString());
 
         command.Avatar = newAvatar;
 
         await Database.SaveChangesAsync(ct);
 
         return newAvatar;
-    }
-
-    private async Task<string> LoadImageToS3Bucket(IFormFile requestFile)
-    {
-        return "https://file.url";
     }
 }

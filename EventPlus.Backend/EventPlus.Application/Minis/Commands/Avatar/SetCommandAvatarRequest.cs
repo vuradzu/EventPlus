@@ -10,25 +10,13 @@ namespace EventPlus.Application.Minis.Commands.Avatar;
 public class SetCommandAvatarRequest : IMinisRequest<string>
 {
     public required long Id { get; set; }
-    
-    [FromQuery] public string? Link { get; init; }
-
-    [FromForm] public IFormFile? File { get; init; }
-    
+    [FromForm] public IFormFile File { get; init; }
 }
 
 public class SetCommandAvatarValidator : AbstractValidator<SetUserAvatarRequest>
 {
     public SetCommandAvatarValidator()
     {
-        When(sa => sa.Link is not null, () =>
-        {
-            RuleFor(sa => sa.Link)
-                .NotEmpty()
-                .WithMessage("Wrong link")
-                .Must(l => Assets.ImagesAllowedExtensions.Any(ie =>
-                    l.ToLower().EndsWith(ie, StringComparison.OrdinalIgnoreCase)))
-                .WithMessage($"Allowed extensions: {string.Join(", ", Assets.ImagesAllowedExtensions)}.");
-        });
+        //TODO: Add validation for IFormFile
     }
 }

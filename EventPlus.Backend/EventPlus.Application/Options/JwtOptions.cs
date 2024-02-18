@@ -28,14 +28,11 @@ public sealed class JwtOptions
     }
 
 
-    internal sealed class Configurator : IConfigureOptions<JwtOptions>
+    internal sealed class Configurator(IConfiguration configuration) : IConfigureOptions<JwtOptions>
     {
-        private readonly IConfiguration _configuration;
-        public Configurator(IConfiguration configuration) => _configuration = configuration;
-
         public void Configure(JwtOptions options)
         {
-            var config = _configuration.GetRequiredSection("Jwt");
+            var config = configuration.GetRequiredSection("Jwt");
             config.Bind(options);
 
             var stringToken = config.GetValue<string>("AccessToken:Secret")!;
