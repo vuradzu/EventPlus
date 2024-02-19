@@ -4,9 +4,9 @@ using EventPlus.Application.Minis.Events.Get.GetAll;
 using EventPlus.Application.Minis.Events.Get.GetOne;
 using EventPlus.Application.Minis.Events.Models;
 using EventPlus.Application.Minis.Events.Update;
+using EventPlus.Core.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NetHub.Shared.Api.Constants;
 
 namespace EventPlus.Api.Controllers;
 
@@ -43,6 +43,7 @@ public class EventController : Controller
     /// <summary>
     /// Get All Events by Command
     /// </summary>
+    [Authorize(Policy = Policies.HasCommandMemberPermission)]
     [HttpGet("by-command/{commandId}")]
     public async Task<ICollection<EventModel>> GetAll([FromRoute] long commandId,
         [FromServices] GetAllEventsHandler handler, CancellationToken ct)
@@ -53,6 +54,7 @@ public class EventController : Controller
     /// <summary>
     /// Get One Event
     /// </summary>
+    [Authorize(Policy = Policies.HasCommandMemberPermission)]
     [HttpGet("{id}")]
     public async Task<EventModel> GetOne([FromRoute] long id,
         [FromServices] GetOneEventHandler handler, CancellationToken ct)

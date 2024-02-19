@@ -31,13 +31,16 @@ public enum CommandPermissions
     [CommandPermissionInfo("*", "Admin")]
     Admin = 1,
     
-    [CommandPermissionInfo("mt.cmd+", "Commands")]
+    [CommandPermissionInfo("ca.cmd", "Commands")]
+    CommandMember = 10,
+    
+    [CommandPermissionInfo("ca.cmd+", "Commands")]
     ManageCommand = 11,
     
-    [CommandPermissionInfo("mt.cmd.usr+", "Commands")]
+    [CommandPermissionInfo("ca.cmd.usr+", "Commands")]
     ManageCommandMembers = 12,
     
-    [CommandPermissionInfo("mt.evt+", "Events")]
+    [CommandPermissionInfo("ca.evt+", "Events")]
     ManageEvent = 21,
     
     // [PermissionInfo("mt.usr", "Users")]
@@ -46,15 +49,15 @@ public enum CommandPermissions
     // [PermissionInfo("mt.usr+", "Users")]
     // ManageUsers = 11,
 
-    [CommandPermissionInfo("mt.usr.pem", "User Permissions")]
+    [CommandPermissionInfo("ca.usr.pem", "User Permissions")]
     ReadUserPermissions = 12,
 
-    [CommandPermissionInfo("mt.usr.pem+", "User Permissions")]
+    [CommandPermissionInfo("ca.usr.pem+", "User Permissions")]
     ManageUserPermissions = 13,
 
-    [CommandPermissionInfo("mt.rol", "Roles")]
+    [CommandPermissionInfo("ca.rol", "Roles")]
     ReadRoles = 20,
 
-    [CommandPermissionInfo("mt.rol+", "Roles")]
+    [CommandPermissionInfo("ca.rol+", "Roles")]
     ManageRoles = 21
 }

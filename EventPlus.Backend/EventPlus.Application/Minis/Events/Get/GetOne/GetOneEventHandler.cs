@@ -1,6 +1,5 @@
 ﻿using EventPlus.Application.Minis.Base;
 using EventPlus.Application.Minis.Events.Models;
-using EventPlus.Core.Exceptions;
 using EventPlus.Domain.Entities;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
@@ -13,18 +12,10 @@ public class GetOneEventHandler(IServiceProvider serviceProvider)
 {
     protected override async Task<EventModel> Process(GetOneEventRequest request, CancellationToken ct)
     {
-        var userId = UserProvider.UserId;
-        
-        var @event = await Database.Set<Event>().FirstOrDefaultAsync(e => e.Id == request.Id, ct);
-        
-        if (@event is null) throw new NotFoundException("No such Event");
-        
-        var isMember = await Database.Set<CommandMember>()
-            .Where(cm => cm.CommandId == @event.CommandId)
-            .Where(cm => cm.AppUserId == userId)
-            .FirstOrDefaultAsync(ct) is not null;
+        var @event = await Database.Set<Event>()
+            .FirstOrDefaultAsync(e => e.Id == request.Id, ct);
 
-        if (!isMember) throw new PermissionsException();
+        if (@event is null) throw new NotFoundException("No such Event");
 
         return @event.Adapt<EventModel>();
     }

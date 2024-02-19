@@ -1,7 +1,6 @@
 using EventPlus.Api.Filters;
 using EventPlus.Core.Constants;
 using Microsoft.AspNetCore.Authorization;
-using NetHub.Shared.Api.Constants;
 
 namespace EventPlus.Api.Extensions;
 
@@ -13,9 +12,11 @@ public static class PolicyAuthorizationExtensions
         services.AddAuthorization(options =>
         {
             // /commands
-            options.AddManagePolicy(
+            options.AddReadManagePolicy(
+                readPolicy: Policies.HasCommandMemberPermission,
+                readPermissions: [CommandPermissions.CommandMember],
                 managePolicy: Policies.HasManageCommandPermission,
-                managePermissions: CommandPermissions.ManageCommand);
+                managePermissions: [CommandPermissions.ManageCommand]);
 
             options.AddManagePolicy(
                 managePolicy: Policies.HasManageCommandMembersPermission,

@@ -8,9 +8,9 @@ using EventPlus.Application.Minis.Commands.Invite.Models;
 using EventPlus.Application.Minis.Commands.Invite.Use;
 using EventPlus.Application.Minis.Commands.Models;
 using EventPlus.Application.Minis.Commands.Update;
+using EventPlus.Core.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NetHub.Shared.Api.Constants;
 
 namespace EventPlus.Api.Controllers;
 
@@ -80,6 +80,7 @@ public class CommandController : Controller
     /// <summary>
     /// Get Command by id
     /// </summary>
+    [Authorize(Policy = Policies.HasCommandMemberPermission)]
     [HttpGet("{id}")]
     public async Task<CommandModel> GetOne([FromRoute] long id,
         [FromServices] GetOneCommandHandler handler, CancellationToken ct)

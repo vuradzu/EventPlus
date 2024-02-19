@@ -14,6 +14,7 @@ public class CommandRolePermissionsSeeder : IDataSeeder
                 new CommandRolePermission { Id = 1, PermissionId = 1, RoleId = 1 },
                 new CommandRolePermission { Id = 2, PermissionId = 2, RoleId = 1 },
                 new CommandRolePermission { Id = 3, PermissionId = 3, RoleId = 1 },
+                new CommandRolePermission { Id = 4, PermissionId = 4, RoleId = 1 },
             ]);
         });
     }

@@ -13,10 +13,12 @@ public class CommandPermissionsSeeder : IDataSeeder
         builder.Entity<CommandPermission>(b =>
         {
             b.HasData([
+                
                 //Command permissions
                 new CommandPermission { Id = 1, Title = CommandPermissions.ManageCommand.GetPermissionInfo().Key},
                 new CommandPermission { Id = 2, Title = CommandPermissions.ManageCommandMembers.GetPermissionInfo().Key},
-            
+                new CommandPermission { Id = 4, Title = CommandPermissions.CommandMember.GetPermissionInfo().Key},
+                
                 //Event permissions
                 new CommandPermission { Id = 3, Title = CommandPermissions.ManageEvent.GetPermissionInfo().Key},
             ]);
