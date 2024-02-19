@@ -1,5 +1,8 @@
 using EventPlus.Application.Minis.Base;
+using EventPlus.Core.Constants;
+using EventPlus.Core.Extensions;
 using EventPlus.Domain.Entities;
+using EventPlus.Domain.Entities.Authorization;
 using EventPlus.Domain.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
 using NeerCore.Exceptions;
@@ -24,12 +27,15 @@ public class UseInviteHandler(IServiceProvider serviceProvider) : MinisHandler<U
                 .FirstOrDefaultAsync(cm => cm.AppUserId == user.Id
                                            && cm.CommandId == invite.CommandId, ct) is not null)
             throw new ValidationFailedException("You already are a member of this group");
-            
-        
+
+
         invite.UsersAllowed--;
 
         if (invite.UsersAllowed == 0)
             Database.Set<InviteCode>().Remove(invite);
+
+        var memberPermission = await Database.Set<CommandPermission>()
+            .SingleAsync(r => r.Title == CommandPermissions.CommandMember.GetPermissionInfo().Key, ct);
 
         var newMemberEntity = new CommandMember
         {
@@ -38,6 +44,7 @@ public class UseInviteHandler(IServiceProvider serviceProvider) : MinisHandler<U
             Avatar = user.Avatar,
             AppUserId = user.Id,
             CommandId = invite.CommandId,
+            CommandMemberPermissions = [new CommandMemberPermission { PermissionId = memberPermission.Id }]
         };
 
         await Database.Set<CommandMember>().AddAsync(newMemberEntity, ct);
