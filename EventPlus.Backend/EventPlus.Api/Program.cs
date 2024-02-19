@@ -7,6 +7,7 @@ using NeerCore.Api.Extensions;
 using NeerCore.Api.Swagger.Extensions;
 using NeerCore.Logging;
 using NeerCore.Logging.Extensions;
+using DependencyInjection = EventPlus.Api.DependencyInjection;
 
 var logger = LoggerInstaller.InitFromCurrentEnvironment();
 
@@ -23,7 +24,7 @@ try
     logger.Debug("Configuring web application");
     // JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
     ConfigureWebApp(app);
-    
+
     app.Run();
 }
 catch (Exception e)
@@ -64,6 +65,9 @@ static void ConfigureWebApp(WebApplication app)
         app.UseNeerSwagger();
         app.ForceRedirect(from: "/", to: "/swagger");
     }
+
+    app.UseCustomHangfireDashboard(app.Environment);
+    DependencyInjection.RegisterHangfireJobs();
 
     app.UseMiddleware<ExceptionsHandlerMiddleware>();
     app.UseHttpsRedirection();

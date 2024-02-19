@@ -2,6 +2,7 @@ using System.Reflection;
 using EventPlus.Application.Minis.Base;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Hangfire;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,8 @@ public static class DependencyInjection
     {
         services.AddMinis();
         services.AddCustomFluentValidation();
+
+        services.AddCustomHangfire(configuration);
 
         return services;
     }
@@ -41,5 +44,16 @@ public static class DependencyInjection
         services.AddValidatorsFromAssemblyContaining<IMinisRequest>(ServiceLifetime.Transient,
             includeInternalTypes: true);
         services.AddFluentValidationRulesToSwagger();
+    }
+
+    private static void AddCustomHangfire(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddHangfire(options => options
+            .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+            .UseSimpleAssemblyNameTypeSerializer()
+            .UseRecommendedSerializerSettings()
+            .UseSqlServerStorage(configuration.GetConnectionString("Default")));
+
+        services.AddHangfireServer();
     }
 }
