@@ -2,8 +2,9 @@ using System.Reflection;
 using EventPlus.Api.Extensions;
 using EventPlus.Api.Filters;
 using EventPlus.Api.Middlewares;
-using EventPlus.Application.Jobs.Abstraction;
+using EventPlus.Application.Hangfire;
 using EventPlus.Application.Options;
+using EventPlus.Infrastructure.Services.Jwt;
 using Hangfire;
 using Hangfire.Dashboard.BasicAuthorization;
 using Microsoft.AspNetCore.Mvc;
@@ -76,14 +77,14 @@ public static class DependencyInjection
     
     public static void RegisterHangfireJobs()
     {
-        var jobTypes = Assembly.GetAssembly(typeof(IJob))!
+        var jobTypes = Assembly.GetAssembly(typeof(JwtService))!
             .GetTypes()
             .Where(p => p.IsAssignableTo(typeof(IJob)) && p.IsClass);
 
         foreach (var jobType in jobTypes)
         {
             var job = Activator.CreateInstance(jobType) as IJob;
-            job!.Run();
+            job!.RunJob();
         }
     }
 }
