@@ -14,11 +14,9 @@ public class AssignmentsModel
         
     public required bool Completed  { get; set; }
     public required bool CanBeCompleted { get; set; }
-   
-    public AppUser? Assignee  { get; set; }
+    
     public long AssigneeId { get; set; }
     
-    public AppUser? Creator { get; set; }
     public long CreatorId { get; set; }
     
     public DateTime CompletionTime  { get; }
