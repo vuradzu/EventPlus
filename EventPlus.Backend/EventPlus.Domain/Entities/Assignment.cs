@@ -20,6 +20,7 @@ public class Assignment : ICreatableEntity<long>, ISoftDeletable, IUpdatable
     
     public long AssigneId { get; set; }
     public long CreatorId { get; set; }
+    public long EventId { get; set; }
 
     public DateTime CompletionTime  { get; set; }
     
@@ -29,6 +30,7 @@ public class Assignment : ICreatableEntity<long>, ISoftDeletable, IUpdatable
         
     public AppUser? Assignee { get; set; }
     public AppUser? Creator { get; set; }
+    public Event? Event { get; set; }
 
     public long? UpdatedBy { get; set; }
 }

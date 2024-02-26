@@ -25,6 +25,7 @@ namespace EventPlus.Domain.Migrations
                     Completed = table.Column<bool>(type: "bit", nullable: false),
                     AssigneId = table.Column<long>(type: "bigint", nullable: false),
                     CreatorId = table.Column<long>(type: "bigint", nullable: false),
+                    EventId = table.Column<long>(type: "bigint", nullable: false),
                     CompletionTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Deleted = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -46,6 +47,12 @@ namespace EventPlus.Domain.Migrations
                         principalTable: "AppUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Assignment_Event_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Event",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -57,6 +64,11 @@ namespace EventPlus.Domain.Migrations
                 name: "IX_Assignment_CreatorId",
                 table: "Assignment",
                 column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Assignment_EventId",
+                table: "Assignment",
+                column: "EventId");
         }
 
         /// <inheritdoc />

@@ -21,5 +21,9 @@ public class AssignmentConfiguration : IEntityTypeConfiguration<Assignment>
             .WithMany()
             .HasForeignKey(a => a.AssigneId)
             .OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(e => e.Event)
+            .WithMany()
+            .HasForeignKey(a => a.EventId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
