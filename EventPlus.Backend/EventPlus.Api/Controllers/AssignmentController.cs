@@ -3,7 +3,7 @@ using EventPlus.Application.Minis.Assignments.Delete;
 using EventPlus.Application.Minis.Assignments.Get.GetAll;
 using EventPlus.Application.Minis.Assignments.Get.GetOne;
 using EventPlus.Application.Minis.Assignments.Models;
-using EventPlus.Application.Minis.Commands.Create;
+using EventPlus.Application.Minis.Assignments.Update;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +25,6 @@ public class AssignmentController : Controller
     {
         return await handler.Handle(request, ct);
     }
-
     
     /// <summary>
     /// Delete Assignment
