@@ -22,7 +22,8 @@ public class CreateAssignmentHandler(IServiceProvider serviceProvider)
         assignmentEntity.Completed = request.Completed;
         assignmentEntity.CanBeCompleted = request.CanBeCompleted;
         assignmentEntity.CompletionTime = request.CompletionTime;
-       
+        assignmentEntity.EventId = request.EventId;
+        
         assignmentEntity.AssigneId = request.AssigneeId;
      
         

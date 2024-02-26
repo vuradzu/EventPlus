@@ -19,6 +19,7 @@ public class CreateAssignmentRequest: IMinisRequest<AssignmentsModel>
         
     public long AssigneeId { get; set; }
     public long CreatorId { get; set; }
+    public long EventId { get; set; }
 
 }
 
