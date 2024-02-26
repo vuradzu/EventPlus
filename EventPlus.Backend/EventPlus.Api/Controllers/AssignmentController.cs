@@ -1,4 +1,6 @@
 ﻿using EventPlus.Application.Minis.Assignments.Create;
+using EventPlus.Application.Minis.Assignments.Get.GetAll;
+using EventPlus.Application.Minis.Assignments.Get.GetOne;
 using EventPlus.Application.Minis.Assignments.Models;
 using EventPlus.Application.Minis.Commands.Create;
 using Microsoft.AspNetCore.Authorization;
@@ -42,6 +44,16 @@ public class AssignmentController : Controller
         [FromServices] GetOneAssignmentHandler handler, CancellationToken ct)
     {
         return await handler.Handle(new GetOneAssignmentRequest(){Id = id}, ct);
+    }
+    
+    /// <summary>
+    /// Get All Assignments by Event
+    /// </summary>
+    [HttpGet("by-command/{eventId}")]
+    public async Task<ICollection<AssignmentsModel>> GetAll([FromRoute] long eventId,
+        [FromServices] GetAllAssignmentHandler handler, CancellationToken ct)
+    {
+        return await handler.Handle(new GetAllAssignmentRequest(){EventId = eventId}, ct);
     }
     
 }
