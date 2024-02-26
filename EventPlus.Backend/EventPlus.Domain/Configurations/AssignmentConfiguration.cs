@@ -19,11 +19,7 @@ public class AssignmentConfiguration : IEntityTypeConfiguration<Assignment>
         
         builder.HasOne(a => a.Assignee)
             .WithMany()
-            .HasForeignKey(a => a.AssigneId)
-            .OnDelete(DeleteBehavior.Restrict);
-        builder.HasOne(e => e.Event)
-            .WithMany()
-            .HasForeignKey(a => a.EventId)
+            .HasForeignKey(a => a.AssigneeId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

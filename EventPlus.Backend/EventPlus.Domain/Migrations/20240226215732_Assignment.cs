@@ -18,15 +18,15 @@ namespace EventPlus.Domain.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Priority = table.Column<byte>(type: "tinyint", nullable: false),
-                    CanBeCompleted = table.Column<bool>(type: "bit", nullable: true),
+                    CanBeCompleted = table.Column<bool>(type: "bit", nullable: false),
                     Completed = table.Column<bool>(type: "bit", nullable: false),
-                    AssigneId = table.Column<long>(type: "bigint", nullable: false),
+                    AssigneeId = table.Column<long>(type: "bigint", nullable: false),
                     CreatorId = table.Column<long>(type: "bigint", nullable: false),
                     EventId = table.Column<long>(type: "bigint", nullable: false),
-                    CompletionTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CompletionTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Deleted = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Updated = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -36,8 +36,8 @@ namespace EventPlus.Domain.Migrations
                 {
                     table.PrimaryKey("PK_Assignment", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Assignment_AppUsers_AssigneId",
-                        column: x => x.AssigneId,
+                        name: "FK_Assignment_AppUsers_AssigneeId",
+                        column: x => x.AssigneeId,
                         principalTable: "AppUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -52,13 +52,13 @@ namespace EventPlus.Domain.Migrations
                         column: x => x.EventId,
                         principalTable: "Event",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Assignment_AssigneId",
+                name: "IX_Assignment_AssigneeId",
                 table: "Assignment",
-                column: "AssigneId");
+                column: "AssigneeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Assignment_CreatorId",
@@ -76,7 +76,6 @@ namespace EventPlus.Domain.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Assignment");
-            
         }
     }
 }

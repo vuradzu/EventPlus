@@ -20,7 +20,7 @@ public class AssignmentController : Controller
     /// Create new Assignment
     /// </summary>
     [HttpPost]
-    public async Task<AssignmentsModel> Create([FromBody] CreateAssignmentRequest request,
+    public async Task<AssignmentModel> Create([FromBody] CreateAssignmentRequest request,
         [FromServices] CreateAssignmentHandler handler, CancellationToken ct)
     {
         return await handler.Handle(request, ct);
@@ -40,7 +40,7 @@ public class AssignmentController : Controller
     /// Get One Assignment by id
     /// </summary>
     [HttpGet("{id}")]
-    public async Task<AssignmentsModel> GetOne([FromRoute] long id,
+    public async Task<AssignmentModel> GetOne([FromRoute] long id,
         [FromServices] GetOneAssignmentHandler handler, CancellationToken ct)
     {
         return await handler.Handle(new GetOneAssignmentRequest(){Id = id}, ct);
@@ -50,10 +50,10 @@ public class AssignmentController : Controller
     /// Get All Assignments by Event
     /// </summary>
     [HttpGet("by-command/{eventId}")]
-    public async Task<ICollection<AssignmentsModel>> GetAll([FromRoute] long eventId,
-        [FromServices] GetAllAssignmentHandler handler, CancellationToken ct)
+    public async Task<ICollection<AssignmentModel>> GetAll([FromRoute] long eventId,
+        [FromServices] GetAllAssignmentsHandler handler, CancellationToken ct)
     {
-        return await handler.Handle(new GetAllAssignmentRequest(){EventId = eventId}, ct);
+        return await handler.Handle(new GetAllAssignmentsRequest(){EventId = eventId}, ct);
     }
     
     /// <summary>

@@ -30,16 +30,16 @@ namespace EventPlus.Domain.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("AssigneId")
+                    b.Property<long>("AssigneeId")
                         .HasColumnType("bigint");
 
-                    b.Property<bool?>("CanBeCompleted")
+                    b.Property<bool>("CanBeCompleted")
                         .HasColumnType("bit");
 
                     b.Property<bool>("Completed")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("CompletionTime")
+                    b.Property<DateTime?>("CompletionTime")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("Created")
@@ -48,14 +48,13 @@ namespace EventPlus.Domain.Migrations
                     b.Property<long>("CreatorId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("Deleted")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -78,7 +77,7 @@ namespace EventPlus.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AssigneId");
+                    b.HasIndex("AssigneeId");
 
                     b.HasIndex("CreatorId");
 
@@ -694,7 +693,7 @@ namespace EventPlus.Domain.Migrations
                 {
                     b.HasOne("EventPlus.Domain.Entities.Identity.AppUser", "Assignee")
                         .WithMany()
-                        .HasForeignKey("AssigneId")
+                        .HasForeignKey("AssigneeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -707,7 +706,7 @@ namespace EventPlus.Domain.Migrations
                     b.HasOne("EventPlus.Domain.Entities.Event", "Event")
                         .WithMany()
                         .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Assignee");

@@ -8,15 +8,15 @@ using NeerCore.Exceptions;
 namespace EventPlus.Application.Minis.Assignments.Get.GetOne;
 
 public class GetOneAssignmentHandler(IServiceProvider serviceProvider)
-    : MinisHandler<GetOneAssignmentRequest, AssignmentsModel>(serviceProvider)
+    : MinisHandler<GetOneAssignmentRequest, AssignmentModel>(serviceProvider)
 {
-    protected override async Task<AssignmentsModel> Process(GetOneAssignmentRequest request, CancellationToken ct)
+    protected override async Task<AssignmentModel> Process(GetOneAssignmentRequest request, CancellationToken ct)
     {
         var assignment = await Database.Set<Assignment>()
             .FirstOrDefaultAsync(c => c.Id == request.Id, ct);
         
-        if (assignment is null) throw new NotFoundException("No such Event");
+        if (assignment is null) throw new NotFoundException("No such Assignment");
 
-        return assignment.Adapt<AssignmentsModel>();
+        return assignment.Adapt<AssignmentModel>();
     }
 }

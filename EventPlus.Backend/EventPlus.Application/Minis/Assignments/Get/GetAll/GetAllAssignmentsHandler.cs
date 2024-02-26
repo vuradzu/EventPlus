@@ -8,17 +8,17 @@ using NeerCore.Exceptions;
 
 namespace EventPlus.Application.Minis.Assignments.Get.GetAll;
 
-public class GetAllAssignmentHandler(IServiceProvider serviceProvider)
-    : MinisHandler<GetAllAssignmentRequest, ICollection<AssignmentsModel>>(serviceProvider)
+public class GetAllAssignmentsHandler(IServiceProvider serviceProvider)
+    : MinisHandler<GetAllAssignmentsRequest, ICollection<AssignmentModel>>(serviceProvider)
 {
-    protected override async Task<ICollection<AssignmentsModel>> Process(GetAllAssignmentRequest request, CancellationToken ct)
+    protected override async Task<ICollection<AssignmentModel>> Process(GetAllAssignmentsRequest request, CancellationToken ct)
     {
         var @event = await Database.Set<Event>().FirstOrDefaultAsync(e => e.Id == request.EventId, ct);
 
         if (@event is null) throw new NotFoundException("No such Event");
 
-        var events = await Database.Set<Assignment>().Where(a => a.EventId == request.EventId).ToListAsync(ct);
+        var assignments = await Database.Set<Assignment>().Where(a => a.EventId == request.EventId).ToArrayAsync(ct);
 
-        return events.Adapt<ICollection<AssignmentsModel>>();
+        return assignments.Adapt<ICollection<AssignmentModel>>();
     }
 }

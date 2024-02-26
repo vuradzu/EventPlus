@@ -12,13 +12,13 @@ public class UpdateAssignmentRequest : IMinisRequest
     public string? Description { get; set; }
     
     public Priority Priority { get; set; }
-    public DateTime Date { get; set; }
+    public DateTime? Date { get; set; }
     
     public bool Completed  { get; set; }
     public bool CanBeCompleted { get; set; }
     
-    public long AssigneeId { get; set; }
-    public DateTime CompletionTime  { get; set; }
+    public long AssigneeId { get; set; } 
+    public DateTime? CompletionTime  { get; set; }
 }
 
 internal sealed class UpdateAssignmentValidator : AbstractValidator<UpdateAssignmentRequest>
@@ -27,5 +27,15 @@ internal sealed class UpdateAssignmentValidator : AbstractValidator<UpdateAssign
     {
         RuleFor(i => i.Id)
             .NotEmpty().NotNull().WithMessage("Invalid Id");
+        RuleFor(i => i.Title)
+            .NotEmpty().NotNull().WithMessage("Invalid Title");
+        RuleFor(i => i.Priority)
+            .NotNull().WithMessage("Invalid Priority");
+        RuleFor(i => i.Completed)
+            .NotEmpty().NotNull().WithMessage("'Completed' Should be true/false");
+        RuleFor(i => i.CanBeCompleted)
+            .NotEmpty().NotNull().WithMessage("'CanBeCompleted' Should be true/false");
+        RuleFor(i => i.AssigneeId)
+            .NotEmpty().NotNull().WithMessage("Invalid AssigneeId");
     }
 }

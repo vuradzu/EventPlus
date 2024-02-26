@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace EventPlus.Application.Minis.Assignments.Get.GetOne;
 
-public class GetOneAssignmentRequest : IMinisRequest<AssignmentsModel>
+public class GetOneAssignmentRequest : IMinisRequest<AssignmentModel>
 {
     public required long Id { get; set; }
 }

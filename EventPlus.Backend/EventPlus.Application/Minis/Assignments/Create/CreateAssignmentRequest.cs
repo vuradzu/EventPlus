@@ -5,21 +5,21 @@ using FluentValidation;
 
 namespace EventPlus.Application.Minis.Assignments.Create;
 
-public class CreateAssignmentRequest: IMinisRequest<AssignmentsModel>
+public class CreateAssignmentRequest: IMinisRequest<AssignmentModel>
 {
     public required string Title { get; set; }
-    public required string Description { get; set; }
+    public required string? Description { get; set; }
     
+    public DateTime? Date { get; set; }
     public required Priority Priority {get; set;}
-   
+
+    public required bool? CanBeCompleted { get; set; }
     public required bool Completed  { get; set; }
-    public required bool CanBeCompleted { get; set; }
     
-    public DateTime CompletionTime  { get; }
-        
     public long AssigneeId { get; set; }
-    public long CreatorId { get; set; }
     public long EventId { get; set; }
+    
+    public DateTime? CompletionTime  { get; }
 
 }
 
@@ -35,6 +35,8 @@ internal sealed class CreateAssignmentValidator : AbstractValidator<CreateAssign
             .MaximumLength(100).WithMessage("Maximum command description is 100");
         RuleFor(c => c.Priority)
             .IsInEnum().WithMessage("Priority is not enum type");
+        RuleFor(d => d.Date >= DateTime.Now)
+            .NotEmpty().NotNull().WithMessage("Wrong Time");
         RuleFor(c => c.Completed)
             .NotEmpty().NotNull().WithMessage("Wrong Completed field");
         RuleFor(c => c.CanBeCompleted)

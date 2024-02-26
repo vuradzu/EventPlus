@@ -1,5 +1,6 @@
 ﻿using EventPlus.Application.Minis.Base;
 using EventPlus.Domain.Entities;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 using NeerCore.Exceptions;
 
@@ -13,15 +14,8 @@ public class UpdateAssignmentHandler(IServiceProvider serviceProvider)
         var assignment = await Database.Set<Assignment>().FirstOrDefaultAsync(e => e.Id == request.Id, ct);
 
         if (assignment is null) throw new NotFoundException("No such Assignment");
-
-        assignment.Title = request.Title;
-        assignment.Description = request.Description;
-        assignment.Priority = request.Priority;
-        assignment.Date = request.Date;
-        assignment.Completed = request.Completed;
-        assignment.CanBeCompleted = request.CanBeCompleted;
-        assignment.AssigneId = request.AssigneeId;
-        assignment.CompletionTime = request.CompletionTime;
+        
+        assignment = request.Adapt<Assignment>();
         
         await Database.SaveChangesAsync(ct);
     }

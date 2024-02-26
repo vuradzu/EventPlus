@@ -5,12 +5,12 @@ using FluentValidation;
 
 namespace EventPlus.Application.Minis.Assignments.Get.GetAll;
 
-public class GetAllAssignmentRequest : IMinisRequest<ICollection<AssignmentsModel>>, IMinisRequest<ICollection<EventModel>>
+public class GetAllAssignmentsRequest : IMinisRequest<ICollection<AssignmentModel>>, IMinisRequest<ICollection<EventModel>>
 {
     public long EventId { get; set; }
 }
 
-internal sealed class GetAllAssignmentsValidator : AbstractValidator<GetAllAssignmentRequest>
+internal sealed class GetAllAssignmentsValidator : AbstractValidator<GetAllAssignmentsRequest>
 {
     public GetAllAssignmentsValidator()
     {
