@@ -59,6 +59,9 @@ namespace EventPlus.Domain.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<long>("EventId")
+                        .HasColumnType("bigint");
+
                     b.Property<byte>("Priority")
                         .HasColumnType("tinyint");
 
@@ -78,6 +81,8 @@ namespace EventPlus.Domain.Migrations
                     b.HasIndex("AssigneId");
 
                     b.HasIndex("CreatorId");
+
+                    b.HasIndex("EventId");
 
                     b.ToTable("Assignment");
                 });
@@ -699,9 +704,17 @@ namespace EventPlus.Domain.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("EventPlus.Domain.Entities.Event", "Event")
+                        .WithMany()
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Assignee");
 
                     b.Navigation("Creator");
+
+                    b.Navigation("Event");
                 });
 
             modelBuilder.Entity("EventPlus.Domain.Entities.Authorization.CommandMemberPermission", b =>

@@ -1,4 +1,5 @@
 ﻿using EventPlus.Application.Minis.Assignments.Create;
+using EventPlus.Application.Minis.Assignments.Delete;
 using EventPlus.Application.Minis.Assignments.Get.GetAll;
 using EventPlus.Application.Minis.Assignments.Get.GetOne;
 using EventPlus.Application.Minis.Assignments.Models;
@@ -56,4 +57,13 @@ public class AssignmentController : Controller
         return await handler.Handle(new GetAllAssignmentRequest(){EventId = eventId}, ct);
     }
     
+    /// <summary>
+    /// Update Assignment
+    /// </summary>
+    [HttpPut("{id}")]
+    public async Task Update([FromBody] UpdateAssignmentRequest request,
+        [FromServices] UpdateAssignmentHandler handler, CancellationToken ct)
+    {
+        await handler.Handle(request, ct);
+    }
 }
