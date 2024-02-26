@@ -30,15 +30,14 @@ internal sealed class CreateAssignmentValidator : AbstractValidator<CreateAssign
             .NotEmpty().NotNull().WithMessage("Wrong Title")
             .MaximumLength(30).WithMessage("Maximum command name length is 30");
         RuleFor(c => c.Description)
-            .NotEmpty().NotNull().WithMessage("Wrong Description")
             .MaximumLength(100).WithMessage("Maximum command description is 100");
         RuleFor(c => c.Priority)
             .IsInEnum().WithMessage("Priority is not enum type");
         RuleFor(d => d.Date >= DateTime.Now)
-            .NotEmpty().NotNull().WithMessage("Wrong Time");
-        RuleFor(c => c.CanBeCompleted)
-            .NotEmpty().NotNull().WithMessage("Wrong CanBeCompleted field");
+            .NotEmpty().WithMessage("Wrong Time");
         RuleFor(c => c.AssigneeId)
             .NotEmpty().NotNull().WithMessage("No assignee");
+        RuleFor(c => c.EventId)
+            .NotEmpty().NotNull().WithMessage("No EventId");
     }
 }

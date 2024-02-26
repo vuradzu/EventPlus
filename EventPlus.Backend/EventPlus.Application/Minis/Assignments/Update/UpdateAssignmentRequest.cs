@@ -28,13 +28,14 @@ internal sealed class UpdateAssignmentValidator : AbstractValidator<UpdateAssign
         RuleFor(i => i.Id)
             .NotEmpty().NotNull().WithMessage("Invalid Id");
         RuleFor(i => i.Title)
-            .NotEmpty().NotNull().WithMessage("Invalid Title");
+            .NotEmpty().NotNull().WithMessage("Invalid Title")
+            .MaximumLength(30).WithMessage("Maximum command name length is 30");
+        RuleFor(c => c.Description)
+            .MaximumLength(100).WithMessage("Maximum command description is 100");
         RuleFor(i => i.Priority)
             .NotNull().WithMessage("Invalid Priority");
         RuleFor(i => i.Completed)
             .NotEmpty().NotNull().WithMessage("'Completed' Should be true/false");
-        RuleFor(i => i.CanBeCompleted)
-            .NotEmpty().NotNull().WithMessage("'CanBeCompleted' Should be true/false");
         RuleFor(i => i.AssigneeId)
             .NotEmpty().NotNull().WithMessage("Invalid AssigneeId");
     }
