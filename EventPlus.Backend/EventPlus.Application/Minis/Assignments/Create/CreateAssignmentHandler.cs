@@ -15,8 +15,6 @@ public class CreateAssignmentHandler(IServiceProvider serviceProvider)
         var assignmentEntity = request.Adapt<Assignment>();
 
         assignmentEntity.CreatorId = userId;
-        
-        assignmentEntity.AssigneeId = request.AssigneeId;
 
         assignmentEntity.CanBeCompleted = request.CanBeCompleted ?? true;
         

@@ -14,7 +14,6 @@ public class CreateAssignmentRequest: IMinisRequest<AssignmentModel>
     public required Priority Priority {get; set;}
 
     public required bool? CanBeCompleted { get; set; }
-    public required bool Completed  { get; set; }
     
     public long AssigneeId { get; set; }
     public long EventId { get; set; }
@@ -37,8 +36,6 @@ internal sealed class CreateAssignmentValidator : AbstractValidator<CreateAssign
             .IsInEnum().WithMessage("Priority is not enum type");
         RuleFor(d => d.Date >= DateTime.Now)
             .NotEmpty().NotNull().WithMessage("Wrong Time");
-        RuleFor(c => c.Completed)
-            .NotEmpty().NotNull().WithMessage("Wrong Completed field");
         RuleFor(c => c.CanBeCompleted)
             .NotEmpty().NotNull().WithMessage("Wrong CanBeCompleted field");
         RuleFor(c => c.AssigneeId)

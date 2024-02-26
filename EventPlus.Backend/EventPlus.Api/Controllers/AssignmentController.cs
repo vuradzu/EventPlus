@@ -47,7 +47,7 @@ public class AssignmentController : Controller
     }
     
     /// <summary>
-    /// Get All Assignments by Event
+    /// Get All Assignments by event
     /// </summary>
     [HttpGet("by-command/{eventId}")]
     public async Task<ICollection<AssignmentModel>> GetAll([FromRoute] long eventId,
