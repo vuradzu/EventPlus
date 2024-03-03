@@ -2,6 +2,7 @@
 using EventPlus.Application.Minis.Assignments.Delete;
 using EventPlus.Application.Minis.Assignments.Get.GetAll;
 using EventPlus.Application.Minis.Assignments.Get.GetOne;
+using EventPlus.Application.Minis.Assignments.Mark;
 using EventPlus.Application.Minis.Assignments.Models;
 using EventPlus.Application.Minis.Assignments.Update;
 using Microsoft.AspNetCore.Authorization;
@@ -62,6 +63,16 @@ public class AssignmentController : Controller
     [HttpPut("{id}")]
     public async Task Update([FromBody] UpdateAssignmentRequest request,
         [FromServices] UpdateAssignmentHandler handler, CancellationToken ct)
+    {
+        await handler.Handle(request, ct);
+    }
+    
+    /// <summary>
+    /// Mark Assignment
+    /// </summary>
+    [HttpPut("completed/{id}")]
+    public async Task Mark([FromBody] MarkAssignmentRequest request,
+        [FromServices] MarkAssignmentHandler handler, CancellationToken ct)
     {
         await handler.Handle(request, ct);
     }
