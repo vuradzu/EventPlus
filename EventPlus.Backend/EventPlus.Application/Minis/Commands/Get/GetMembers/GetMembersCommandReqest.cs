@@ -12,4 +12,9 @@ public class GetMembersCommandReqest : IMinisRequest<ICollection<AppUser>>
 
 internal sealed class GetMembersCommandsValidator : AbstractValidator<GetMembersCommandReqest>
 {
+    public GetMembersCommandsValidator()
+    {
+        RuleFor(i => i.Id)
+            .NotEmpty().NotNull().WithMessage("Invalid Id");
+    }
 }
