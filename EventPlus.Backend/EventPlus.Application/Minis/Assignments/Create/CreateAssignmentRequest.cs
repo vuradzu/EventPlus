@@ -5,12 +5,12 @@ using FluentValidation;
 
 namespace EventPlus.Application.Minis.Assignments.Create;
 
-public class CreateAssignmentRequest: IMinisRequest<AssignmentModel>
+public class CreateAssignmentRequest : IMinisRequest<AssignmentModel>
 {
     public required string Title { get; set; }
     public required string? Description { get; set; }
     
-    public DateTime? Date { get; set; }
+    public DateTime? Date { get; set; } = DateTime.Now;
     public required Priority Priority {get; set;}
 
     public required bool? CanBeCompleted { get; set; }
@@ -30,10 +30,11 @@ internal sealed class CreateAssignmentValidator : AbstractValidator<CreateAssign
             .NotEmpty().NotNull().WithMessage("Wrong Title")
             .MaximumLength(30).WithMessage("Maximum command name length is 30");
         RuleFor(c => c.Description)
+            .NotEmpty().NotNull().WithMessage("Wrong Description")
             .MaximumLength(100).WithMessage("Maximum command description is 100");
         RuleFor(c => c.Priority)
             .IsInEnum().WithMessage("Priority is not enum type");
-        RuleFor(d => d.Date >= DateTime.Now)
+        RuleFor(d => d.Date)
             .NotEmpty().WithMessage("Wrong Time");
         RuleFor(c => c.AssigneeId)
             .NotEmpty().NotNull().WithMessage("No assignee");

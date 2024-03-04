@@ -1,17 +1,16 @@
 ﻿using EventPlus.Application.Minis.Assignments.Models;
 using EventPlus.Application.Minis.Base;
-using EventPlus.Application.Minis.Events.Models;
 using EventPlus.Domain.Entities;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 using NeerCore.Exceptions;
 
-namespace EventPlus.Application.Minis.Assignments.Get.GetAll;
+namespace EventPlus.Application.Minis.Assignments.Get.GetAll.ByEvent;
 
-public class GetAllAssignmentsHandler(IServiceProvider serviceProvider)
-    : MinisHandler<GetAllAssignmentsRequest, ICollection<AssignmentModel>>(serviceProvider)
+public class GetAllAssignmentsByEHandler(IServiceProvider serviceProvider)
+    : MinisHandler<GetAllAssignmentsByERequest, ICollection<AssignmentModel>>(serviceProvider)
 {
-    protected override async Task<ICollection<AssignmentModel>> Process(GetAllAssignmentsRequest request, CancellationToken ct)
+    protected override async Task<ICollection<AssignmentModel>> Process(GetAllAssignmentsByERequest request, CancellationToken ct)
     {
         var @event = await Database.Set<Event>().FirstOrDefaultAsync(e => e.Id == request.EventId, ct);
 

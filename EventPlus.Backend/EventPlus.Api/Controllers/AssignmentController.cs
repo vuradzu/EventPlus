@@ -1,6 +1,7 @@
 ﻿using EventPlus.Application.Minis.Assignments.Create;
 using EventPlus.Application.Minis.Assignments.Delete;
-using EventPlus.Application.Minis.Assignments.Get.GetAll;
+using EventPlus.Application.Minis.Assignments.Get.GetAll.ByAssignee;
+using EventPlus.Application.Minis.Assignments.Get.GetAll.ByEvent;
 using EventPlus.Application.Minis.Assignments.Get.GetOne;
 using EventPlus.Application.Minis.Assignments.Mark;
 using EventPlus.Application.Minis.Assignments.Models;
@@ -51,10 +52,20 @@ public class AssignmentController : Controller
     /// Get All Assignments by Event
     /// </summary>
     [HttpGet("by-event/{eventId}")]
-    public async Task<ICollection<AssignmentModel>> GetAll([FromRoute] long eventId,
-        [FromServices] GetAllAssignmentsHandler handler, CancellationToken ct)
+    public async Task<ICollection<AssignmentModel>> GetAllByE([FromRoute] long eventId,
+        [FromServices] GetAllAssignmentsByEHandler handler, CancellationToken ct)
     {
-        return await handler.Handle(new GetAllAssignmentsRequest(){EventId = eventId}, ct);
+        return await handler.Handle(new GetAllAssignmentsByERequest(){EventId = eventId}, ct);
+    }
+
+    /// <summary>
+    /// Get All Assignments by Assignee
+    /// </summary>
+    [HttpGet("by-assignee/{assigneeId}")]
+    public async Task<ICollection<AssignmentModel>> GetAllByA([FromRoute] long assigneeId,
+        [FromServices] GetAllAssignmentsByAHandler handler, CancellationToken ct)
+    {
+        return await handler.Handle(new GetAllAssignmentsByARequest(){AssigneeId = assigneeId}, ct);
     }
     
     /// <summary>
