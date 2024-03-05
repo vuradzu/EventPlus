@@ -2,12 +2,14 @@ using EventPlus.Application.Minis.Commands.Avatar;
 using EventPlus.Application.Minis.Commands.Create;
 using EventPlus.Application.Minis.Commands.Delete;
 using EventPlus.Application.Minis.Commands.Get.GetAll;
+using EventPlus.Application.Minis.Commands.Get.GetMembers;
 using EventPlus.Application.Minis.Commands.Get.GetOne;
 using EventPlus.Application.Minis.Commands.Invite.Create;
 using EventPlus.Application.Minis.Commands.Invite.Models;
 using EventPlus.Application.Minis.Commands.Invite.Use;
 using EventPlus.Application.Minis.Commands.Models;
 using EventPlus.Application.Minis.Commands.Update;
+using EventPlus.Application.Minis.Users.Models;
 using EventPlus.Core.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -109,4 +111,15 @@ public class CommandController : Controller
     {
         return await handler.Handle(request, ct);
     }
+    
+    /// <summary>
+    /// Get Members by Command id
+    /// </summary>
+    [Authorize(Policy = Policies.HasCommandMemberPermission)]
+    [HttpGet("by-command/{id}")]
+    public async Task<ICollection<AppUserModelMinified>> GetMembers([FromRoute] long id,
+        [FromServices] GetCommandMembersHandler handler, CancellationToken ct)
+    {
+        return await handler.Handle(new GetCommandMembersRequest {Id = id}, ct);
+    }   
 }
