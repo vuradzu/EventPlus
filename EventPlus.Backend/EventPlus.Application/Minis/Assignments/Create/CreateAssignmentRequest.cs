@@ -34,7 +34,7 @@ internal sealed class CreateAssignmentValidator : AbstractValidator<CreateAssign
             .MaximumLength(100).WithMessage("Maximum command description is 100");
         RuleFor(c => c.Priority)
             .IsInEnum().WithMessage("Priority is not enum type");
-        RuleFor(d => d.Date)
+        RuleFor(d => d.Date >= DateTime.Now)
             .NotEmpty().WithMessage("Wrong Time");
         RuleFor(c => c.AssigneeId)
             .NotEmpty().NotNull().WithMessage("No assignee");

@@ -21,7 +21,7 @@ public class TestController(IJwtService jwtService, ISqlServerDatabase database)
 
         var user = await database.Set<AppUser>().FirstAsync(u => u.Id == userId);
 
-        var jwtResult = await jwtService.GenerateAsync(user, 10004);
+        var jwtResult = await jwtService.GenerateAsync(user, 10003);
 
         return jwtResult.Token;
     }

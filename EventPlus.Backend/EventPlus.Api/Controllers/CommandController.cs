@@ -9,9 +9,8 @@ using EventPlus.Application.Minis.Commands.Invite.Models;
 using EventPlus.Application.Minis.Commands.Invite.Use;
 using EventPlus.Application.Minis.Commands.Models;
 using EventPlus.Application.Minis.Commands.Update;
+using EventPlus.Application.Minis.Users.Models;
 using EventPlus.Core.Constants;
-using EventPlus.Domain.Entities;
-using EventPlus.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -116,11 +115,11 @@ public class CommandController : Controller
     /// <summary>
     /// Get Members by Command id
     /// </summary>
-    [Authorize(Policy = Policies.HasManageCommandPermission)]
+    [Authorize(Policy = Policies.HasCommandMemberPermission)]
     [HttpGet("by-command/{id}")]
-    public async Task<ICollection<AppUser>> GetMembers([FromRoute] long id,
-        [FromServices] GetMembersCommandHandler handler, CancellationToken ct)
+    public async Task<ICollection<AppUserModelMinified>> GetMembers([FromRoute] long id,
+        [FromServices] GetCommandMembersHandler handler, CancellationToken ct)
     {
-        return await handler.Handle(new GetMembersCommandReqest {Id = id}, ct);
+        return await handler.Handle(new GetCommandMembersRequest {Id = id}, ct);
     }   
 }

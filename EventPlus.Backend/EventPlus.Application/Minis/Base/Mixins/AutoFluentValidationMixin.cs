@@ -25,7 +25,7 @@ public abstract class AutoFluentValidationMixin
         var validationContextType = typeof(ValidationContext<>);
         var validationContextTypeGeneric = validationContextType.MakeGenericType(modelType);
         var validationContextInstance = Activator.CreateInstance(validationContextTypeGeneric, model) as IValidationContext;
-
+        
         return validatorInstance!.Validate(validationContextInstance);
     }
     

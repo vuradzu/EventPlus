@@ -55,7 +55,10 @@ public sealed class ExceptionsHandlerMiddleware : IMiddleware
 
         var messages = e switch
         {
-            ValidationException ve => ve.Errors.Select(error => $"{error.PropertyName}: {error.ErrorMessage}").ToArray(),
+            ValidationException ve => ve.Errors.Select(error => string.IsNullOrWhiteSpace(error.PropertyName)
+                ? $"{error.ErrorMessage}"
+                : $"{error.PropertyName}: {error.ErrorMessage}"
+                ).ToArray(),
             _ => [e.Message]
         };
 
