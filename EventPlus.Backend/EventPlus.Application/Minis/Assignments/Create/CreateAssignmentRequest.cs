@@ -10,7 +10,7 @@ public class CreateAssignmentRequest : IMinisRequest<AssignmentModel>
     public required string Title { get; set; }
     public required string? Description { get; set; }
     
-    public DateTime? Date { get; set; } = DateTime.Now;
+    public DateTime? Date { get; set; }
     public required Priority Priority {get; set;}
 
     public required bool? CanBeCompleted { get; set; }
@@ -34,7 +34,7 @@ internal sealed class CreateAssignmentValidator : AbstractValidator<CreateAssign
             .MaximumLength(100).WithMessage("Maximum command description is 100");
         RuleFor(c => c.Priority)
             .IsInEnum().WithMessage("Priority is not enum type");
-        RuleFor(d => d.Date >= DateTime.Now)
+        RuleFor(d => d.Date > DateTime.Now)
             .NotEmpty().WithMessage("Wrong Time");
         RuleFor(c => c.AssigneeId)
             .NotEmpty().NotNull().WithMessage("No assignee");
