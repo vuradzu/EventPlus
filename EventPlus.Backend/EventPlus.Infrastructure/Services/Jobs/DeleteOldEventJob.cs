@@ -13,7 +13,7 @@ public class DeleteOldEventJob : IJob
         RecurringJob.AddOrUpdate<DeleteOldEventJobService>(
             "event",
             service => service.Process(),
-            Cron.Daily
+            Cron.Monthly
         );
     }
 }

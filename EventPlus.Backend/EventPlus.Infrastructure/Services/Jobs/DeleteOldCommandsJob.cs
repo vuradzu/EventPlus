@@ -14,7 +14,7 @@ public class DeleteOldCommandsJob : IJob
         RecurringJob.AddOrUpdate<DeleteOldCommandsJobService>(
             "command",
             service => service.Process(),
-            Cron.Daily
+            Cron.Monthly
         );
     }
 }
