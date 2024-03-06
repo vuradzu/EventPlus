@@ -12,7 +12,7 @@ public class DeleteOldCommandsJob : IJob
     public void RunJob()
     {
         RecurringJob.AddOrUpdate<DeleteOldCommandsJobService>(
-            "command",
+            "delete-old-commands",
             service => service.Process(),
             Cron.Monthly
         );
@@ -28,7 +28,7 @@ public class DeleteOldCommandsJobService(ISqlServerDatabase database, Cancellati
             .Where(c => c.Deleted != null)
             .ToArrayAsync();
 
-        var commandsDelete = commands.Where(c => c.Deleted <= DateTime.Now.AddDays(-31)).ToArray();
+        var commandsDelete = commands.Where(c => c.Deleted.Value.AddDays(31) <= DateTime.Now).ToArray();
 
         database.RemoveRange(commandsDelete);
         await database.SaveChangesAsync(ct);
