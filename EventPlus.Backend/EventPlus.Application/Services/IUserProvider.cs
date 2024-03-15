@@ -1,4 +1,3 @@
-using EventPlus.Core.Constants;
 using EventPlus.Domain.Entities.Identity;
 
 namespace EventPlus.Application.Services;

@@ -5,6 +5,9 @@ using NeerCore.Exceptions;
 
 namespace EventPlus.Application.Minis.Base.Mixins;
 
+/// <summary>
+/// Fluent validation mixin, that provides an ability to automatically validate request models, based on their type
+/// </summary>
 public abstract class AutoFluentValidationMixin
 {
     protected ValidationResult AutoValidate(object model)
