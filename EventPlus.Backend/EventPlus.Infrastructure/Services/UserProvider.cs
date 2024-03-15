@@ -12,7 +12,7 @@ using NeerCore.Exceptions;
 namespace EventPlus.Infrastructure.Services;
 
 [Service]
-internal sealed class UserProvider : IUserProvider
+public class UserProvider : IUserProvider
 {
     private readonly IHttpContextAccessor _accessor;
     private AppUser? _userProfile;

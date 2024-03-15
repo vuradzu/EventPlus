@@ -20,7 +20,7 @@ public abstract class MinisHandler<TRequest, TResult>(IServiceProvider servicePr
     /// <summary>
     /// Database context instance
     /// </summary>
-    protected ISqlServerDatabase Database
+    public ISqlServerDatabase Database
     {
         get
         {
@@ -32,6 +32,7 @@ public abstract class MinisHandler<TRequest, TResult>(IServiceProvider servicePr
 
             return _database;
         }
+        set => _database = value;
     }
 
     /// <summary>
@@ -77,7 +78,7 @@ public abstract class MinisHandler<TRequest>(IServiceProvider serviceProvider) :
     /// <summary>
     /// Database context instance
     /// </summary>
-    protected ISqlServerDatabase Database
+    public ISqlServerDatabase Database
     {
         get
         {
@@ -89,6 +90,7 @@ public abstract class MinisHandler<TRequest>(IServiceProvider serviceProvider) :
 
             return _database;
         }
+        set => _database = value;
     }
 
     /// <summary>

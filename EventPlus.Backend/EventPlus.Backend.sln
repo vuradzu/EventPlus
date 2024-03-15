@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventPlus.Application", "Ev
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventPlus.Infrastructure", "EventPlus.Infrastructure\EventPlus.Infrastructure.csproj", "{2B7B6CC9-0007-4B81-982C-BFFB5C04769C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventPlus.Tests", "EventPlus.Tests\EventPlus.Tests.csproj", "{5A56A769-007D-4041-8014-FCDF8CEF1D29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{2B7B6CC9-0007-4B81-982C-BFFB5C04769C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B7B6CC9-0007-4B81-982C-BFFB5C04769C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B7B6CC9-0007-4B81-982C-BFFB5C04769C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A56A769-007D-4041-8014-FCDF8CEF1D29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A56A769-007D-4041-8014-FCDF8CEF1D29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A56A769-007D-4041-8014-FCDF8CEF1D29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A56A769-007D-4041-8014-FCDF8CEF1D29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
