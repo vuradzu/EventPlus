@@ -57,7 +57,6 @@ public class JwtAuthenticateHandler(
             FirstName = request.FirstName!,
             LastName = request.LastName,
             Email = request.Email,
-            Avatar = request.Avatar,
             EmailConfirmed = request.Provider is not ProviderType.Telegram,
         };
 

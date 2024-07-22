@@ -12,8 +12,10 @@ public partial class SqlServerDbContext
     {
         if (entity is not ISoftDeletable softDeletableEntity) return base.Remove(entity);
 
-        if (softDeletableEntity.Deleted is null)
-            softDeletableEntity.Deleted = DateTime.UtcNow;
+        if (softDeletableEntity.Deleted is not null)
+            return base.Remove(entity);
+
+        softDeletableEntity.Deleted = DateTime.UtcNow;
 
         return base.Entry(entity);
     }
@@ -22,8 +24,10 @@ public partial class SqlServerDbContext
     {
         if (entity is not ISoftDeletable softDeletableEntity) return base.Remove(entity);
 
-        if (softDeletableEntity.Deleted is null)
-            softDeletableEntity.Deleted = DateTime.UtcNow;
+        if (softDeletableEntity.Deleted is not null)
+            return base.Remove(entity);
+
+        softDeletableEntity.Deleted = DateTime.UtcNow;
 
         return base.Entry(entity);
     }
@@ -38,12 +42,17 @@ public partial class SqlServerDbContext
             .Where(e => e is ISoftDeletable)
             .Cast<ISoftDeletable>()
             .ToArray();
-        var deletableEntities = entities.Except(softDeletableEntities);
+        var deletableEntities = entities.Except(softDeletableEntities).ToList();
 
         foreach (var softDeletableEntity in softDeletableEntities)
         {
-            if (softDeletableEntity.Deleted is null)
-                softDeletableEntity.Deleted = DateTime.UtcNow;
+            if (softDeletableEntity.Deleted is not null)
+            {
+                deletableEntities.Add(softDeletableEntity);
+                continue;
+            }
+
+            softDeletableEntity.Deleted = DateTime.UtcNow;
         }
 
         base.RemoveRange(deletableEntities);
@@ -57,12 +66,17 @@ public partial class SqlServerDbContext
             .Where(e => e is ISoftDeletable)
             .Cast<ISoftDeletable>()
             .ToArray();
-        var deletableEntities = enumerated.Except(softDeletableEntities);
+        var deletableEntities = enumerated.Except(softDeletableEntities).ToList();
 
         foreach (var softDeletableEntity in softDeletableEntities)
         {
-            if (softDeletableEntity.Deleted is null)
-                softDeletableEntity.Deleted = DateTime.UtcNow;
+            if (softDeletableEntity.Deleted is not null)
+            {
+                deletableEntities.Add(softDeletableEntity);
+                continue;
+            }
+
+            softDeletableEntity.Deleted = DateTime.UtcNow;
         }
 
         base.RemoveRange(deletableEntities);

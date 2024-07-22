@@ -15,4 +15,6 @@ public sealed record JwtResult
     public DateTimeOffset TokenExpires { get; init; }
     public DateTimeOffset RefreshTokenExpires { get; init; }
     public string? Avatar { get; set; }
+    
+    public ICollection<long> Commands { get; set; }
 }

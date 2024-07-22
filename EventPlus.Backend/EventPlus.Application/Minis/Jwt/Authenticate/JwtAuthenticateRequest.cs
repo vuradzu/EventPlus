@@ -8,11 +8,10 @@ namespace EventPlus.Application.Minis.Jwt.Authenticate;
 
 public class JwtAuthenticateRequest:  IMinisRequest<JwtResult>
 {
-    public required string Username { get; set; }
+    public string? Username { get; set; }
     public string? Email { get; set; }
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
-    public string? Avatar { get; set; }
     public long? CommandId { get; set; }
     public Dictionary<string, string?> ProviderMetadata { get; set; } = default!;
     public ProviderType Provider { get; set; }
@@ -20,9 +19,9 @@ public class JwtAuthenticateRequest:  IMinisRequest<JwtResult>
     public SsoType Type { get; set; }
 }
 
-internal sealed class SsoEnterValidator : AbstractValidator<JwtAuthenticateRequest>
+internal sealed class JwtAuthenticateValidator : AbstractValidator<JwtAuthenticateRequest>
 {
-    public SsoEnterValidator()
+    public JwtAuthenticateValidator()
     {
         When(r => r.Type == SsoType.Register, () =>
         {

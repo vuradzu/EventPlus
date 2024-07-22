@@ -1,7 +1,11 @@
 using EventPlus.Application.Minis.Base.Mixins;
 using EventPlus.Application.Services;
+using EventPlus.Core.Constants;
 using EventPlus.Domain.Context;
+using EventPlus.Domain.Entities;
 using FluentValidation;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EventPlus.Application.Minis.Base;
@@ -16,6 +20,7 @@ public abstract class MinisHandler<TRequest, TResult>(IServiceProvider servicePr
 {
     private ISqlServerDatabase? _database;
     private IUserProvider? _userProvider;
+    private IHttpContextAccessor? _httpContextAccessor;
 
     /// <summary>
     /// Database context instance
@@ -39,6 +44,12 @@ public abstract class MinisHandler<TRequest, TResult>(IServiceProvider servicePr
     /// User provider instance
     /// </summary>
     protected IUserProvider UserProvider => _userProvider ??= serviceProvider.GetRequiredService<IUserProvider>();
+
+    /// <summary>
+    /// Http context accessor instance
+    /// </summary>
+    protected IHttpContextAccessor HttpContextAccessor =>
+        _httpContextAccessor ??= serviceProvider.GetRequiredService<IHttpContextAccessor>();
 
     /// <summary>
     /// Custom business logic
@@ -55,13 +66,34 @@ public abstract class MinisHandler<TRequest, TResult>(IServiceProvider servicePr
     /// <param name="ct">Cancellation token</param>
     /// <returns>Instance of the TResult type</returns>
     /// <exception cref="ValidationException">If validation doesn't pass, ValidationException will be thrown</exception>
-    public Task<TResult> Handle(TRequest request, CancellationToken ct)
+    public async Task<TResult> Handle(TRequest request, CancellationToken ct)
     {
         var validationResult = AutoValidate(request);
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        return Process(request, ct);
+        var processResult = await Process(request, ct);
+        await UpdateCommandLastActivity();
+
+        return processResult;
+    }
+
+    private async Task UpdateCommandLastActivity()
+    {
+        var httpContext = HttpContextAccessor.HttpContext;
+        var commandIdHeaderExists =
+            httpContext!.Request.Headers.TryGetValue(HeaderConstants.CommandIdHeaderName,
+                out var commandIdFromHeader);
+
+        if (!commandIdHeaderExists) return;
+
+        var command = await Database.Set<Command>().FirstOrDefaultAsync(c => c.Id == commandIdFromHeader);
+
+        if (command is null) return;
+
+        command.LastActivity = DateTime.Now;
+
+        await Database.SaveChangesAsync();
     }
 }
 
@@ -74,6 +106,7 @@ public abstract class MinisHandler<TRequest>(IServiceProvider serviceProvider) :
 {
     private ISqlServerDatabase? _database;
     private IUserProvider? _userProvider;
+    private IHttpContextAccessor? _httpContextAccessor;
 
     /// <summary>
     /// Database context instance
@@ -99,6 +132,12 @@ public abstract class MinisHandler<TRequest>(IServiceProvider serviceProvider) :
     protected IUserProvider UserProvider => _userProvider ??= serviceProvider.GetRequiredService<IUserProvider>();
 
     /// <summary>
+    /// Http context accessor instance
+    /// </summary>
+    protected IHttpContextAccessor HttpContextAccessor =>
+        _httpContextAccessor ??= serviceProvider.GetRequiredService<IHttpContextAccessor>();
+
+    /// <summary>
     /// Custom business logic
     /// </summary>
     /// <param name="request">The request</param>
@@ -112,12 +151,31 @@ public abstract class MinisHandler<TRequest>(IServiceProvider serviceProvider) :
     /// <param name="request">The request</param>
     /// <param name="ct">Cancellation token</param>
     /// <exception cref="ValidationException">If validation doesn't pass, ValidationException will be thrown</exception>
-    public Task Handle(TRequest request, CancellationToken ct)
+    public async Task Handle(TRequest request, CancellationToken ct)
     {
         var validationResult = AutoValidate(request);
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        return Process(request, ct);
+        await Process(request, ct);
+        await UpdateCommandLastActivity();
+    }
+
+    private async Task UpdateCommandLastActivity()
+    {
+        var httpContext = HttpContextAccessor.HttpContext;
+        var commandIdHeaderExists =
+            httpContext!.Request.Headers.TryGetValue(HeaderConstants.CommandIdHeaderName,
+                out var commandIdFromHeader);
+
+        if (!commandIdHeaderExists) return;
+
+        var command = await Database.Set<Command>().FirstOrDefaultAsync(c => c.Id == commandIdFromHeader);
+
+        if (command is null) return;
+
+        command.LastActivity = DateTime.Now;
+
+        await Database.SaveChangesAsync();
     }
 }

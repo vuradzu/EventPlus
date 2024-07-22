@@ -1,3 +1,5 @@
+using EventPlus.Api.Filters.Requirements;
+using EventPlus.Core.Constants;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -11,7 +13,7 @@ public class SwaggerAddCommandHeaderFilter : IOperationFilter
 
         operation.Parameters.Add(new OpenApiParameter
         {
-            Name = CommandIdRequirement.CommandIdHeaderName,
+            Name = HeaderConstants.CommandIdHeaderName,
             In = ParameterLocation.Header,
             Description = "Current command Id",
             Required = false

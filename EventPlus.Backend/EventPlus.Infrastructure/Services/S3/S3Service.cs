@@ -7,6 +7,7 @@ using EventPlus.Core.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using NeerCore.DependencyInjection;
+using NeerCore.Exceptions;
 
 namespace EventPlus.Infrastructure.Services.S3;
 
@@ -46,6 +47,39 @@ public class S3Service : IS3Service
             throw new CustomHttpException("S3 upload error", result.HttpStatusCode, "S3Error");
 
         return GetPublicFileUrl(type, fullPath);
+    }
+
+    public async Task<string> UploadFileFromUrl(BucketTypes type, string path, string fileUrl, string fileName)
+    {
+        using HttpClient httpClient = new HttpClient();
+        HttpResponseMessage response = await httpClient.GetAsync(fileUrl);
+
+        if (!response.IsSuccessStatusCode) throw new ValidationFailedException("Cannot download file");
+
+        var fileContentType = response.Content.Headers.ContentType!.ToString();
+        var fileExtension = fileContentType.Split("/").Last();
+        
+        var fileNameWithExtensionName = fileName + '.' + fileExtension;
+        var fullPath = Path.Join(path, fileNameWithExtensionName);
+
+        using var newMemoryStream = new MemoryStream();
+        await (await response.Content.ReadAsStreamAsync()).CopyToAsync(newMemoryStream);
+
+        var putObjectRequest = new PutObjectRequest
+        {
+            Key = fullPath,
+            BucketName = GetBucketName(type),
+            InputStream = newMemoryStream
+        };
+
+        var result = await _s3Client.PutObjectAsync(putObjectRequest);
+
+        if (result.HttpStatusCode >= HttpStatusCode.MultipleChoices)
+            throw new CustomHttpException("S3 upload error", result.HttpStatusCode, "S3Error");
+
+        return GetPublicFileUrl(type, fullPath);
+        
+        
     }
 
     public async Task DeleteFile(BucketTypes type, string fileUrl)

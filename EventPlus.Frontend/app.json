@@ -1,0 +1,71 @@
+{
+  "expo": {
+    "name": "Event+",
+    "slug": "event-plus",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "eventp",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#020108"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.neerspace.eventplus",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.990916835718-n5lauv1djhdrv3isda4gd211e54jridf"
+        }
+      },
+      "googleServicesFile": "./config/ios/GoogleService-Info.plist"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.neerspace.eventplus",
+      "googleServicesFile": "./config/android/google-services.json"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "@react-native-google-signin/google-signin",
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth",
+      "@react-native-firebase/crashlytics",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "3006bd15-a82d-4d61-8b31-ceb8bf57b208"
+      }
+    }
+  }
+}

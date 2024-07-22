@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "990916835718",
+    "project_id": "event-plus-19",
+    "storage_bucket": "event-plus-19.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:990916835718:android:2762b6a63b549401361407",
+        "android_client_info": {
+          "package_name": "com.neerspace.eventplus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "990916835718-sud32t475lahuna0d4c0e5u3udt8fkss.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.neerspace.eventplus",
+            "certificate_hash": "770275f1f923b10ba0f1d52257c8f00880d3bf5c"
+          }
+        },
+        {
+          "client_id": "990916835718-tjopfekjhis65f96k6i4p2od92nvv34a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.neerspace.eventplus",
+            "certificate_hash": "2b2d6f5ddece8f3a0e0d3cd067c4b0e4427bdba3"
+          }
+        },
+        {
+          "client_id": "990916835718-2432dhl9ik00cqbs7pf111qp2nfgla3q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8FHBPVZHje4hliuEbXRlSmTOKk-vkGxI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "990916835718-2432dhl9ik00cqbs7pf111qp2nfgla3q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "990916835718-n5lauv1djhdrv3isda4gd211e54jridf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.neerspace.eventplus"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

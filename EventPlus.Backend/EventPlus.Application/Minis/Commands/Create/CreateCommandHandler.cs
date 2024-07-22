@@ -31,6 +31,7 @@ public class CreateCommandHandler(IServiceProvider serviceProvider)
                 CommandMemberRoles = [new CommandMemberRole { RoleId = adminRole.Id }]
             }
         };
+        commandEntity.LastActivity = DateTime.Now;
 
         var commandEntry = await Database.Set<Command>().AddAsync(commandEntity, ct);
 

@@ -2,7 +2,7 @@ using EventPlus.Application.Services;
 using EventPlus.Core.Constants;
 using Microsoft.AspNetCore.Authorization;
 
-namespace EventPlus.Api.Filters;
+namespace EventPlus.Api.Filters.Requirements;
 
 public class CommandIdRequirementHandler(IHttpContextAccessor httpContextAccessor, IUserProvider userProvider)
     : AuthorizationHandler<CommandIdRequirement>
@@ -12,7 +12,7 @@ public class CommandIdRequirementHandler(IHttpContextAccessor httpContextAccesso
     {
         var httpContext = httpContextAccessor.HttpContext;
         var commandIdHeaderExists =
-            httpContext!.Request.Headers.TryGetValue(CommandIdRequirement.CommandIdHeaderName,
+            httpContext!.Request.Headers.TryGetValue(HeaderConstants.CommandIdHeaderName,
                 out var commandIdFromHeader);
         var commandIdFromAccessToken = userProvider.GetClaimValue(Claims.CommandId);
 

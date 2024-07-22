@@ -1,8 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
 
-namespace EventPlus.Api.Filters;
+namespace EventPlus.Api.Filters.Requirements;
 
-public class CommandIdRequirement : IAuthorizationRequirement
-{
-    public const string CommandIdHeaderName = "Current-Command-Id-E+";
-}
+public class CommandIdRequirement : IAuthorizationRequirement;

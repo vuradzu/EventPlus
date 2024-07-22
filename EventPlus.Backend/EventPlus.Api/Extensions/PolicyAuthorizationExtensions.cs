@@ -1,4 +1,4 @@
-using EventPlus.Api.Filters;
+using EventPlus.Api.Filters.Requirements;
 using EventPlus.Core.Constants;
 using Microsoft.AspNetCore.Authorization;
 

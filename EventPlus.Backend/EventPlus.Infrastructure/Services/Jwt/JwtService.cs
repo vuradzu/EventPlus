@@ -4,6 +4,7 @@ using EventPlus.Application.Services.Jwt.Models;
 using EventPlus.Core.Constants;
 using EventPlus.Core.Enums;
 using EventPlus.Domain.Context;
+using EventPlus.Domain.Entities;
 using EventPlus.Domain.Entities.Identity;
 using EventPlus.Infrastructure.Extensions;
 using EventPlus.Infrastructure.Services.Jwt.Internal;
@@ -46,7 +47,11 @@ public sealed class JwtService(
             Token = accessToken,
             TokenExpires = accessTokenExpires,
             RefreshToken = refreshToken,
-            RefreshTokenExpires = refreshTokenExpires
+            RefreshTokenExpires = refreshTokenExpires,
+            Commands = await database.Set<CommandMember>()
+                .Where(cm => cm.Id == user.Id)
+                .Select(cm => cm.CommandId)
+                .ToArrayAsync(ct)
         };
     }
 
@@ -105,10 +110,11 @@ public sealed class JwtService(
 
         if (userAgent.IsRobot // coz we hate robots here
                               // UA platform is invalid
-            || string.Equals(userAgent.Platform, "Unknown Platform", StringComparison.OrdinalIgnoreCase)
+            // || string.Equals(userAgent.Platform, "Unknown Platform", StringComparison.OrdinalIgnoreCase)
             // UA browser is invalid
-            || string.IsNullOrEmpty(userAgent.Browser)
-            || string.IsNullOrEmpty(userAgent.BrowserVersion))
+            // || string.IsNullOrEmpty(userAgent.Browser)
+            // || string.IsNullOrEmpty(userAgent.BrowserVersion)
+                              )
             throw new ForbidException("You are using a suspicious device.\n"
                 + "Make sure you are using a modern browser and do not use a toaster to surf the web");
 

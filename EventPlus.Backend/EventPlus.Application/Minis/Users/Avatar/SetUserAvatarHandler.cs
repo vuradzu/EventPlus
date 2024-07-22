@@ -10,6 +10,9 @@ namespace EventPlus.Application.Minis.Users.Avatar;
 public class SetUserAvatarHandler(IServiceProvider serviceProvider, IS3Service s3Service)
     : MinisHandler<SetUserAvatarRequest, string>(serviceProvider)
 {
+    private const string anonimousAvatarLink =
+        "https://users-bucket-123321.s3.eu-central-1.amazonaws.com/Avatars/anonimousAvatar.png";
+
     protected override async Task<string> Process(SetUserAvatarRequest request, CancellationToken ct)
     {
         var user = await Database.Set<AppUser>().SingleOrDefaultAsync(u => u.Id == UserProvider.UserId, ct);
@@ -20,11 +23,19 @@ public class SetUserAvatarHandler(IServiceProvider serviceProvider, IS3Service s
         if (user.Avatar is not null)
             await s3Service.DeleteFile(BucketTypes.Users, user.Avatar);
 
-        var newAvatar = await s3Service.UploadFile(
-            BucketTypes.Users,
-            S3BucketsTree.UsersBucket.Avatars,
-            request.File,
-            user.Id.ToString());
+        var newAvatar = request.Image != null
+            ? await s3Service.UploadFile(
+                BucketTypes.Users,
+                S3BucketsTree.UsersBucket.Avatars,
+                request.Image,
+                user.Id.ToString())
+            : request.Link != null
+                ? await s3Service.UploadFileFromUrl(
+                    BucketTypes.Users,
+                    S3BucketsTree.UsersBucket.Avatars,
+                    request.Link,
+                    user.Id.ToString())
+                : anonimousAvatarLink;
 
         user.Avatar = newAvatar;
 
