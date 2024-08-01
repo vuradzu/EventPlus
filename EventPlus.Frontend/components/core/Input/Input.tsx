@@ -1,5 +1,11 @@
 import React, { useMemo, useRef } from "react";
-import { ColorValue, ImageSourcePropType, TextInput, View } from "react-native";
+import {
+  ColorValue,
+  ImageSourcePropType,
+  KeyboardTypeOptions,
+  TextInput,
+  View,
+} from "react-native";
 import { classNames } from "~/utils/helpers/classNames";
 import FullyRoundedInputTitle from "./components/FullyRoundedInputTitle";
 import { InputError } from "./components/InputError";
@@ -28,6 +34,7 @@ type InputProps = {
   error?: string;
   variant?: InputVariant;
   maxLength?: number;
+  keyboardType?: KeyboardTypeOptions;
 } & (InputFullyRounded | InputHalfRounded);
 
 const Input = (props: InputProps) => {
@@ -41,6 +48,7 @@ const Input = (props: InputProps) => {
     onValueChange,
     error,
     maxLength,
+    keyboardType = 'default',
     ...rest
   } = props;
 
@@ -74,6 +82,7 @@ const Input = (props: InputProps) => {
         <InputIcon icon={icon} iconColor={iconColor} />
         <FullyRoundedInputTitle variant={variant} placeholder={placeholder} />
         <TextInput
+          keyboardType={keyboardType}
           editable={!disabled}
           selectTextOnFocus={disabled}
           ref={inputRef}

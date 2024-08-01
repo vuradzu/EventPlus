@@ -10,11 +10,13 @@ public sealed record JwtResult
 
     /// <example>[JWT]</example>
     public required string Token { get; init; }
+
     public required string RefreshToken { get; init; }
 
-    public DateTimeOffset TokenExpires { get; init; }
-    public DateTimeOffset RefreshTokenExpires { get; init; }
+    public DateTime TokenExpires { get; init; }
+    public DateTime RefreshTokenExpires { get; init; }
     public string? Avatar { get; set; }
-    
+
     public ICollection<long> Commands { get; set; }
+    public long? LastActivityCommand { get; set; }
 }

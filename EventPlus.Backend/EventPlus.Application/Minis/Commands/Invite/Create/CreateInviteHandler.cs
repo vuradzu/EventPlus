@@ -54,7 +54,7 @@ public class CreateInviteHandler(IServiceProvider serviceProvider)
         var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
         var random = new Random();
-        var number = random.Next(100000000, 1000000000).ToString();
+        var number = random.Next(10000, 100000).ToString();
 
         var code = number.Select(digit => digit % 2 == 0)
             .Select(isNumber => isNumber

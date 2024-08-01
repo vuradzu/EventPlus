@@ -25,4 +25,6 @@ public class Event : ICreatableEntity<long>, ISoftDeletable, IUpdatable
     public AppUser? Creator { get; set; }
 
     public long? UpdatedBy { get; set; }
+    
+    public ICollection<Assignment>? Assignments { get; set; }
 }

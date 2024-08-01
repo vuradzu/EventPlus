@@ -13,6 +13,7 @@ public class GetOneEventHandler(IServiceProvider serviceProvider)
     protected override async Task<EventModel> Process(GetOneEventRequest request, CancellationToken ct)
     {
         var @event = await Database.Set<Event>()
+            .Include(e => e.Assignments)
             .FirstOrDefaultAsync(e => e.Id == request.Id, ct);
 
         if (@event is null) throw new NotFoundException("No such Event");

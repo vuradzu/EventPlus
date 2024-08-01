@@ -45,7 +45,7 @@ public class EventController : Controller
     /// </summary>
     [Authorize(Policy = Policies.HasCommandMemberPermission)]
     [HttpGet("by-command/{commandId}")]
-    public async Task<ICollection<EventModel>> GetAll([FromRoute] long commandId,
+    public async Task<ICollection<EventModelMini>> GetAll([FromRoute] long commandId,
         [FromServices] GetAllEventsHandler handler, CancellationToken ct)
     {
         return await handler.Handle(new GetAllEventsRequest{CommandId = commandId}, ct);

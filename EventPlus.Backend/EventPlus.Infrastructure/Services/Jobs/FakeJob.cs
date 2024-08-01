@@ -7,11 +7,11 @@ public class FakeJob : IJob
 {
     public void RunJob()
     {
-        RecurringJob.AddOrUpdate<FakeJobService>(
-            "fake",
-            service => service.Process(),
-            Cron.Hourly
-        );
+        // RecurringJob.AddOrUpdate<FakeJobService>(
+        //     "fake",
+        //     service => service.Process(),
+        //     Cron.Hourly
+        // );
     }
 }
 

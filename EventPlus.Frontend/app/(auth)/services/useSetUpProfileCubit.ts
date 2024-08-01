@@ -1,17 +1,17 @@
 import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
-import { authenticate } from "~/api/jwt/jwt.api";
 import { AuthenticateRequest } from "~/api/jwt/types/authenticateRequest";
 import { changeAvatar, checkIfUsernameAvailable } from "~/api/user/user.api";
 import { emailRegex, nameRegex, usernameRegex } from "~/constants/Regex";
 import { useUserStore } from "~/store/user/user.store";
 import { FormErrors } from "~/types/FormErrors";
+import { JwtHelper } from "~/utils/helpers/jwtHelper";
 import { useForm } from "~/utils/hooks/useForm";
 import { useAuthStore } from "../state/auth.store";
 
 export const useSetUpProfileCubit = () => {
-  const { addUserTokenInfo, setStoreUser, updateUserAvatar } = useUserStore();
+  const { updateUserAvatar } = useUserStore();
   const { providerUser } = useAuthStore();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [pickedImage, setPickedImage] = useState<
@@ -109,33 +109,19 @@ export const useSetUpProfileCubit = () => {
         return;
       }
 
-      const user = await authenticate({
+      // registration
+      await JwtHelper.authenticateUser({
         ...authRequest,
         providerMetadata: {
           token: await providerUser!.getIdToken(),
         },
       });
 
-      setStoreUser({
-        firstName: user.firstName,
-        lastName: user.lastName,
-        username: user.username,
-        avatar: user.avatar,
-        commands: user.commands,
-      });
-
-      addUserTokenInfo({
-        token: user.token,
-        tokenExpires: user.tokenExpires,
-        refreshToken: user.refreshToken,
-        refreshTokenExpires: user.refreshTokenExpires,
-      });
-
       const newAvatar = await uploadUserImage();
 
       updateUserAvatar(newAvatar);
 
-      router.replace("home/home");
+      router.push("command-onboarding");
     } finally {
       setIsLoading(false);
     }

@@ -5,7 +5,7 @@ using FluentValidation;
 
 namespace EventPlus.Application.Minis.Events.Get.GetAll;
 
-public class GetAllEventsRequest : IMinisRequest<ICollection<EventModel>>, IMinisRequest<ICollection<CommandModel>>
+public class GetAllEventsRequest : IMinisRequest<ICollection<EventModelMini>>, IMinisRequest<ICollection<CommandModel>>
 { 
        public required long CommandId { get; set; }
 }

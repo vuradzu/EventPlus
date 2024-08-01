@@ -2,13 +2,16 @@ import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { router } from "expo-router";
 import { useState } from "react";
-import { authenticate, checkIfRegistered } from "~/api/jwt/jwt.api";
+import { checkIfRegistered } from "~/api/jwt/jwt.api";
 import { useUserStore } from "~/store/user/user.store";
+import { JwtHelper } from "~/utils/helpers/jwtHelper";
+import { useToasts } from "~/utils/hooks/useToasts";
 import { useAuthStore } from "../state/auth.store";
 
 export const useSignInCubit = () => {
   const { setProviderUser } = useAuthStore();
-  const { setStoreUser, addUserTokenInfo } = useUserStore();
+  const { showInfoToast } = useToasts();
+  const { setActiveCommand } = useUserStore();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const loginByGoogle = async () => {
@@ -36,6 +39,7 @@ export const useSignInCubit = () => {
         provider: "google",
       });
 
+      // registration
       if (!isProviderRegistered) {
         setProviderUser(googleUser);
 
@@ -43,7 +47,8 @@ export const useSignInCubit = () => {
         return;
       }
 
-      const user = await authenticate({
+      // login
+      const jwtResult = await JwtHelper.authenticateUser({
         type: "login",
         provider: "google",
         providerKey: googleUser.uid,
@@ -53,22 +58,14 @@ export const useSignInCubit = () => {
         },
       });
 
-      setStoreUser({
-        firstName: user.firstName,
-        lastName: user.lastName,
-        username: user.username,
-        avatar: user.avatar,
-        commands: user.commands,
-      });
+      setActiveCommand(jwtResult.lastActivityCommand);
 
-      addUserTokenInfo({
-        token: user.token,
-        tokenExpires: user.tokenExpires,
-        refreshToken: user.refreshToken,
-        refreshTokenExpires: user.refreshTokenExpires,
-      });
+      if (!!jwtResult.lastActivityCommand) {
+        router.replace("home/home");
+        return;
+      }
 
-      router.replace("home");
+      router.push("command-onboarding");
     } finally {
       setIsLoading(false);
     }

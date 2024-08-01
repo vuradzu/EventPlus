@@ -5,4 +5,4 @@ namespace EventPlus.Application.Services.Jwt.Models;
 /// </summary>
 /// <param name="Token">Jwt token</param>
 /// <param name="Expires">Expires time</param>
-public record struct JwtToken(string Token, DateTimeOffset Expires);
+public record struct JwtToken(string Token, DateTime Expires);

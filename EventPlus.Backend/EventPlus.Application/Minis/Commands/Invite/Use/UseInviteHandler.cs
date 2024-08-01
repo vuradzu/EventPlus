@@ -1,35 +1,49 @@
 using EventPlus.Application.Minis.Base;
+using EventPlus.Application.Minis.Commands.Models;
+using EventPlus.Application.Services;
 using EventPlus.Core.Constants;
 using EventPlus.Core.Extensions;
 using EventPlus.Domain.Entities;
 using EventPlus.Domain.Entities.Authorization;
-using EventPlus.Domain.Entities.Identity;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
-using NeerCore.Exceptions;
 
 namespace EventPlus.Application.Minis.Commands.Invite.Use;
 
-public class UseInviteHandler(IServiceProvider serviceProvider) : MinisHandler<UseInviteRequest>(serviceProvider)
+public class UseInviteHandler(IServiceProvider serviceProvider, IJwtService jwtService)
+    : MinisHandler<UseInviteRequest, UseInviteResult>(serviceProvider)
 {
-    protected override async Task Process(UseInviteRequest request, CancellationToken ct)
+    protected override async Task<UseInviteResult> Process(UseInviteRequest request, CancellationToken ct)
     {
-        // var user = await UserProvider.GetUserAsync();
-        var user = await Database.Set<AppUser>().FirstAsync(u => u.Id == 1, ct);
+        var result = new UseInviteResult { IsSuccess = false };
+        var user = await UserProvider.GetUserAsync();
 
         var invite = await Database.Set<InviteCode>()
             .SingleOrDefaultAsync(ic => ic.Code == request.Code, ct);
 
 
-        if (invite is null || invite.ValidUntil.UtcDateTime < DateTimeOffset.UtcNow)
-            throw new ValidationFailedException("Invitation has already been expired");
+        if (invite is null)
+        {
+            result.Message = "No such invitation";
+            return result;
+        }
+
+        if (invite.ValidUntil.UtcDateTime < DateTimeOffset.UtcNow)
+        {
+            result.Message = "Invitation has already been expired";
+            return result;
+        }
 
         if (await Database.Set<CommandMember>()
                 .FirstOrDefaultAsync(cm => cm.AppUserId == user.Id
                                            && cm.CommandId == invite.CommandId, ct) is not null)
-            throw new ValidationFailedException("You already are a member of this group");
-
+        {
+            result.Message = "You are already a member of this group";
+            return result;
+        }
 
         invite.UsersAllowed--;
+        result.CommandId = invite.CommandId;
 
         if (invite.UsersAllowed == 0)
             Database.Set<InviteCode>().Remove(invite);
@@ -49,5 +63,12 @@ public class UseInviteHandler(IServiceProvider serviceProvider) : MinisHandler<U
 
         await Database.Set<CommandMember>().AddAsync(newMemberEntity, ct);
         await Database.SaveChangesAsync(ct);
+
+        var tokens = await jwtService.GenerateAsync(user, result.CommandId, ct);
+
+        result.IsSuccess = true;
+        result.Tokens = tokens.Adapt<CommandTokensModel>();
+
+        return result;
     }
 }

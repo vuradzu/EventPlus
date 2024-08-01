@@ -16,7 +16,6 @@ public class UserController : Controller
     /// <summary>
     /// Set user avatar, can be file or link
     /// </summary>
-    [AllowAnonymous]
     [HttpPost("avatar")]
     public async Task<string> SetAvatar(SetUserAvatarRequest request, [FromServices] SetUserAvatarHandler handler,
         CancellationToken ct)

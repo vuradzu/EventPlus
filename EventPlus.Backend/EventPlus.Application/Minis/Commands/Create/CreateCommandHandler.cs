@@ -1,5 +1,6 @@
 using EventPlus.Application.Minis.Base;
 using EventPlus.Application.Minis.Commands.Models;
+using EventPlus.Application.Services;
 using EventPlus.Core.Constants;
 using EventPlus.Domain.Entities;
 using EventPlus.Domain.Entities.Authorization;
@@ -8,10 +9,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventPlus.Application.Minis.Commands.Create;
 
-public class CreateCommandHandler(IServiceProvider serviceProvider)
-    : MinisHandler<CreateCommandRequest, CommandModel>(serviceProvider)
+public class CreateCommandHandler(IServiceProvider serviceProvider, IJwtService jwtService)
+    : MinisHandler<CreateCommandRequest, CreateCommandResult>(serviceProvider)
 {
-    protected override async Task<CommandModel> Process(CreateCommandRequest request, CancellationToken ct)
+    protected override async Task<CreateCommandResult> Process(CreateCommandRequest request, CancellationToken ct)
     {
         var user = await UserProvider.GetUserAsync();
 
@@ -37,6 +38,10 @@ public class CreateCommandHandler(IServiceProvider serviceProvider)
 
         await Database.SaveChangesAsync(ct);
 
-        return commandEntry.Entity.Adapt<CommandModel>();
+        var result = commandEntry.Entity.Adapt<CreateCommandResult>();
+        var tokens = await jwtService.GenerateAsync(user, commandEntity.Id, ct);
+        result.Tokens = tokens.Adapt<CommandTokensModel>();
+
+        return result;
     }
 }

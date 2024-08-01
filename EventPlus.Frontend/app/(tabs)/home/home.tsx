@@ -1,14 +1,19 @@
 import { router } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaView, View } from "react-native";
+import { authTest } from "~/api/test/test.api";
 import { Button } from "~/components/core/Button/Button";
+import Input from "~/components/core/Input/Input";
+import { InputVariant } from "~/components/core/Input/types/InputVariant";
 import { TypographyVariants } from "~/components/core/Typography/types/TypographyVariants";
 import { Typography } from "~/components/core/Typography/Typography";
 import {
   EventModel,
   EventTilesDashboard,
 } from "~/components/EventTiles/EventTilesDashboard";
+import { useUserStore } from "~/store/user/user.store";
 import { HomeFilter } from "./components/HomeFilter";
+import { JwtHelper } from "~/utils/helpers/jwtHelper";
 
 const Home = () => {
   const events: EventModel[] = [

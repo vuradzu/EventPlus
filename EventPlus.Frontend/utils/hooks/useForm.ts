@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { FormErrors } from "~/types/FormErrors";
 
-export const useForm = <T>() => {
-  const [form, setForm] = useState<Partial<T>>({});
+export const useForm = <T>(defaultValue?: Partial<T>) => {
+  const [form, setForm] = useState<Partial<T>>({ ...defaultValue });
   const [formErrors, setFormErrors] = useState<FormErrors<T>>({});
 
   const setFormValue = <K extends keyof T>(field: K, value: T[K]) => {

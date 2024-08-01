@@ -35,7 +35,13 @@ public sealed class JwtService(
     {
         var device = await GetUserDeviceAsync(ct);
 
-        var (accessToken, accessTokenExpires) = await accessTokenGenerator.GenerateAsync(user, commandId, ct);
+        var userCommands = await database.Set<CommandMember>()
+            .Include(cm => cm.Command)
+            .Where(cm => cm.AppUserId == user.Id)
+            .ToArrayAsync(ct);
+        var lastActivityCommand = userCommands.MaxBy(uc => uc.Command!.LastActivity)?.CommandId;
+        
+        var (accessToken, accessTokenExpires) = await accessTokenGenerator.GenerateAsync(user, commandId ?? lastActivityCommand, ct);
         var (refreshToken, refreshTokenExpires) = await refreshTokenGenerator.GenerateAsync(user, device, ct);
 
         return new JwtResult
@@ -48,10 +54,8 @@ public sealed class JwtService(
             TokenExpires = accessTokenExpires,
             RefreshToken = refreshToken,
             RefreshTokenExpires = refreshTokenExpires,
-            Commands = await database.Set<CommandMember>()
-                .Where(cm => cm.Id == user.Id)
-                .Select(cm => cm.CommandId)
-                .ToArrayAsync(ct)
+            Commands = userCommands.Select(uc => uc.CommandId).ToArray(),
+            LastActivityCommand = lastActivityCommand
         };
     }
 

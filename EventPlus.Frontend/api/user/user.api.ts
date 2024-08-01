@@ -1,8 +1,8 @@
 import { AxiosResponse } from "axios";
 import FormData from "form-data";
-import { getUrl } from "~/utils/helpers/apiHelpers";
 import { _apiBase } from "..";
 import { CheckIfUsernameAvailable } from "./types/checkIfUsernameAvailableResult";
+import { getUrl } from "~/utils/helpers/apiFunctions";
 
 const prefix = "user";
 

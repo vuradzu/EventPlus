@@ -1,4 +1,5 @@
 using EventPlus.Application.Services;
+using EventPlus.Core.Constants;
 using EventPlus.Domain.Context;
 using EventPlus.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Authorization;
@@ -23,7 +24,7 @@ public class TestController(IJwtService jwtService, ISqlServerDatabase database)
 
         var user = await database.Set<AppUser>().FirstAsync(u => u.Id == userId);
 
-        var jwtResult = await jwtService.GenerateAsync(user, 10003);
+        var jwtResult = await jwtService.GenerateAsync(user, 10006);
 
         return jwtResult.Token;
     }
@@ -33,5 +34,13 @@ public class TestController(IJwtService jwtService, ISqlServerDatabase database)
     public async Task ThrowError()
     {
         throw new ValidationFailedException("Помилковий екшн");
+    }
+
+    [Authorize(Policy = Policies.HasCommandMemberPermission)]
+    [HttpGet("auth-test")]
+    public void AuthTest()
+    {
+        var headerExists = Request.Headers.TryGetValue(HeaderConstants.CommandIdHeaderName,
+            out var commandIdFromHeader);
     }
 }

@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace EventPlus.Application.Minis.Commands.Create;
 
-public class CreateCommandRequest: IMinisRequest<CommandModel>
+public class CreateCommandRequest: IMinisRequest<CreateCommandResult>
 {
     public required string Name { get; set; } 
     public string? Description { get; set; } 

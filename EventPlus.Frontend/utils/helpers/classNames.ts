@@ -14,4 +14,7 @@ export function classNames(
   ].join(" ");
 }
 
-export type ClassNameProps<T> = { className?: string } & T;
+export type ClassNameProps<T, B extends boolean = true> = (B extends true
+  ? { className?: string }
+  : { styles?: string }) &
+  T;

@@ -1,14 +1,15 @@
-import { router } from "expo-router";
 import LottieView from "lottie-react-native";
 import { View } from "react-native";
-import { useUserStore } from "~/store/user/user.store";
+import { JwtHelper } from "~/utils/helpers/jwtHelper";
+import { useIndexCubit } from "./services/useIndexCubit";
 
 const App = () => {
-  const { storeUser, clearStore } = useUserStore();
+  const { onAppEnter } = useIndexCubit();
+  const needSso = !JwtHelper.getTokenInfo();
 
-  const animation = !!storeUser
-    ? require("~/assets/json/splash-full.json")
-    : require("~/assets/json/splash-half.json");
+  const animation = needSso
+    ? require("~/assets/json/splash-half.json")
+    : require("~/assets/json/splash-full.json");
 
   return (
     <View className="w-full h-full bg-bg-primary">
@@ -18,17 +19,7 @@ const App = () => {
         autoPlay
         loop={false}
         speed={1.2}
-        onAnimationFinish={() => {
-          // clearStore();
-
-          if (storeUser === null) {
-            router.replace("sign-in");
-          }
-
-          if (!!storeUser) {
-            router.replace("home/home");
-          }
-        }}
+        onAnimationFinish={onAppEnter}
       />
     </View>
   );

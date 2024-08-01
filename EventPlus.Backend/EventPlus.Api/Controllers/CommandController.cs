@@ -52,10 +52,10 @@ public class CommandController : Controller
     /// Use invite code, to join command
     /// </summary>
     /// <param name="code">Invite code</param>
-    [HttpGet("use-invite/{code}")]
-    public async Task UseInvite([FromRoute] string code, [FromServices] UseInviteHandler handler, CancellationToken ct)
+    [HttpPost("use-invite/{code}")]
+    public async Task<UseInviteResult> UseInvite([FromRoute] string code, [FromServices] UseInviteHandler handler, CancellationToken ct)
     {
-        await handler.Handle(new UseInviteRequest(code), ct);
+        return await handler.Handle(new UseInviteRequest(code), ct);
     }
 
     /// <summary>

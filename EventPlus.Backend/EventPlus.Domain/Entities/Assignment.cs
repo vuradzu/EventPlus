@@ -16,7 +16,7 @@ public class Assignment : ICreatableEntity<long>, ISoftDeletable, IUpdatable
     public required Priority Priority {get; set;}
     
     public bool CanBeCompleted { get; set; }
-    public required bool  Completed  { get; set; }
+    public required bool Completed  { get; set; }
     
     public long AssigneeId { get; set; }
     public long CreatorId { get; set; }

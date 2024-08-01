@@ -7,7 +7,7 @@ const AuthLayout = () => {
       <Stack.Screen
         name="set-up-profile"
         options={{
-          animation: 'default',
+          animation: "default",
           headerShown: true,
           headerTitle: "Set up profile",
           headerBackTitle: "Back",
@@ -17,6 +17,13 @@ const AuthLayout = () => {
           headerTitleStyle: {
             color: "#FFFFFF",
           },
+        }}
+      />
+      <Stack.Screen
+        name="command-onboarding"
+        options={{
+          headerBackTitle: "Back",
+          headerBackButtonMenuEnabled: true,
         }}
       />
     </Stack>

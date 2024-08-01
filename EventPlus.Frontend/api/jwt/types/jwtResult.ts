@@ -11,4 +11,5 @@ export interface JwtResult {
 
   avatar: string | null;
   commands: number[];
+  lastActivityCommand: number | null;
 }

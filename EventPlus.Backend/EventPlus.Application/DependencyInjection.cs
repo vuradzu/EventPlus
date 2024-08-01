@@ -3,6 +3,8 @@ using EventPlus.Application.Minis.Base;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Hangfire;
+using Mapster;
+using MapsterMapper;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +19,7 @@ public static class DependencyInjection
         services.AddCustomFluentValidation();
 
         services.AddCustomHangfire(configuration);
+        services.AddMappings();
 
         return services;
     }
@@ -55,5 +58,14 @@ public static class DependencyInjection
             .UseSqlServerStorage(configuration.GetConnectionString("Default")));
 
         services.AddHangfireServer();
+    }
+
+    private static void AddMappings(this IServiceCollection services)
+    {
+        var config = TypeAdapterConfig.GlobalSettings;
+        config.Scan(Assembly.GetExecutingAssembly());
+
+        services.AddSingleton(config);
+        services.AddScoped<IMapper, ServiceMapper>();
     }
 }

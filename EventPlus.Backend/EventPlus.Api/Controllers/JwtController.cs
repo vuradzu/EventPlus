@@ -30,6 +30,7 @@ public class JwtController : Controller
     /// <summary>
     /// Refresh token
     /// </summary>
+    [AllowAnonymous]
     [HttpPost("refresh")]
     public async Task<JwtResult> Refresh([FromBody] JwtRefreshTokenRequest request,
         [FromServices] JwtRefreshTokenHandler handler, CancellationToken ct)
@@ -39,6 +40,7 @@ public class JwtController : Controller
         return result;
     }
 
+    [AllowAnonymous]
     [HttpGet("check-if-registered")]
     public async Task<CheckIfProviderRegisteredResult> CheckIfRegisteredAsync(
         [FromQuery] CheckIfProviderRegisteredRequest request,

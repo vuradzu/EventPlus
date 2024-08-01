@@ -9,7 +9,7 @@ public class GetOneEventRequest : IMinisRequest<EventModel>
     public required long Id { get; set; }
 }
 
-internal sealed class GetOneEventValidator : AbstractValidator<GetOneEventRequest>
+internal sealed class GetOneEventValidator : AbstractValidator<EventModel>
 {
     public GetOneEventValidator()
     {
