@@ -1,3 +1,5 @@
+using EventPlus.Application.Minis.Events.Models;
+
 namespace EventPlus.Application.Minis.Commands.Models;
 
 public class CommandModel
@@ -9,4 +11,6 @@ public class CommandModel
     public long CreatorId { get; set; }
 
     public DateTime Created { get; init; }
+
+    public ICollection<EventModelMini> Events { get; set; }
 }

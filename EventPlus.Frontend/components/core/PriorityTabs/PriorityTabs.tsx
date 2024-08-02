@@ -1,15 +1,15 @@
 import React from "react";
+import { Priority } from "~/api/types/Priority";
+import { ClassNameProps } from "~/utils/helpers/classNames";
 import { Tab, Tabs } from "../Tabs/Tabs";
 
-type Priorities = "low" | "medium" | "high";
-
 interface PriorityTabsProps {
-  priority?: Priorities;
-  onPriorityChange?: (id: string) => void;
+  priority?: Priority;
+  onPriorityChange?: (id: Priority) => void;
 }
 
-const PriorityTabs = (props: PriorityTabsProps) => {
-  const { priority, onPriorityChange } = props;
+const PriorityTabs = (props: ClassNameProps<PriorityTabsProps, false>) => {
+  const { styles, priority, onPriorityChange } = props;
 
   const priorityTabs: Tab[] = [
     { id: "low", title: "Низький" },
@@ -19,9 +19,12 @@ const PriorityTabs = (props: PriorityTabsProps) => {
 
   return (
     <Tabs
+      styles={styles}
       tabs={priorityTabs}
       selectedTab={priority}
-      onTabChange={onPriorityChange}
+      onTabChange={(tab) =>
+        !!onPriorityChange && onPriorityChange(tab as Priority)
+      }
     />
   );
 };

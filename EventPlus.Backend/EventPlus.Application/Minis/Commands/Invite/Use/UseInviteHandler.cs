@@ -42,8 +42,16 @@ public class UseInviteHandler(IServiceProvider serviceProvider, IJwtService jwtS
             return result;
         }
 
+        var command = await Database.Set<Command>()
+            .FirstOrDefaultAsync(c => c.Id == invite.CommandId, ct);
+
+        if (command is null)
+        {
+            result.Message = "No such command";
+            return result;
+        }
+
         invite.UsersAllowed--;
-        result.CommandId = invite.CommandId;
 
         if (invite.UsersAllowed == 0)
             Database.Set<InviteCode>().Remove(invite);
@@ -57,17 +65,18 @@ public class UseInviteHandler(IServiceProvider serviceProvider, IJwtService jwtS
             LastName = user.LastName,
             Avatar = user.Avatar,
             AppUserId = user.Id,
-            CommandId = invite.CommandId,
+            CommandId = command.Id,
             CommandMemberPermissions = [new CommandMemberPermission { PermissionId = memberPermission.Id }]
         };
 
         await Database.Set<CommandMember>().AddAsync(newMemberEntity, ct);
         await Database.SaveChangesAsync(ct);
 
-        var tokens = await jwtService.GenerateAsync(user, result.CommandId, ct);
+        var tokens = await jwtService.GenerateAsync(user, command.Id, ct);
 
         result.IsSuccess = true;
         result.Tokens = tokens.Adapt<CommandTokensModel>();
+        result.Command = command.Adapt<CommandModel>();
 
         return result;
     }

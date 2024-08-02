@@ -13,6 +13,7 @@ public class GetOneCommandHandler(IServiceProvider serviceProvider)
     protected override async Task<CommandModel> Process(GetOneCommandRequest request, CancellationToken ct)
     {
         var command = await Database.Set<Command>()
+            .Include(c => c.Events)
             .ProjectToType<CommandModel>()
             .FirstOrDefaultAsync(c => c.Id == request.Id, ct);
 

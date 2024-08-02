@@ -1,8 +1,9 @@
+import { CommandModel } from "./commandModel";
 import { CommandTokensModel } from "./commandTokensModel";
 
 interface InviteSuccessResult {
   isSuccess: true;
-  commandId: number;
+  command: CommandModel;
   tokens: CommandTokensModel;
 }
 interface InviteFailureResult {

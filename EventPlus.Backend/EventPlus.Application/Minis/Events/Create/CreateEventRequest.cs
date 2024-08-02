@@ -7,15 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EventPlus.Application.Minis.Events.Create;
 
-public record CreateEventRequest : IMinisRequest<EventModel>
+public record CreateEventRequest : IMinisRequest<EventModelMini>
 {
     [FromRoute] public long CommandId { get; set; }
 
-    public required string Title { get; set; }
+    public string Title { get; set; }
     public string? Description { get; set; }
     
-    public required Priority Priority { get; set; }
-    public required DateTime Date { get; set; }
+    public Priority Priority { get; set; }
+    public DateTime Date { get; set; }
 }
  internal sealed class CreateEventValidator : AbstractValidator<CreateEventRequest>
  {

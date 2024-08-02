@@ -31,24 +31,15 @@ export const userStore = createStore<UserStoreSchema>(
     const clearStore = () => {
       set((state) => {
         state.storeUser = null;
-        state.activeCommand = null;
-      });
-    };
-
-    const setActiveCommand = (id?: number | null) => {
-      set((state) => {
-        state.activeCommand = id;
       });
     };
 
     return {
       storeUser: null,
-      activeCommand: null,
       setStoreUser,
       addUserTokenInfo,
       updateUserAvatar,
       clearStore,
-      setActiveCommand,
     };
   },
   { persisted: true }

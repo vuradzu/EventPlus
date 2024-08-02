@@ -23,7 +23,7 @@ public class EventController : Controller
     /// </summary>
     [Authorize(Policy = Policies.HasManageEventPermission)]
     [HttpPost("{commandId}")]
-    public async Task<EventModel> Create([FromBody] CreateEventRequest request,
+    public async Task<EventModelMini> Create([FromBody] CreateEventRequest request,
         [FromServices] CreateEventHandler handler, CancellationToken ct)
     {
         return await handler.Handle(request, ct);

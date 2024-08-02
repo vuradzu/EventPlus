@@ -15,20 +15,20 @@ const EnterInvite = () => {
 
   return (
     <SafeAreaView className="bg-bg-primary-vr w-full h-full">
-      <View className="flex flex-col w-full h-full items-center justify-between px-4'">
+      <View className="flex flex-col w-full h-full items-center justify-between px-4">
         {/* icon and text */}
-        <View className="flex flex-col h-[30%]">
+        <View className="flex flex-col h-[30%] w-full">
           <View className="mb-1 h-[70%]">
             <LottieView
               style={{ flex: 1 }}
-              source={require("~/assets/json/command-onboarding.json")}
+              source={require("~/assets/json/invite-code.json")}
               autoPlay
               loop={false}
               speed={1}
             />
           </View>
           <Typography
-            fontSize={38}
+            fontSize={35}
             variant={TypographyVariants.Semibold}
             className="mb-3 text-center"
           >
@@ -41,7 +41,7 @@ const EnterInvite = () => {
             Для отримання коду зверніться до адміністратора команди
           </Typography>
           <CodeInput
-            styles="mt-8 px-16"
+            styles="mt-8 px-14"
             cellsCount={5}
             value={codeForm.code ?? ""}
             setValue={(code) => setCodeForm({ code })}

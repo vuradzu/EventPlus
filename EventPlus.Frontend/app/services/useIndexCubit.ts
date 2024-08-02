@@ -1,17 +1,18 @@
 import { router } from "expo-router";
+import { useCommandsStore } from "~/store/commands/commands.store";
 import { useUserStore } from "~/store/user/user.store";
 import { JwtHelper } from "~/utils/helpers/jwtHelper";
 
 export const useIndexCubit = () => {
-  const { activeCommand, storeUser, clearStore } = useUserStore();
+  const { clearStore } = useUserStore();
+  const { activeCommand, clearStore: clearCommands } = useCommandsStore();
 
   const onAppEnter = async () => {
-    console.warn(storeUser)
-    console.warn(activeCommand)
+    // clearStore();
+    // clearCommands();
     const tokenInfo = JwtHelper.getTokenInfo();
 
     if (!tokenInfo) {
-      console.warn('no token', tokenInfo)
       router.replace("sign-in");
       return;
     }

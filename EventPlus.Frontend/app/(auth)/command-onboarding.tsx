@@ -11,7 +11,7 @@ import { Typography } from "~/components/core/Typography/Typography";
 const CommandOnboarding = () => {
   return (
     <SafeAreaView className="bg-bg-primary-vr w-full h-full">
-      <View className="flex flex-col w-full h-full items-center justify-between px-4'">
+      <View className="flex flex-col w-full h-full items-center justify-between px-4">
         {/* icon and text */}
         <View className="flex flex-col h-[30%]">
           <View className="mb-1 h-[70%]">

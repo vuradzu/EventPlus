@@ -19,7 +19,6 @@ export type StoreUser = {
 
 interface StoreData {
   storeUser: StoreUser | null;
-  activeCommand?: number | null;
 }
 
 interface StoreActions {
@@ -27,7 +26,6 @@ interface StoreActions {
   addUserTokenInfo: (tokenInfo: StoreTokenInfo) => void;
   updateUserAvatar: (url: string) => void;
   clearStore: () => void;
-  setActiveCommand: (id?: number | null) => void;
 }
 
 export type UserStoreSchema = StoreData & StoreActions;

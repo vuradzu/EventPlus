@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import { useState } from "react";
 import { useInvite } from "~/api/command/command.api";
-import { useUserStore } from "~/store/user/user.store";
+import { useCommandsStore } from "~/store/commands/commands.store";
 import { JwtHelper } from "~/utils/helpers/jwtHelper";
 import { useForm } from "~/utils/hooks/useForm";
 
@@ -15,7 +15,7 @@ export const useEnterInviteCubit = () => {
     setFormErrors: setCodeError,
   } = useForm<{ code: string }>();
 
-  const { setActiveCommand } = useUserStore();
+  const { addCommand, setActiveCommand } = useCommandsStore();
 
   const validateForm = () => {
     setCodeError({});
@@ -37,6 +37,8 @@ export const useEnterInviteCubit = () => {
         return "Ви вже учасник даної команди";
       case "No such invitation":
         return "Такого запрошення не існує";
+      case "No such command":
+        return "Групи в яку ви хочете доєднатись більше не існує"
       default:
         return "";
     }
@@ -61,8 +63,12 @@ export const useEnterInviteCubit = () => {
         return;
       }
 
-      setActiveCommand(inviteCodeResult.commandId);
-      JwtHelper.addUserToken(inviteCodeResult.tokens, inviteCodeResult.commandId);
+      setActiveCommand(inviteCodeResult.command.id);
+      addCommand(inviteCodeResult.command);
+      JwtHelper.addUserToken(
+        inviteCodeResult.tokens,
+        inviteCodeResult.command.id
+      );
 
       router.replace("home/home");
     } finally {

@@ -2,12 +2,13 @@ import { router } from "expo-router";
 import { authenticate, refresh } from "~/api/jwt/jwt.api";
 import { AuthenticateRequest } from "~/api/jwt/types/authenticateRequest";
 import { JwtResult } from "~/api/jwt/types/jwtResult";
+import { commandsStore } from "~/store/commands/commands.store";
 import { StoreTokenInfo } from "~/store/user/user.schema";
 import { userStore } from "~/store/user/user.store";
 
 export class JwtHelper {
   public static getTokenInfo(): StoreTokenInfo | undefined {
-    const commandId = userStore.getState().activeCommand;
+    const commandId = commandsStore.getState().activeCommand;
 
     if (!commandId) return this.getAccessTokenWithoutCommandId();
 
@@ -30,6 +31,7 @@ export class JwtHelper {
     request: Partial<AuthenticateRequest>
   ): Promise<JwtResult> {
     const { setStoreUser } = userStore.getState();
+    const { addCommand, setActiveCommand } = commandsStore.getState();
 
     const jwtResult = await authenticate(request);
 
@@ -41,7 +43,11 @@ export class JwtHelper {
       commands: jwtResult.commands,
     });
 
-    this.addUserToken(jwtResult, jwtResult.lastActivityCommand);
+    this.addUserToken(jwtResult, jwtResult.lastActivityCommand?.id);
+
+    setActiveCommand(jwtResult.lastActivityCommand?.id);
+    if (!!jwtResult.lastActivityCommand)
+      addCommand(jwtResult.lastActivityCommand);
 
     return jwtResult;
   }
@@ -53,7 +59,9 @@ export class JwtHelper {
       return;
     }
 
-    const { activeCommand, setStoreUser } = userStore.getState();
+    const { setStoreUser } = userStore.getState();
+    const { activeCommand, setActiveCommand, addCommand } =
+      commandsStore.getState();
 
     const refreshJwtResult = await refresh(
       tokenInfo.refreshToken,
@@ -68,7 +76,14 @@ export class JwtHelper {
       commands: refreshJwtResult.commands,
     });
 
-    this.addUserToken(refreshJwtResult);
+    this.addUserToken(
+      refreshJwtResult,
+      refreshJwtResult.lastActivityCommand?.id
+    );
+
+    setActiveCommand(refreshJwtResult.lastActivityCommand?.id);
+    if (!!refreshJwtResult.lastActivityCommand)
+      addCommand(refreshJwtResult.lastActivityCommand);
   }
 
   public static addUserToken(

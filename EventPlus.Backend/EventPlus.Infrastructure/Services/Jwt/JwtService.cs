@@ -1,3 +1,4 @@
+using EventPlus.Application.Minis.Commands.Models;
 using EventPlus.Application.Options;
 using EventPlus.Application.Services;
 using EventPlus.Application.Services.Jwt.Models;
@@ -8,6 +9,7 @@ using EventPlus.Domain.Entities;
 using EventPlus.Domain.Entities.Identity;
 using EventPlus.Infrastructure.Extensions;
 using EventPlus.Infrastructure.Services.Jwt.Internal;
+using Mapster;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -39,9 +41,9 @@ public sealed class JwtService(
             .Include(cm => cm.Command)
             .Where(cm => cm.AppUserId == user.Id)
             .ToArrayAsync(ct);
-        var lastActivityCommand = userCommands.MaxBy(uc => uc.Command!.LastActivity)?.CommandId;
+        var lastActivityCommand = userCommands.MaxBy(uc => uc.Command!.LastActivity)?.Command;
         
-        var (accessToken, accessTokenExpires) = await accessTokenGenerator.GenerateAsync(user, commandId ?? lastActivityCommand, ct);
+        var (accessToken, accessTokenExpires) = await accessTokenGenerator.GenerateAsync(user, commandId ?? lastActivityCommand?.Id, ct);
         var (refreshToken, refreshTokenExpires) = await refreshTokenGenerator.GenerateAsync(user, device, ct);
 
         return new JwtResult
@@ -55,7 +57,7 @@ public sealed class JwtService(
             RefreshToken = refreshToken,
             RefreshTokenExpires = refreshTokenExpires,
             Commands = userCommands.Select(uc => uc.CommandId).ToArray(),
-            LastActivityCommand = lastActivityCommand
+            LastActivityCommand = lastActivityCommand?.Adapt<CommandModel>()
         };
     }
 

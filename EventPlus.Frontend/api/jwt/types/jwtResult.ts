@@ -1,3 +1,5 @@
+import { CommandModel } from "~/api/command/types/commandModel";
+
 export interface JwtResult {
   username: string;
   firstName: string;
@@ -11,5 +13,5 @@ export interface JwtResult {
 
   avatar: string | null;
   commands: number[];
-  lastActivityCommand: number | null;
+  lastActivityCommand: CommandModel | null;
 }

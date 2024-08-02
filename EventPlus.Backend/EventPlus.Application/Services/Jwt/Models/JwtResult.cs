@@ -1,3 +1,5 @@
+using EventPlus.Application.Minis.Commands.Models;
+
 namespace EventPlus.Application.Services.Jwt.Models;
 
 public sealed record JwtResult
@@ -18,5 +20,5 @@ public sealed record JwtResult
     public string? Avatar { get; set; }
 
     public ICollection<long> Commands { get; set; }
-    public long? LastActivityCommand { get; set; }
+    public CommandModel? LastActivityCommand { get; set; }
 }

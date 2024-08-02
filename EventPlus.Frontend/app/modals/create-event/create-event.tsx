@@ -1,20 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import { SafeAreaView, View } from "react-native";
-import { Button } from "~/components/core/Button/Button";
+import { Button, ButtonVariants } from "~/components/core/Button/Button";
+import { CalendarInput } from "~/components/core/CalendarInput/CalendarInput";
 import Input from "~/components/core/Input/Input";
+import { InputVariant } from "~/components/core/Input/types/InputVariant";
 import PriorityTabs from "~/components/core/PriorityTabs/PriorityTabs";
 import { TypographyVariants } from "~/components/core/Typography/types/TypographyVariants";
 import { Typography } from "~/components/core/Typography/Typography";
-import { baseModalScreenOptions } from "./modalsBaseOptions";
-import { InputVariant } from "~/components/core/Input/types/InputVariant";
+import { baseModalScreenOptions } from "../modalsBaseOptions";
+import { useCreateEventCubit } from "./services/useCreateEventCubit";
 
 const CreateEvent = () => {
-  const [state, setState] = useState<string>("");
+  const { form, setFormValue, isLoading, formErrors, onSubmit } =
+    useCreateEventCubit();
 
   return (
-    <SafeAreaView
-      className="w-full h-full bg-bg-surface-1-strong"
-    >
+    <SafeAreaView className="w-full h-full bg-bg-surface-1-strong">
       <View className="w-full h-full flex-col mt-5 px-4 justify-between">
         {/* form */}
         <View>
@@ -25,11 +26,12 @@ const CreateEvent = () => {
             Назва
           </Typography>
           <Input
-            value={""}
-            onValueChange={() => {}}
+            value={form.title}
+            onValueChange={(title) => setFormValue("title", title ?? "")}
             placeholder="Введіть назву події"
             variant={InputVariant.HalfRounded}
             styles="mb-3"
+            error={formErrors.title}
           />
 
           <Typography
@@ -39,14 +41,22 @@ const CreateEvent = () => {
             Опис
           </Typography>
           <Input
-            value={""}
-            onValueChange={() => {}}
+            value={form.description}
+            onValueChange={(description) => {
+              if (description === "") {
+                setFormValue("description", undefined);
+                return;
+              }
+
+              setFormValue("description", description);
+            }}
             multiline
             numberOnLines={2}
             maxLength={100}
             placeholder="Введіть опис події"
             variant={InputVariant.HalfRounded}
             styles="mb-3"
+            error={formErrors.description}
           />
 
           <Typography
@@ -55,12 +65,31 @@ const CreateEvent = () => {
           >
             Пріоритет
           </Typography>
-          <PriorityTabs priority="medium" />
+          <PriorityTabs
+            priority={form.priority}
+            onPriorityChange={(priority) => setFormValue("priority", priority)}
+            styles="mb-3"
+          />
+
+          <Typography className="mb-2" variant={TypographyVariants.Semibold}>
+            Дата події
+          </Typography>
+          <CalendarInput
+            date={form.date}
+            setDate={(date) => setFormValue("date", date)}
+            error={formErrors.date}
+          />
         </View>
 
         {/* button */}
         <View className="mb-4">
-          <Button>Створити подію</Button>
+          <Button
+            onPress={onSubmit}
+            isLoading={isLoading}
+            variant={ButtonVariants.PrimaryBold}
+          >
+            Створити подію
+          </Button>
         </View>
       </View>
     </SafeAreaView>

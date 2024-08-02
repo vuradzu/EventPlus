@@ -6,6 +6,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import { ClassNameProps, classNames } from "~/utils/helpers/classNames";
 import { Typography } from "../Typography/Typography";
 
 export type Tab = {
@@ -19,8 +20,8 @@ interface TabsProps {
   onTabChange?: (tabId: string) => void;
 }
 
-export const Tabs = (props: TabsProps) => {
-  const { tabs, selectedTab, onTabChange } = props;
+export const Tabs = (props: ClassNameProps<TabsProps, false>) => {
+  const { styles, tabs, selectedTab, onTabChange } = props;
   const [selectedTabDimensions, setSelectedTabDimenstions] = useState({
     height: 20,
     width: 100,
@@ -62,7 +63,12 @@ export const Tabs = (props: TabsProps) => {
 
   return (
     <View
-      className="w-full bg-input-bg rounded-xl justify-center"
+      className={classNames(styles, {}, [
+        "w-full",
+        "bg-input-bg",
+        "rounded-xl",
+        "justify-center",
+      ])}
       accessibilityRole="tabbar"
     >
       <Animated.View
@@ -82,7 +88,10 @@ export const Tabs = (props: TabsProps) => {
             className="flex-1 py-5"
             onPress={() => onTabPress(tab.id)}
           >
-            <Typography className="color-button-primary self-center">
+            <Typography
+              fontSize={14}
+              className="color-button-primary self-center"
+            >
               {tab.title}
             </Typography>
           </Pressable>
