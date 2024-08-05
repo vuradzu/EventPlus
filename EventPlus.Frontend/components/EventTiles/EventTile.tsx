@@ -1,13 +1,13 @@
 import React from "react";
 import { View } from "react-native";
+import { EventModelMini } from "~/api/event/types/eventModel";
 import { Typography } from "~/components/core/Typography/Typography";
-import { EventModel } from "./EventTilesDashboard";
 
 interface EventTileProps {
-  event: EventModel;
+  event: EventModelMini;
 }
 
-export const EventTile = ({event}: EventTileProps) => {
+export const EventTile = ({ event }: EventTileProps) => {
   const { title } = event;
 
   return (

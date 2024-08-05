@@ -52,7 +52,7 @@ export class JwtHelper {
     return jwtResult;
   }
 
-  public static async refreshToken() {
+  public static async refreshToken(): Promise<StoreTokenInfo | undefined> {
     const tokenInfo = this.getTokenInfo();
     if (!tokenInfo || JwtHelper.isTokenExpired(tokenInfo.refreshTokenExpires)) {
       router.replace("sign-in");
@@ -84,6 +84,8 @@ export class JwtHelper {
     setActiveCommand(refreshJwtResult.lastActivityCommand?.id);
     if (!!refreshJwtResult.lastActivityCommand)
       addCommand(refreshJwtResult.lastActivityCommand);
+
+    return refreshJwtResult;
   }
 
   public static addUserToken(

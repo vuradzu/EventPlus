@@ -1,5 +1,6 @@
 import React from "react";
 import { View } from "react-native";
+import { ClassNameProps, classNames } from "~/utils/helpers/classNames";
 
 interface GridViewProps<T> {
   items: T[];
@@ -7,11 +8,19 @@ interface GridViewProps<T> {
   columns?: number;
 }
 
-export const GridView = <T extends { id: any }>(props: GridViewProps<T>) => {
-  const { items, renderItem, columns = 3 } = props;
+export const GridView = <T extends { id: any }>(
+  props: ClassNameProps<GridViewProps<T>, false>
+) => {
+  const { styles, items, renderItem, columns = 3 } = props;
   return (
     <View
-      className="w-full h-full flex flex-row flex-wrap"
+      className={classNames(styles, {}, [
+        "w-full",
+        "h-full",
+        "flex",
+        "flex-row",
+        "flex-wrap",
+      ])}
       style={{ rowGap: 38 }}
     >
       {items.map((item) => (

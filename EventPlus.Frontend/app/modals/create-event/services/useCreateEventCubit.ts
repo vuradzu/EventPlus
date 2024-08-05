@@ -1,19 +1,27 @@
+import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { createEvent } from "~/api/event/event.api";
 import { CreateEventRequest } from "~/api/event/types/createEventRequest";
+import { EventModelMini } from "~/api/event/types/eventModel";
 import { useCommandsStore } from "~/store/commands/commands.store";
 import { FormErrors } from "~/types/FormErrors";
+import { QueryKeys } from "~/utils/helpers/queryKeys";
 import { useForm } from "~/utils/hooks/useForm";
 
 export const useCreateEventCubit = () => {
-  const { addCommandEvent } = useCommandsStore();
+  const queryClient = useQueryClient();
 
+  const { activeCommand } = useCommandsStore();
   const [isLoading, setIsLoading] = useState(false);
-  const { form, setFormValue, formErrors, setFormErrors: setEventFormErrors } =
-    useForm<CreateEventRequest>({
-      priority: "medium",
-    });
+  const {
+    form,
+    setFormValue,
+    formErrors,
+    setFormErrors: setEventFormErrors,
+  } = useForm<CreateEventRequest>({
+    priority: "medium",
+  });
 
   const validateForm = () => {
     setEventFormErrors({});
@@ -36,7 +44,13 @@ export const useCreateEventCubit = () => {
       if (!isValid) return;
 
       const newEvent = await createEvent(form as CreateEventRequest);
-      addCommandEvent(newEvent);
+
+      queryClient.setQueryData(
+        QueryKeys.EventsByCommand(activeCommand!),
+        (oldData: EventModelMini[]) => {
+          return [newEvent, ...oldData];
+        }
+      );
     } finally {
       setIsLoading(false);
     }

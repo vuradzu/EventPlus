@@ -9,7 +9,7 @@ const prefix = "event";
 export const eventsByCommand = async (
   commandId: number
 ): Promise<EventModelMini[]> => {
-  const response = await _apiBase.post<EventModelMini[]>(
+  const response = await _apiBase.get<EventModelMini[]>(
     getUrl(prefix, `by-command/${commandId}`)
   );
 

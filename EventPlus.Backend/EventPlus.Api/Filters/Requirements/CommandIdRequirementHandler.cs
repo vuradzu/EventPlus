@@ -1,6 +1,7 @@
 using EventPlus.Application.Services;
 using EventPlus.Core.Constants;
 using Microsoft.AspNetCore.Authorization;
+using NeerCore.Exceptions;
 
 namespace EventPlus.Api.Filters.Requirements;
 
@@ -23,20 +24,23 @@ public class CommandIdRequirementHandler(IHttpContextAccessor httpContextAccesso
 
         if (!commandIdHeaderExists)
         {
-            context.Fail(new AuthorizationFailureReason(this, "No Command-E+ header provided"));
-            return Task.CompletedTask;
+            var message = "No Command-E+ header provided";
+            context.Fail(new AuthorizationFailureReason(this, message));
+            throw new ForbidException(message);
         }
 
         if (string.IsNullOrWhiteSpace(commandIdFromAccessToken))
         {
-            context.Fail(new AuthorizationFailureReason(this, "Access token has no required command Id"));
-            return Task.CompletedTask;
+            var message = "Access token has no required command Id";
+            context.Fail(new AuthorizationFailureReason(this, message));
+            throw new ForbidException(message);
         }
 
         if (commandIdFromHeader != commandIdFromAccessToken)
         {
-            context.Fail(new AuthorizationFailureReason(this, "The access token is from the wrong chat"));
-            return Task.CompletedTask;
+            var message = "The access token is from the wrong chat";
+            context.Fail(new AuthorizationFailureReason(this, message));
+            throw new ForbidException(message);
         }
 
         context.Succeed(requirement);

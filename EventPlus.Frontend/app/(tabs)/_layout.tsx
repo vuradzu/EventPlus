@@ -5,6 +5,8 @@ import { TabIcon } from "~/components/core/TabIcon/TabIcon";
 import HomeIcon from "~/assets/icons/tabs/home.png";
 import ProfileIcon from "~/assets/icons/tabs/profile.png";
 
+export const TabBarHeight = 95;
+
 const TabsLayout = () => {
   return (
     <>
@@ -17,7 +19,7 @@ const TabsLayout = () => {
             backgroundColor: "#1E1E1E",
             borderTopWidth: 1,
             borderTopColor: "#FFFFFF14",
-            height: 95,
+            height: TabBarHeight,
           },
         }}
       >

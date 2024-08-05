@@ -1,12 +1,15 @@
-import { useQuery } from "@tanstack/react-query"
-import { eventsByCommand } from "~/api/event/event.api"
-import { QueryKeys } from "~/utils/helpers/queryKeys"
+import { useQuery } from "@tanstack/react-query";
+import { eventsByCommand } from "~/api/event/event.api";
+import { useCommandsStore } from "~/store/commands/commands.store";
+import { QueryKeys } from "~/utils/helpers/queryKeys";
 
 export const useHomeCubit = () => {
-    const commandId = 1;
+  const { activeCommand } = useCommandsStore();
 
-    const eventsAccessor = useQuery({
-        queryKey: QueryKeys.EventsByCommand(commandId),
-        queryFn: () => eventsByCommand(commandId),
-    })
-}
+  const eventsAccessor = useQuery({
+    queryKey: QueryKeys.EventsByCommand(activeCommand!),
+    queryFn: () => eventsByCommand(activeCommand!),
+  });
+
+  return { eventsAccessor };
+};
