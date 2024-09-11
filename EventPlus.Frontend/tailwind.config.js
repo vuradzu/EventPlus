@@ -67,7 +67,10 @@ module.exports = {
       },
       fontFamily: {
         sfregular: ["SF-Pro-Display-Regular"],
+        sfmedium: ["SF-Pro-Display-Medium"],
         sfsemibold: ["SF-Pro-Display-Semibold"],
+        sfbold: ["SF-Pro-Display-Bold"],
+        sfheavy: ["SF-Pro-Display-Heavy"],
       },
     },
   },
