@@ -1,10 +1,9 @@
 import { router } from "expo-router";
-import React, { useMemo } from "react";
-import { Dimensions, View } from "react-native";
+import React from "react";
+import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Button } from "~/components/core/Button/Button";
-import { TypographyVariants } from "~/components/core/Typography/types/TypographyVariants";
-import { Typography } from "~/components/core/Typography/Typography";
+import { CommandHeader } from "~/components/CommandHeader/CommandHeader";
+import { Button, ButtonVariants } from "~/components/core/Button/Button";
 import { EventTilesDashboard } from "~/components/EventTiles/EventTilesDashboard";
 import { useCommandsStore } from "~/store/commands/commands.store";
 import { HomeFilter } from "./components/HomeFilter";
@@ -14,41 +13,31 @@ const Home = () => {
   const { activeCommand, commands } = useCommandsStore();
   const { eventsAccessor } = useHomeCubit();
 
-  const { height: windowHeight } = Dimensions.get("window");
-
-  const commandName = useMemo(
-    () =>
-      commands.find((c) => c.id === activeCommand)?.name ??
-      "Немає активної команди",
-    [activeCommand]
-  );
-
   return (
     <SafeAreaView className="bg-bg-primary w-full h-full flex flex-col justify-between pb-[105]">
       <View className="h-full flex flex-col">
-        <View className="flex flex-col py-5 px-4 border-b border-border-primary">
+        {/* <View className="flex flex-col py-5 px-4 border-b border-border-primary">
           <Typography variant={TypographyVariants.Semibold} fontSize={34}>
-            {commandName}
+            "Hello"
           </Typography>
-        </View>
+        </View> */}
+        <CommandHeader />
         <View>
           <HomeFilter />
-          {eventsAccessor.isLoading ? (
-            <Typography>"Завантаження..."</Typography>
-          ) : !eventsAccessor.isSuccess ? (
-            <Typography>"Помилка завантаження"</Typography>
-          ) : (
-            <EventTilesDashboard events={eventsAccessor.data} />
-          )}
+          <EventTilesDashboard eventsAccessor={eventsAccessor} />
         </View>
       </View>
       {/* button */}
       <View className="absolute right-4 bottom-5 flex items-end w-full">
         <Button
-          icon={require("~/assets/icons/new_item.png")}
+          iconProps={{
+            icon: "fluent:tab-new-24-filled",
+            color: "white",
+          }}
           onPress={() => router.push("/modals/create-event/create-event")}
           styles="w-[40%]"
           fontSize={17}
+          variant={ButtonVariants.PrimaryBold}
         >
           Нова подія
         </Button>
