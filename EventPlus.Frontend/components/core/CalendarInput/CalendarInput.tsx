@@ -4,12 +4,11 @@ import { View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { magicModal } from "react-native-magic-modal";
 import { DateType } from "react-native-ui-datepicker";
-import CalendarIcon from "~/assets/icons/calendar.png";
 import { CalendarModal } from "~/components/modals/CalendarModal/Calendar.modal";
 import { ClassNameProps, classNames } from "~/utils/helpers/classNames";
-import { InputIcon } from "../Input/components/InputIcon";
-import { Typography } from "../Typography/Typography";
+import { Iconify } from "../Iconify/Iconify";
 import { InputError } from "../Input/components/InputError";
+import { Typography } from "../Typography/Typography";
 
 interface CalendarInputProps {
   date?: DateType;
@@ -42,8 +41,8 @@ export const CalendarInput = (
         ])}
         onPress={showCalendarModal}
       >
-        <InputIcon icon={CalendarIcon} />
-        <Typography fontSize={14} className="ml-2">
+        <Iconify icon="uiw:date" width={14} height={14} color="#939393" />
+        <Typography variant="b2" className="ml-2">
           {date
             ? dayjs(date)
                 .locale("uk")

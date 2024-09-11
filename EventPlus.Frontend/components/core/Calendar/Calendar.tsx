@@ -5,7 +5,6 @@ import DateTimePicker, { DateType } from "react-native-ui-datepicker";
 import { DatePickerSingleProps } from "react-native-ui-datepicker/lib/typescript/src/DateTimePicker";
 import { classNames } from "~/utils/helpers/classNames";
 import { Typography } from "../Typography/Typography";
-import { TypographyVariants } from "../Typography/types/TypographyVariants";
 
 interface CalendarProps {
   date: DateType;
@@ -81,10 +80,7 @@ export const Calendar = (props: CalendarProps) => {
           accessibilityRole="button"
           accessibilityLabel="Today"
         >
-          <Typography
-            variant={TypographyVariants.Semibold}
-            className="text-center"
-          >
+          <Typography fontWeight="semibold" className="text-center">
             Сьогодні
           </Typography>
         </TouchableOpacity>

@@ -3,7 +3,6 @@ import { SafeAreaView, View } from "react-native";
 import { Button } from "~/components/core/Button/Button";
 import Input from "~/components/core/Input/Input";
 import { InputVariant } from "~/components/core/Input/types/InputVariant";
-import { TypographyVariants } from "~/components/core/Typography/types/TypographyVariants";
 import { Typography } from "~/components/core/Typography/Typography";
 import { baseModalScreenOptions } from "../modalsBaseOptions";
 import { useCreateCommandCubit } from "./services/useCreateCommandCubit";
@@ -17,10 +16,7 @@ const CreateCommand = () => {
       <View className="w-full h-full flex-col mt-5 px-4 justify-between">
         {/* form */}
         <View>
-          <Typography
-            className="color-text-primary mb-2"
-            variant={TypographyVariants.Semibold}
-          >
+          <Typography fontWeight="semibold" className="color-text-primary mb-2">
             Назва
           </Typography>
           <Input
@@ -32,10 +28,7 @@ const CreateCommand = () => {
             error={formErrors.name}
           />
 
-          <Typography
-            className="color-text-primary mb-2"
-            variant={TypographyVariants.Semibold}
-          >
+          <Typography fontWeight="semibold" className="color-text-primary mb-2">
             Опис
           </Typography>
           <Input

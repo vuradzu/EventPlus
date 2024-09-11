@@ -32,7 +32,7 @@ export const InputError = ({
   return (
     <Animated.View style={errorAnimatedStyle} className="flex justify-center">
       <Typography
-        fontSize={14}
+        variant="b2"
         className={classNames(styles, {}, ["color-error", "mx-4"])}
       >
         {error}

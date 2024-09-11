@@ -41,6 +41,8 @@ const CodeInput = (props: ClassNameProps<CodeInputProps, false>) => {
         renderCell={({ index, symbol, isFocused }) => (
           <Typography
             key={index}
+            variant="h2"
+            fontWeight="regular"
             style={[
               {
                 ...cellStyles.cell,
@@ -65,7 +67,6 @@ const cellStyles = StyleSheet.create({
   cell: {
     width: 52,
     height: 48,
-    fontSize: 24,
     borderWidth: 1.5,
     lineHeight: 42,
     borderColor: "#FFFFFF80",

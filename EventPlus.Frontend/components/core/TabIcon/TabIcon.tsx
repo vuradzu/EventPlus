@@ -1,29 +1,22 @@
 import React from "react";
-import { Image, ImageSourcePropType, View } from "react-native";
+import { View } from "react-native";
+import { Iconify } from "../Iconify/Iconify";
+import { IconifyProps } from "../Iconify/types/types";
 import { Typography } from "../Typography/Typography";
-import { TypographyVariants } from "../Typography/types/TypographyVariants";
 
 type TabIconProps = {
-  icon: ImageSourcePropType;
-  color: string;
+  iconProps: IconifyProps;
   name: string;
   focused: boolean;
 };
 
-export const TabIcon = ({ icon, color, name, focused }: TabIconProps) => {
+export const TabIcon = ({ iconProps: icon, name, focused }: TabIconProps) => {
   return (
-    <View className="items-center justify-center gap-1">
-      <Image
-        source={icon}
-        resizeMode="contain"
-        tintColor={color}
-        className="w-6 h-6"
-      />
+    <View className="items-center justify-center">
+      <Iconify {...icon} width={24} height={24} />
       <Typography
-        variant={
-          focused ? TypographyVariants.Semibold : TypographyVariants.Regular
-        }
-        style={{ color }}
+        fontWeight={focused ? "semibold" : "regular"}
+        style={{ color: icon.color, marginTop: 2 }}
       >
         {name}
       </Typography>

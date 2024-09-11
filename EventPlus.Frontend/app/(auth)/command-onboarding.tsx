@@ -5,7 +5,6 @@ import { SafeAreaView, View } from "react-native";
 import UserPlus from "~/assets/icons/user-plus.png";
 import UsersPlus from "~/assets/icons/users-plus.png";
 import { Button, ButtonVariants } from "~/components/core/Button/Button";
-import { TypographyVariants } from "~/components/core/Typography/types/TypographyVariants";
 import { Typography } from "~/components/core/Typography/Typography";
 
 const CommandOnboarding = () => {
@@ -23,17 +22,10 @@ const CommandOnboarding = () => {
               speed={1}
             />
           </View>
-          <Typography
-            fontSize={38}
-            variant={TypographyVariants.Semibold}
-            className="mb-3 text-center"
-          >
+          <Typography variant="h2" fontWeight="semibold" className="mb-3 text-center">
             Продовжити
           </Typography>
-          <Typography
-            fontSize={23}
-            className="color-text-secondary text-center"
-          >
+          <Typography className="color-text-secondary text-center">
             Як ви бажаєте продовжити?
           </Typography>
         </View>
@@ -43,7 +35,7 @@ const CommandOnboarding = () => {
           <Button
             styles="mb-4"
             variant={ButtonVariants.PrimaryBold}
-            icon={UsersPlus}
+            iconProps={{icon: "mdi:user", color: "white"}}
             iconPosition="right"
             onPress={() => router.push("modals/create-command/create-command")}
           >
@@ -51,7 +43,10 @@ const CommandOnboarding = () => {
           </Button>
           <Button
             variant={ButtonVariants.SecondaryBold}
-            icon={UserPlus}
+            iconProps={{
+              icon: "mdi:users-plus",
+              color: "white"
+            }}
             iconPosition="right"
             onPress={() => router.push("commands/enter-invite/enter-invite")}
           >

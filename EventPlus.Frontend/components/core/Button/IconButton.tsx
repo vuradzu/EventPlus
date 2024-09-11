@@ -1,28 +1,52 @@
 import React from "react";
 import {
   ColorValue,
+  Image,
   ImageSourcePropType,
   TouchableOpacity,
   TouchableOpacityProps,
 } from "react-native";
+import { classNames } from "~/utils/helpers/classNames";
+import { IconifyProps } from "../Iconify/types/types";
 import { ButtonIcon } from "./components/ButtonIcon";
+
+type IconProps =
+  | IconifyProps
+  | {
+      icon?: ImageSourcePropType;
+      color?: ColorValue;
+      imageStyles?: string;
+      size?: number;
+    };
 
 type IconButtonProps = {
   styles?: string;
-  imageStyles?: string;
-  icon?: ImageSourcePropType;
-  iconColor?: ColorValue;
+  iconProps?: IconProps;
 } & Omit<TouchableOpacityProps, "className">;
 
 export const IconButton = (props: IconButtonProps) => {
-  const { styles, imageStyles, icon, iconColor, ...rest } = props;
+  const { styles, iconProps, ...rest } = props;
+
+  const isIconifyProps = (prop: IconProps): prop is IconifyProps => {
+    return ("imageStyles" in prop);
+  };
+
+  if (!iconProps) return <TouchableOpacity {...rest} className={styles} />;
 
   return (
-    <TouchableOpacity
-      {...rest}
-      className={styles}
-    >
-      <ButtonIcon icon={icon} iconColor={iconColor} styles={imageStyles} />
+    <TouchableOpacity {...rest} className={styles}>
+      {isIconifyProps(iconProps) ? (
+        <ButtonIcon iconProps={iconProps} />
+      ) : (
+        <Image
+          source={iconProps.icon}
+          width={iconProps.size}
+          height={iconProps.size}
+          resizeMode="cover"
+          tintColor={iconProps.color}
+          className={classNames(styles, {}, ["h-6", "w-6"])}
+        />
+      )}
     </TouchableOpacity>
   );
 };

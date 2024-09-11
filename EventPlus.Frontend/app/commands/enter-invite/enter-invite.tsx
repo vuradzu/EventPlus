@@ -5,7 +5,6 @@ import { SafeAreaView, View } from "react-native";
 import UserPlus from "~/assets/icons/user-plus.png";
 import CodeInput from "~/components/CodeInput/CodeInput";
 import { Button, ButtonVariants } from "~/components/core/Button/Button";
-import { TypographyVariants } from "~/components/core/Typography/types/TypographyVariants";
 import { Typography } from "~/components/core/Typography/Typography";
 import { useEnterInviteCubit } from "./services/useEnterInviteCubit";
 
@@ -28,14 +27,14 @@ const EnterInvite = () => {
             />
           </View>
           <Typography
-            fontSize={35}
-            variant={TypographyVariants.Semibold}
+            variant="h2"
+            fontWeight="semibold"
             className="mb-3 text-center"
           >
             Введіть код запрошення
           </Typography>
           <Typography
-            fontSize={23}
+            fontWeight="medium"
             className="color-text-secondary text-center"
           >
             Для отримання коду зверніться до адміністратора команди
@@ -54,7 +53,10 @@ const EnterInvite = () => {
           <Button
             styles="mb-4"
             variant={ButtonVariants.PrimaryBold}
-            icon={UserPlus}
+            iconProps={{
+              icon: "mdi:users-plus",
+              color: "white"
+            }}
             iconPosition="right"
             onPress={onSubmit}
             isLoading={isLoading}

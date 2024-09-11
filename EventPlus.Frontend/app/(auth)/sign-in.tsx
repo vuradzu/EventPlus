@@ -47,19 +47,21 @@ const SignIn = () => {
             <View className="w-full px-[16px] py-[40px]">
               <HelloWave />
               <Typography
-                fontSize={36}
+                variant="h1"
                 className="mb-2"
-                variant={TypographyVariants.Semibold}
               >
                 Привіт!
               </Typography>
-              <Typography fontSize={16} className="mb-[50px]">
+              <Typography className="mb-[50px]">
                 Увійти, щоб продовжити
               </Typography>
 
               <View className="w-full">
                 <Button
-                  icon={GoogleWhite}
+                  iconProps={{
+                    icon: "mdi:google",
+                    color: "white"
+                  }}
                   variant={ButtonVariants.PrimaryBold}
                   styles="my-[8px]"
                   isLoading={signOnIsLoading}

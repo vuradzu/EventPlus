@@ -5,7 +5,6 @@ import { CalendarInput } from "~/components/core/CalendarInput/CalendarInput";
 import Input from "~/components/core/Input/Input";
 import { InputVariant } from "~/components/core/Input/types/InputVariant";
 import PriorityTabs from "~/components/core/PriorityTabs/PriorityTabs";
-import { TypographyVariants } from "~/components/core/Typography/types/TypographyVariants";
 import { Typography } from "~/components/core/Typography/Typography";
 import { baseModalScreenOptions } from "../modalsBaseOptions";
 import { useCreateEventCubit } from "./services/useCreateEventCubit";
@@ -19,10 +18,7 @@ const CreateEvent = () => {
       <View className="w-full h-full flex-col mt-5 px-4 justify-between">
         {/* form */}
         <View>
-          <Typography
-            className="color-text-primary mb-2"
-            variant={TypographyVariants.Semibold}
-          >
+          <Typography fontWeight="semibold" className="color-text-primary mb-2">
             Назва
           </Typography>
           <Input
@@ -34,10 +30,7 @@ const CreateEvent = () => {
             error={formErrors.title}
           />
 
-          <Typography
-            className="color-text-primary mb-2"
-            variant={TypographyVariants.Semibold}
-          >
+          <Typography fontWeight="semibold" className="color-text-primary mb-2">
             Опис
           </Typography>
           <Input
@@ -59,10 +52,7 @@ const CreateEvent = () => {
             error={formErrors.description}
           />
 
-          <Typography
-            className="color-text-primary mb-2"
-            variant={TypographyVariants.Semibold}
-          >
+          <Typography fontWeight="semibold" className="color-text-primary mb-2">
             Пріоритет
           </Typography>
           <PriorityTabs
@@ -71,7 +61,7 @@ const CreateEvent = () => {
             styles="mb-3"
           />
 
-          <Typography className="mb-2" variant={TypographyVariants.Semibold}>
+          <Typography fontWeight="semibold" className="mb-2">
             Дата події
           </Typography>
           <CalendarInput

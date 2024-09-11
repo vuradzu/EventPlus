@@ -1,5 +1,4 @@
 ﻿using EventPlus.Application.Minis.Base;
-using EventPlus.Application.Minis.Commands.Models;
 using EventPlus.Application.Minis.Events.Models;
 using EventPlus.Domain.Enums;
 using FluentValidation;
@@ -7,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EventPlus.Application.Minis.Events.Create;
 
-public record CreateEventRequest : IMinisRequest<EventModelMini>
+public class CreateEventRequest : IMinisRequest<EventModelMini>
 {
     [FromRoute] public long CommandId { get; set; }
 

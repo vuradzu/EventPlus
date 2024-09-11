@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { commandsStore } from "~/store/commands/commands.store";
 import { getUrl } from "~/utils/helpers/apiFunctions";
 import { _apiBase } from "..";
@@ -23,7 +24,10 @@ export const createEvent = async (
 
   const response = await _apiBase.post<EventModelMini>(
     getUrl(prefix, `${commandId}`),
-    request
+    {
+      ...request,
+      date: dayjs(request.date).toDate(),
+    }
   );
 
   return response.data;

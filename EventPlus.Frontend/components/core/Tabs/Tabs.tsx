@@ -89,7 +89,7 @@ export const Tabs = (props: ClassNameProps<TabsProps, false>) => {
             onPress={() => onTabPress(tab.id)}
           >
             <Typography
-              fontSize={14}
+              variant="b2"
               className="color-button-primary self-center"
             >
               {tab.title}

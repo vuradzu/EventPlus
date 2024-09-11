@@ -2,9 +2,6 @@ import { Tabs } from "expo-router";
 import React from "react";
 import { TabIcon } from "~/components/core/TabIcon/TabIcon";
 
-import HomeIcon from "~/assets/icons/tabs/home.png";
-import ProfileIcon from "~/assets/icons/tabs/profile.png";
-
 export const TabBarHeight = 95;
 
 const TabsLayout = () => {
@@ -29,8 +26,10 @@ const TabsLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={HomeIcon}
-                color={color}
+                iconProps={{
+                  icon: "akar-icons:home",
+                  color
+                }}
                 name="Дім"
                 focused={focused}
               />
@@ -43,8 +42,10 @@ const TabsLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={ProfileIcon}
-                color={color}
+                iconProps={{
+                  icon: "akar-icons:person",
+                  color
+                }}
                 name="Профіль"
                 focused={focused}
               />

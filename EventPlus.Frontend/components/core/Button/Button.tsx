@@ -1,14 +1,12 @@
 import React from "react";
 import {
   ActivityIndicator,
-  ColorValue,
-  ImageSourcePropType,
   TouchableOpacity,
   TouchableOpacityProps,
 } from "react-native";
 import { classNames } from "~/utils/helpers/classNames";
+import { IconifyProps } from "../Iconify/types/types";
 import { Typography } from "../Typography/Typography";
-import { TypographyVariants } from "../Typography/types/TypographyVariants";
 import { ButtonIcon } from "./components/ButtonIcon";
 
 export enum ButtonVariants {
@@ -20,11 +18,10 @@ export enum ButtonVariants {
 
 type ButtonProps = {
   variant?: ButtonVariants;
-  icon?: ImageSourcePropType;
-  iconColor?: ColorValue;
+  iconProps?: IconifyProps;
   iconPosition?: "left" | "right";
   styles?: string;
-  fontSize?: number,
+  fontSize?: number;
   isLoading?: boolean;
 } & Omit<TouchableOpacityProps, "className">;
 
@@ -32,8 +29,7 @@ export const Button = (props: ButtonProps) => {
   const {
     children,
     styles,
-    icon,
-    iconColor,
+    iconProps,
     iconPosition,
     fontSize,
     variant = ButtonVariants.Primary,
@@ -61,19 +57,19 @@ export const Button = (props: ButtonProps) => {
           "justify-center",
           "items-center",
           "py-[16px]",
-          "w-full"
+          "w-full",
         ]
       )}
     >
       {(!iconPosition || iconPosition === "left") && (
-        <ButtonIcon icon={icon} iconColor={iconColor} />
+        <ButtonIcon iconProps={iconProps} />
       )}
       <Typography
-        variant={
+        fontWeight={
           variant === ButtonVariants.PrimaryBold ||
           variant === ButtonVariants.SecondaryBold
-            ? TypographyVariants.Semibold
-            : TypographyVariants.Regular
+            ? "semibold"
+            : "regular"
         }
         fontSize={fontSize}
         className="color-button-text items-center justify-center mx-[8px]"
@@ -81,9 +77,7 @@ export const Button = (props: ButtonProps) => {
         {children}
       </Typography>
       {isLoading && <ActivityIndicator />}
-      {iconPosition === "right" && (
-        <ButtonIcon icon={icon} iconColor={iconColor} />
-      )}
+      {iconPosition === "right" && <ButtonIcon iconProps={iconProps} />}
     </TouchableOpacity>
   );
 };

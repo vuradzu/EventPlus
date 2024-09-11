@@ -1,17 +1,18 @@
-import React from "react";
+import { useQueryClient, UseQueryResult } from "@tanstack/react-query";
+import { useCallback, useMemo } from "react";
 import { EventModelMini } from "~/api/event/types/eventModel";
 import { GridView } from "~/components/GridView/GridView";
 import { ClassNameProps } from "~/utils/helpers/classNames";
-import { EventTile } from "./EventTile";
+import { EventTile, EventTileSkeleton } from "./EventTile";
 
 interface EventTilesDashboardProps {
-  events: EventModelMini[]
+  eventsAccessor: UseQueryResult<EventModelMini[], Error>;
 }
 
 export const EventTilesDashboard = (
   props: ClassNameProps<EventTilesDashboardProps, false>
 ) => {
-  const { styles, events } = props;
+  const { styles, eventsAccessor } = props;
 
   const eventsStatic: EventModelMini[] = [
     {
@@ -41,7 +42,7 @@ export const EventTilesDashboard = (
       title: "Test 3",
       priority: "high",
       date: new Date(),
-      assignmentsCount: 6,
+      assignmentsCount: 110,
       completedAssignmentsCount: 6,
       creatorId: 1,
       commandId: 1,
@@ -58,13 +59,29 @@ export const EventTilesDashboard = (
       commandId: 1,
       created: new Date(),
     },
+    {
+      id: 5,
+      title: "Test 5",
+      priority: "low",
+      date: new Date(),
+      assignmentsCount: 0,
+      completedAssignmentsCount: 3,
+      creatorId: 1,
+      commandId: 1,
+      created: new Date(),
+    },
   ];
 
   return (
     <GridView
       styles={styles}
-      items={eventsStatic}
-      renderItem={(event) => <EventTile event={event} />}
+      items={eventsAccessor.data}
+      renderItem={(item) => <EventTile event={item} />}
+      loadingRenderItem={() => <EventTileSkeleton/>}
+      loadingItemsCount={6}
+      onRefresh={async () => {
+        await eventsAccessor.refetch();
+      }}
     />
   );
 };

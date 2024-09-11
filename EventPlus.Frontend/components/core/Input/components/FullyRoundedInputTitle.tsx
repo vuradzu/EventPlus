@@ -14,9 +14,8 @@ export const FullyRoundedInputTitle = ({
 }: FullyRoundedInputTitleProps) => {
   return variant === InputVariant.FullyRounded ? (
     <Typography
-      className={classNames("text-[14px] color-input-text-secondary", {}, [
-        "mx-4",
-      ])}
+      variant="b2"
+      className={classNames("color-input-text-secondary", {}, ["mx-4"])}
     >
       {placeholder}
     </Typography>

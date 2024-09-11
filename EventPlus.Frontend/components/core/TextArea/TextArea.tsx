@@ -1,11 +1,11 @@
 import React, { useMemo, useRef } from "react";
 import {
-    ColorValue,
-    Image,
-    ImageSourcePropType,
-    TextInput,
-    TextInputProps,
-    View,
+  ColorValue,
+  Image,
+  ImageSourcePropType,
+  TextInput,
+  TextInputProps,
+  View,
 } from "react-native";
 import { classNames } from "~/utils/helpers/classNames";
 import { Typography } from "../Typography/Typography";
@@ -54,7 +54,7 @@ export const TextArea = (props: TextAreaProps) => {
         "bg-input-bg",
         "flex-row",
         "px-5",
-        "pt-4"
+        "pt-4",
       ])}
       onTouchStart={() => inputRef.current?.focus()}
     >
@@ -62,13 +62,14 @@ export const TextArea = (props: TextAreaProps) => {
         <Image source={icon} resizeMode="contain" tintColor={iconColor} />
       )}
       <Typography
+        variant="b2"
         className={classNames(
-          "text-[14px]",
+          "mr-5",
           {
             "color-input-text-secondary": !error,
             "color-red-800": !!error,
           },
-          ["mr-5"]
+          []
         )}
       >
         {title}

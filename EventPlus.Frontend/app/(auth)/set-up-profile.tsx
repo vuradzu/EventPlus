@@ -42,7 +42,7 @@ const SetUpProfile = () => {
             />
           </TouchableOpacity>
           <Typography
-            className="color-text-system text-[17px]"
+            className="color-text-system"
             onPress={pickImage}
           >
             Змінити світлину
