@@ -5,7 +5,7 @@ namespace EventPlus.Application.Validators;
 
 public class ImageValidator : AbstractValidator<IFormFile>
 {
-    private const int MEGA_BITES = 10;
+    private const int MEGA_BITES = 5;
     public const int IMAGE_MAX_FILE_SIZE = MEGA_BITES * 1024 * 1024;
 
     public static readonly string[] ALLOWED_IMAGE_CONTENT_TYPES =
@@ -24,7 +24,7 @@ public class ImageValidator : AbstractValidator<IFormFile>
         When(i => i is not null, () =>
         {
             RuleFor(i => i.Length).NotNull().NotEmpty().LessThanOrEqualTo(IMAGE_MAX_FILE_SIZE)
-                .WithMessage("Image size is larger than allowed 10 MB");
+                .WithMessage($"Image size is larger than allowed {IMAGE_MAX_FILE_SIZE} MB");
 
             RuleFor(i => i.ContentType).NotNull().NotEmpty()
                 .Must(ct => ALLOWED_IMAGE_CONTENT_TYPES.Any(ct.Equals))

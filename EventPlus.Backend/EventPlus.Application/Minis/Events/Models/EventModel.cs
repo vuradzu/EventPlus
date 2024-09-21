@@ -15,6 +15,8 @@ public class EventModelBase
 
     public Priority Priority { get; init; }
     public DateTime Date { get; init; }
+    
+    public string Icon { get; set; }
 
     public DateTime Created { get; init; }
 }

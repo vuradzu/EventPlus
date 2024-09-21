@@ -117,7 +117,7 @@ const Input = (props: InputProps) => {
               return;
             }
 
-            onValueChange(text);
+            onValueChange(text.substring(0, maxLength));
           }}
           placeholder={variant === InputVariant.HalfRounded ? placeholder : ""}
           placeholderTextColor="#FFFFFF80"

@@ -10,6 +10,7 @@ import { Typography } from "../Typography/Typography";
 import { ButtonIcon } from "./components/ButtonIcon";
 
 export enum ButtonVariants {
+  Transparent,
   Primary,
   PrimaryBold,
   Secondary,
@@ -23,6 +24,7 @@ type ButtonProps = {
   styles?: string;
   fontSize?: number;
   isLoading?: boolean;
+  textStyles?: string;
 } & Omit<TouchableOpacityProps, "className">;
 
 export const Button = (props: ButtonProps) => {
@@ -34,6 +36,7 @@ export const Button = (props: ButtonProps) => {
     fontSize,
     variant = ButtonVariants.Primary,
     isLoading = false,
+    textStyles,
     ...rest
   } = props;
 
@@ -49,16 +52,10 @@ export const Button = (props: ButtonProps) => {
           "bg-button-bg-secondary":
             variant === ButtonVariants.Secondary ||
             variant === ButtonVariants.SecondaryBold,
+          "flex-row rounded-full min-h-[54px] justify-center items-center py-[16px] w-full":
+            variant !== ButtonVariants.Transparent,
         },
-        [
-          "flex-row",
-          "rounded-full",
-          "min-h-[54px]",
-          "justify-center",
-          "items-center",
-          "py-[16px]",
-          "w-full",
-        ]
+        []
       )}
     >
       {(!iconPosition || iconPosition === "left") && (
@@ -68,11 +65,15 @@ export const Button = (props: ButtonProps) => {
         fontWeight={
           variant === ButtonVariants.PrimaryBold ||
           variant === ButtonVariants.SecondaryBold
-            ? "semibold"
+            ? "bold"
             : "regular"
         }
         fontSize={fontSize}
-        className="color-button-text items-center justify-center mx-[8px]"
+        className={classNames(
+          textStyles,
+          { "mx-[8px]": variant !== ButtonVariants.Transparent },
+          ["color-button-text", "items-center", "justify-center"]
+        )}
       >
         {children}
       </Typography>

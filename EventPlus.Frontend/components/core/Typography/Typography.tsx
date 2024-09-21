@@ -1,7 +1,5 @@
-import { useMemo } from "react";
 import { Text, TextProps } from "react-native";
 import { ClassNameProps, classNames } from "~/utils/helpers/classNames";
-import { getFontByWeight } from "./services/typographyHelpers";
 import { TypographyVariants } from "./types/TypographyVariants";
 import {
   FontStyle,
@@ -29,15 +27,14 @@ export const Typography = (props: TypographyProps) => {
   const styles = {
     ...TypographyVariantsObject[variant],
     fontSize,
+    fontWeight,
   };
-
-  const fontClass = useMemo(() => getFontByWeight(fontWeight), [fontWeight]);
 
   return (
     <Text
       {...rest}
-      className={classNames(className, {}, ["color-text-primary", fontClass])}
       style={[styles, customStyle]}
+      className={classNames(className, {}, ["color-text-primary"])}
     >
       {children}
     </Text>

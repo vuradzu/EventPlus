@@ -19,7 +19,7 @@ public class SetUserAvatarValidator : AbstractValidator<SetUserAvatarRequest>
         When(i => i.Image is not null, () =>
         {
             RuleFor(i => i.Image.Length).NotNull().NotEmpty().LessThanOrEqualTo(ImageValidator.IMAGE_MAX_FILE_SIZE)
-                .WithMessage("Image size is larger than allowed 10 MB");
+                .WithMessage($"Image size is larger than allowed {ImageValidator.IMAGE_MAX_FILE_SIZE} MB");
 
             RuleFor(i => i.Image.ContentType).NotNull().NotEmpty()
                 .Must(ct => ImageValidator.ALLOWED_IMAGE_CONTENT_TYPES.Any(ct.Equals))

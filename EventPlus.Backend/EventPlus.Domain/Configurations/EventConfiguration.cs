@@ -11,6 +11,7 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
     {
         builder.Property(e => e.Title).AsSmallText();
         builder.Property(e => e.Description).AsLargeText();
+        builder.Property(e => e.Icon).AsLargeText();
 
         builder.HasOne(e => e.Command)
             .WithMany(c => c.Events)

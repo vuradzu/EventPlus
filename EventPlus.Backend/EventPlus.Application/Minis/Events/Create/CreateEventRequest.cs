@@ -15,6 +15,7 @@ public class CreateEventRequest : IMinisRequest<EventModelMini>
     
     public Priority Priority { get; set; }
     public DateTime Date { get; set; }
+    public string Icon { get; set; }
 }
  internal sealed class CreateEventValidator : AbstractValidator<CreateEventRequest>
  {
@@ -29,5 +30,6 @@ public class CreateEventRequest : IMinisRequest<EventModelMini>
              .NotEmpty().NotNull().IsInEnum().WithMessage("Priority is not enum type");
          RuleFor(d => d.Date >= DateTime.Now)
              .NotEmpty().NotNull().WithMessage("Wrong Time");
+         RuleFor(r => r.Icon).NotNull().NotEmpty().WithMessage("Wrong Icon");
      }
  }

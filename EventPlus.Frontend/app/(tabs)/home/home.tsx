@@ -5,25 +5,18 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { CommandHeader } from "~/components/CommandHeader/CommandHeader";
 import { Button, ButtonVariants } from "~/components/core/Button/Button";
 import { EventTilesDashboard } from "~/components/EventTiles/EventTilesDashboard";
-import { useCommandsStore } from "~/store/commands/commands.store";
-import { HomeFilter } from "./components/HomeFilter";
+import { EventsFilter } from "./components/HomeFilter";
 import { useHomeCubit } from "./services/useHomeCubit";
 
 const Home = () => {
-  const { activeCommand, commands } = useCommandsStore();
   const { eventsAccessor } = useHomeCubit();
 
   return (
     <SafeAreaView className="bg-bg-primary w-full h-full flex flex-col justify-between pb-[105]">
       <View className="h-full flex flex-col">
-        {/* <View className="flex flex-col py-5 px-4 border-b border-border-primary">
-          <Typography variant={TypographyVariants.Semibold} fontSize={34}>
-            "Hello"
-          </Typography>
-        </View> */}
         <CommandHeader />
         <View>
-          <HomeFilter />
+          <EventsFilter />
           <EventTilesDashboard eventsAccessor={eventsAccessor} />
         </View>
       </View>

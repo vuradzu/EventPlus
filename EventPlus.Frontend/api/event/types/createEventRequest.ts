@@ -6,4 +6,5 @@ export interface CreateEventRequest {
   description?: string;
   priority: Priority;
   date: DateType;
+  icon: string;
 }

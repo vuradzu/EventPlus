@@ -3,7 +3,10 @@ using FluentValidation;
 
 namespace EventPlus.Application.Minis.Users.CheckUsername;
 
-public record CheckUsernameRequest(string Username) : IMinisRequest<CheckUsernameResult>;
+public class CheckUsernameRequest(string username) : IMinisRequest<CheckUsernameResult>
+{
+    public string Username { get; set; } = username;
+}
 
 public class CheckUsernameValidator : AbstractValidator<CheckUsernameRequest>
 {

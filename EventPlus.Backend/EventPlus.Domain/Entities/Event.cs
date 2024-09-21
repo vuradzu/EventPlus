@@ -14,6 +14,7 @@ public class Event : ICreatableEntity<long>, ISoftDeletable, IUpdatable
     
     public required Priority Priority {get; set;}
     public required DateTime Date { get; set; }
+    public required string Icon { get; set; }
     
     public long CommandId { get; set; }
     public long CreatorId { get; set; }

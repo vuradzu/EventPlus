@@ -54,8 +54,9 @@ const SetUpProfile = () => {
               placeholder="Юзернейм"
               variant={InputVariant.FullyRounded}
               value={form.username}
-              onValueChange={(value) => setFormValue("username", value ?? "")}
+              onValueChange={(value) => setFormValue("username", value?.toLowerCase() ?? "")}
               error={formErrors.username}
+              maxLength={12}
             />
             <Input
               disabled

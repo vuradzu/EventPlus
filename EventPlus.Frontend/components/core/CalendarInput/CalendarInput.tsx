@@ -23,9 +23,12 @@ export const CalendarInput = (
   const { styles, date, setDate, useTime = true, error } = props;
 
   const showCalendarModal = useCallback(() => {
-    magicModal.show(() => <CalendarModal onDateChange={setDate} />, {
-      swipeDirection: undefined,
-    });
+    magicModal.show(
+      () => <CalendarModal selectedDate={date} onDateChange={setDate} />,
+      {
+        swipeDirection: undefined,
+      }
+    );
   }, [date]);
 
   return (

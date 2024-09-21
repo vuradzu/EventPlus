@@ -13,6 +13,8 @@ interface EventModelBase {
   priority: Priority;
   date: Date;
 
+  icon: string;
+
   created: Date;
 }
 

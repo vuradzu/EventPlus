@@ -27,11 +27,11 @@ type IconButtonProps = {
 export const IconButton = (props: IconButtonProps) => {
   const { styles, iconProps, ...rest } = props;
 
-  const isIconifyProps = (prop: IconProps): prop is IconifyProps => {
-    return ("imageStyles" in prop);
-  };
+  const isIconifyProps = (prop: IconProps): prop is IconifyProps =>
+    typeof prop.icon === "string";
 
-  if (!iconProps) return <TouchableOpacity {...rest} className={styles} />;
+  if (!iconProps?.icon)
+    return <TouchableOpacity {...rest} className={styles} />;
 
   return (
     <TouchableOpacity {...rest} className={styles}>

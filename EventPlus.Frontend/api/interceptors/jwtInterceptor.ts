@@ -11,7 +11,7 @@ export const jwtInterceptor = async (
 
   if (!tokenInfo) {
     router.replace("sign-in");
-    return;
+    return request;
   }
 
   const tokenValid = !JwtHelper.isTokenExpired(tokenInfo.tokenExpires);

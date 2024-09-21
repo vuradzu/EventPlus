@@ -1,3 +1,4 @@
+import * as FileSystem from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
@@ -8,9 +9,12 @@ import { useUserStore } from "~/store/user/user.store";
 import { FormErrors } from "~/types/FormErrors";
 import { JwtHelper } from "~/utils/helpers/jwtHelper";
 import { useForm } from "~/utils/hooks/useForm";
+import { useToasts } from "~/utils/hooks/useToasts";
 import { useAuthStore } from "../state/auth.store";
 
 export const useSetUpProfileCubit = () => {
+  const { showWarningToast } = useToasts();
+
   const { updateUserAvatar } = useUserStore();
   const { providerUser } = useAuthStore();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -26,6 +30,14 @@ export const useSetUpProfileCubit = () => {
     setFormErrors,
   } = useForm<AuthenticateRequest>();
 
+  const getFileInfo = async (fileURI: string) => {
+    const fileInfo = await FileSystem.getInfoAsync(fileURI);
+    return fileInfo;
+  };
+
+  const isLessThanTheMB = (fileSize: number, border: number) =>
+    fileSize / 1024 / 1024 <= border;
+
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -36,7 +48,22 @@ export const useSetUpProfileCubit = () => {
       allowsMultipleSelection: false,
     });
 
-    setPickedImage(result.assets?.[0]);
+    if (result.canceled) return;
+
+    const { uri } = result.assets[0];
+    const fileInfo = await getFileInfo(uri);
+
+    if (!fileInfo.exists) return;
+
+    if (!fileInfo.size || !isLessThanTheMB(fileInfo.size, 5)) {
+      showWarningToast({
+        title: "Занадто великий файл",
+        message: "Дозволено 5 Мб",
+      });
+      return;
+    }
+
+    setPickedImage(result.assets[0]);
   };
 
   const accountImage = useMemo(() => {
@@ -55,12 +82,14 @@ export const useSetUpProfileCubit = () => {
     if (!authRequest.username) {
       tempFormErrors.username = "Юзернейм не може бути пустим";
     }
+
     const { isAvailable } = await checkIfUsernameAvailable(
       authRequest.username!
     );
     if (!isAvailable) {
       tempFormErrors.username = "Цей юзернейм вже зайнятий";
     }
+
     if (!usernameRegex.test(authRequest.username!))
       tempFormErrors.username = "Недопустимі символи";
 
@@ -121,7 +150,7 @@ export const useSetUpProfileCubit = () => {
 
       updateUserAvatar(newAvatar);
 
-      router.push("command-onboarding");
+      router.replace("command-onboarding");
     } finally {
       setIsLoading(false);
     }
@@ -143,7 +172,10 @@ export const useSetUpProfileCubit = () => {
       setAuthRequestValue("lastName", splittedDisplayNameArray![1]);
     }
 
-    setAuthRequestValue("username", providerUser!.email!.split("@")[0]!);
+    setAuthRequestValue(
+      "username",
+      providerUser!.email!.split("@")[0]!.substring(0, 12)
+    );
     setAuthRequestValue("email", providerUser!.email);
   }, []);
 

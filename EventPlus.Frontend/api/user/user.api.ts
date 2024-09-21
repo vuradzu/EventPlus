@@ -1,8 +1,8 @@
 import { AxiosResponse } from "axios";
 import FormData from "form-data";
+import { getUrl } from "~/utils/helpers/apiFunctions";
 import { _apiBase } from "..";
 import { CheckIfUsernameAvailable } from "./types/checkIfUsernameAvailableResult";
-import { getUrl } from "~/utils/helpers/apiFunctions";
 
 const prefix = "user";
 
@@ -23,7 +23,7 @@ type ImageFile = {
 type ImageLink = string;
 
 export const changeAvatar = async (
-  image: ImageFile | ImageLink | undefined
+  image?: ImageFile | ImageLink | undefined
 ): Promise<string> => {
   const options: any = {
     headers: {

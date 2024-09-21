@@ -97,7 +97,7 @@ export const TextArea = (props: TextAreaProps) => {
             return;
           }
 
-          onValueChange(text);
+          onValueChange(text.substring(0, length));
         }}
         placeholder={placeholder}
       />

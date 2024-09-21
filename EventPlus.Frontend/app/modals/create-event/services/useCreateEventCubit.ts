@@ -1,5 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
+import { router } from "expo-router";
 import { useState } from "react";
 import { createEvent } from "~/api/event/event.api";
 import { CreateEventRequest } from "~/api/event/types/createEventRequest";
@@ -20,6 +21,7 @@ export const useCreateEventCubit = () => {
     formErrors,
     setFormErrors: setEventFormErrors,
   } = useForm<CreateEventRequest>({
+    icon: "octicon:sparkle-fill-16",
     priority: "medium",
   });
 
@@ -51,6 +53,8 @@ export const useCreateEventCubit = () => {
           return [newEvent, ...oldData];
         }
       );
+
+      router.back();
     } finally {
       setIsLoading(false);
     }

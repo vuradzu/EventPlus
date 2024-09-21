@@ -2,6 +2,7 @@ import React from "react";
 import { SafeAreaView, View } from "react-native";
 import { Button, ButtonVariants } from "~/components/core/Button/Button";
 import { CalendarInput } from "~/components/core/CalendarInput/CalendarInput";
+import { IconInput } from "~/components/core/IconInput/IconInput";
 import Input from "~/components/core/Input/Input";
 import { InputVariant } from "~/components/core/Input/types/InputVariant";
 import PriorityTabs from "~/components/core/PriorityTabs/PriorityTabs";
@@ -21,14 +22,17 @@ const CreateEvent = () => {
           <Typography fontWeight="semibold" className="color-text-primary mb-2">
             Назва
           </Typography>
-          <Input
-            value={form.title}
-            onValueChange={(title) => setFormValue("title", title ?? "")}
-            placeholder="Введіть назву події"
-            variant={InputVariant.HalfRounded}
-            styles="mb-3"
-            error={formErrors.title}
-          />
+          <View className="flex flex-row justify-between mb-3">
+            <Input
+              value={form.title}
+              onValueChange={(title) => setFormValue("title", title ?? "")}
+              placeholder="Введіть назву події"
+              variant={InputVariant.HalfRounded}
+              styles="w-[82%]"
+              error={formErrors.title}
+            />
+            <IconInput styles="h-[57]" icon={form.icon} onIconChange={(iconName) => setFormValue('icon', iconName)} />
+          </View>
 
           <Typography fontWeight="semibold" className="color-text-primary mb-2">
             Опис

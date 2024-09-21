@@ -4,16 +4,20 @@ import { DateType } from "react-native-ui-datepicker";
 import { Calendar } from "~/components/core/Calendar/Calendar";
 
 interface CalendarModalProps {
+  selectedDate?: DateType;
   onDateChange: (date: DateType) => void;
 }
 
-export const CalendarModal = ({ onDateChange }: CalendarModalProps) => {
-  const [date, setDate] = useState<DateType>();
+export const CalendarModal = ({
+  selectedDate,
+  onDateChange,
+}: CalendarModalProps) => {
+  const [date, setDate] = useState<DateType>(selectedDate);
 
-    const onDateChangeHandler = (date: DateType) => {
-        setDate(date);
-        onDateChange(date);
-    }
+  const onDateChangeHandler = (date: DateType) => {
+    setDate(date);
+    onDateChange(date);
+  };
 
   return (
     <View className="flex items-center">
