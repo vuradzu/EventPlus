@@ -11,6 +11,7 @@ import { ReactQueryDevTools } from "~/components/ReactQueryDevTools/ReactQueryDe
 import { toastConfig } from "~/config/toastsConfig";
 import { createCommandModalOptions } from "./modals/create-command/create-command";
 import { createEventModalOptions } from "./modals/create-event/create-event";
+import { switchCommandModalOptions } from "./modals/switch-command/switch-command";
 
 SplashScreen.preventAutoHideAsync();
 GoogleSignin.configure({
@@ -52,6 +53,10 @@ const RootLayout = () => {
           <Stack.Screen
             name="modals/create-command/create-command"
             options={createCommandModalOptions}
+          />
+          <Stack.Screen
+            name="modals/switch-command/switch-command"
+            options={switchCommandModalOptions}
           />
         </Stack>
         <Toast config={toastConfig} topOffset={60} />

@@ -51,7 +51,7 @@ export const EventTile = ({ event }: EventTileProps) => {
       <Typography
         variant="b2"
         fontWeight="bold"
-        className="color-text-primary mt-1"
+        className="color-text-primary mt-1 text-center"
       >
         {title}
       </Typography>

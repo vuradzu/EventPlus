@@ -27,7 +27,7 @@ public class DeleteOldEventsJobService(ISqlServerDatabase database, Cancellation
             .Where(e => e.Deleted != null)
             .ToArrayAsync();
 
-        var eventsDelete = events.Where(e => e.Deleted.Value.AddDays(31) <= DateTime.Now).ToArray();
+        var eventsDelete = events.Where(e => e.Deleted.Value.AddDays(31) <= DateTime.UtcNow).ToArray();
 
         database.RemoveRange(eventsDelete);
         await database.SaveChangesAsync(ct);

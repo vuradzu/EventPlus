@@ -1,5 +1,6 @@
 export class QueryKeys {
   public static Keys = {
+    user: "user",
     events: "events",
     event: "event",
     command: "command",
@@ -11,4 +12,6 @@ export class QueryKeys {
     this.Keys.command,
     commandId,
   ];
+
+  public static UserCommands = [this.Keys.user, this.Keys.commands];
 }

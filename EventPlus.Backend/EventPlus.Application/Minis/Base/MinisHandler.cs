@@ -91,7 +91,7 @@ public abstract class MinisHandler<TRequest, TResult>(IServiceProvider servicePr
 
         if (command is null) return;
 
-        command.LastActivity = DateTime.Now;
+        command.LastActivity = DateTime.UtcNow;
 
         await Database.SaveChangesAsync();
     }
@@ -174,7 +174,7 @@ public abstract class MinisHandler<TRequest>(IServiceProvider serviceProvider) :
 
         if (command is null) return;
 
-        command.LastActivity = DateTime.Now;
+        command.LastActivity = DateTime.UtcNow;
 
         await Database.SaveChangesAsync();
     }

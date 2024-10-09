@@ -8,5 +8,5 @@ export interface CommandModel {
   creatorId: number;
   created: Date;
 
-  events: EventModelMini[];
+  events?: EventModelMini[];
 }

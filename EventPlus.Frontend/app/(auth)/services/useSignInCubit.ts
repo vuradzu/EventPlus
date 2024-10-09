@@ -2,7 +2,7 @@ import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { router } from "expo-router";
 import { useState } from "react";
-import { checkIfRegistered } from "~/api/jwt/jwt.api";
+import { _checkIfRegistered } from "~/api/jwt/jwt.api";
 import { JwtHelper } from "~/utils/helpers/jwtHelper";
 import { useAuthStore } from "../state/auth.store";
 
@@ -30,7 +30,7 @@ export const useSignInCubit = () => {
       setIsLoading(true);
       const googleUser = await loginByGoogle();
 
-      const { isProviderRegistered } = await checkIfRegistered({
+      const { isProviderRegistered } = await _checkIfRegistered({
         key: googleUser.uid,
         provider: "google",
       });

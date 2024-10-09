@@ -28,7 +28,7 @@ public class CreateEventRequest : IMinisRequest<EventModelMini>
              .MaximumLength(100).WithMessage("Maximum description is 100");
          RuleFor(p => p.Priority)
              .NotEmpty().NotNull().IsInEnum().WithMessage("Priority is not enum type");
-         RuleFor(d => d.Date >= DateTime.Now)
+         RuleFor(d => d.Date.ToUniversalTime() >= DateTime.UtcNow)
              .NotEmpty().NotNull().WithMessage("Wrong Time");
          RuleFor(r => r.Icon).NotNull().NotEmpty().WithMessage("Wrong Icon");
      }

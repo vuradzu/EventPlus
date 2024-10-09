@@ -4,6 +4,7 @@ using EventPlus.Application.Minis.Commands.Delete;
 using EventPlus.Application.Minis.Commands.Get.GetAll;
 using EventPlus.Application.Minis.Commands.Get.GetMembers;
 using EventPlus.Application.Minis.Commands.Get.GetOne;
+using EventPlus.Application.Minis.Commands.Get.SwitchCommand;
 using EventPlus.Application.Minis.Commands.Invite.Create;
 using EventPlus.Application.Minis.Commands.Invite.Models;
 using EventPlus.Application.Minis.Commands.Invite.Use;
@@ -37,7 +38,7 @@ public class CommandController : Controller
     /// <summary>
     /// Create invite to Command
     /// </summary>
-    /// <param name="commandId">Command Id</param>
+    /// <param name="commandId">Command ID</param>
     /// <param name="maximumUses">Maximum users count, that can join to command using this code</param>
     /// <param name="validUntil">Valid until code time</param>
     [Authorize(Policy = Policies.HasManageCommandPermission)]
@@ -88,7 +89,18 @@ public class CommandController : Controller
         [FromServices] GetOneCommandHandler handler, CancellationToken ct)
     {
         return await handler.Handle(new GetOneCommandRequest{Id = id}, ct);
-    }   
+    }
+
+    /// <summary>
+    /// Switch command to another
+    /// </summary>
+    [Authorize]
+    [HttpGet("switch-to/{id}")]
+    public async Task<SwitchCommandResult> SwitchCommand([FromRoute] long id,
+        [FromServices] SwitchCommandHandler handler, CancellationToken ct)
+    {
+        return await handler.Handle(new SwitchCommandRequest{Id = id}, ct);
+    }
     
     /// <summary>
     /// Update Command

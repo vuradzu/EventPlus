@@ -16,7 +16,7 @@ const jwtApi = axios.create({
   },
 });
 
-export const authenticate = async (
+export const _authenticate = async (
   request: Partial<AuthenticateRequest>
 ): Promise<JwtResult> => {
   const response = await jwtApi.post<JwtResult>(
@@ -27,7 +27,7 @@ export const authenticate = async (
   return response.data;
 };
 
-export const refresh = async (
+export const _refresh = async (
   refreshToken: string,
   commandId?: number | null
 ): Promise<JwtResult> => {
@@ -39,7 +39,7 @@ export const refresh = async (
   return response.data;
 };
 
-export const checkIfRegistered = async (request: CheckIfRegisteredRequest) => {
+export const _checkIfRegistered = async (request: CheckIfRegisteredRequest) => {
   const response = await jwtApi.get<CheckIfRegisteredResult>(
     getUrl(prefix, "check-if-registered", {
       key: request.key,

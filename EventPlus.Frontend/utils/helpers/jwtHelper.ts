@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { authenticate, refresh } from "~/api/jwt/jwt.api";
+import { _authenticate, _refresh } from "~/api/jwt/jwt.api";
 import { AuthenticateRequest } from "~/api/jwt/types/authenticateRequest";
 import { JwtResult } from "~/api/jwt/types/jwtResult";
 import { commandsStore } from "~/store/commands/commands.store";
@@ -33,7 +33,7 @@ export class JwtHelper {
     const { setStoreUser } = userStore.getState();
     const { addCommand, setActiveCommand } = commandsStore.getState();
 
-    const jwtResult = await authenticate(request);
+    const jwtResult = await _authenticate(request);
 
     setStoreUser({
       firstName: jwtResult.firstName,
@@ -63,7 +63,7 @@ export class JwtHelper {
     const { activeCommand, setActiveCommand, addCommand } =
       commandsStore.getState();
 
-    const refreshJwtResult = await refresh(
+    const refreshJwtResult = await _refresh(
       tokenInfo.refreshToken,
       activeCommand
     );

@@ -15,6 +15,7 @@ module.exports = function (api) {
             "fluent:tab-new-24-filled",
             "akar-icons:home",
             "akar-icons:person",
+            "akar-icons:check-box",
             "octicon:sparkle-fill-16",
             "fluent:mic-sparkle-20-filled",
             "fluent:play-circle-sparkle-24-filled",
@@ -31,6 +32,7 @@ module.exports = function (api) {
             "fluent:pen-sparkle-16-filled",
             "fluent:bot-sparkle-24-filled",
             "fa6-solid:hand-sparkles",
+            "hugeicons:user-multiple-02"
           ],
         },
       ],

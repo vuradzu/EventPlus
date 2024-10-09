@@ -37,6 +37,22 @@ const TabsLayout = () => {
           }}
         />
         <Tabs.Screen
+          name="tasks/tasks"
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon
+                iconProps={{
+                  icon: "akar-icons:check-box",
+                  color
+                }}
+                name="Завдання"
+                focused={focused}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
           name="profile"
           options={{
             headerShown: false,

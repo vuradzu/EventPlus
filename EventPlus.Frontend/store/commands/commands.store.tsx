@@ -35,6 +35,12 @@ export const commandsStore = createStore<CommandsStoreSchema>(
       });
     };
 
+    const setCommandLoading = (isLoading: boolean) => {
+      set((state) => {
+        state.commandLoading = isLoading;
+      });
+    };
+
     const clearStore = () => {
       set((state) => {
         state.activeCommand = null;
@@ -45,6 +51,8 @@ export const commandsStore = createStore<CommandsStoreSchema>(
     return {
       commands: [],
       activeCommand: null,
+      commandLoading: false,
+      setCommandLoading,
       addCommand,
       removeCommand,
       setActiveCommand,

@@ -1,11 +1,15 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { router } from "expo-router";
 import { useState } from "react";
-import { useInvite } from "~/api/command/command.api";
+import { _useInvite } from "~/api/command/command.api";
 import { useCommandsStore } from "~/store/commands/commands.store";
 import { JwtHelper } from "~/utils/helpers/jwtHelper";
+import { QueryKeys } from "~/utils/helpers/queryKeys";
 import { useForm } from "~/utils/hooks/useForm";
 
 export const useEnterInviteCubit = () => {
+  const queryClient = useQueryClient();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
@@ -38,7 +42,7 @@ export const useEnterInviteCubit = () => {
       case "No such invitation":
         return "Такого запрошення не існує";
       case "No such command":
-        return "Групи в яку ви хочете доєднатись більше не існує"
+        return "Група, в яку ви хочете доєднатись, більше не існує";
       default:
         return "";
     }
@@ -54,7 +58,7 @@ export const useEnterInviteCubit = () => {
         return;
       }
 
-      const inviteCodeResult = await useInvite(codeForm.code!);
+      const inviteCodeResult = await _useInvite(codeForm.code!);
 
       if (!inviteCodeResult.isSuccess) {
         setCodeError({
@@ -69,6 +73,7 @@ export const useEnterInviteCubit = () => {
         inviteCodeResult.tokens,
         inviteCodeResult.command.id
       );
+      queryClient.refetchQueries({ queryKey: QueryKeys.UserCommands });
 
       router.replace("home/home");
     } finally {

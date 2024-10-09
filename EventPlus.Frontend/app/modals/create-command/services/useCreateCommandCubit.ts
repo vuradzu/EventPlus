@@ -1,12 +1,15 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { router } from "expo-router";
 import { useState } from "react";
-import { createCommand } from "~/api/command/command.api";
+import { _createCommand } from "~/api/command/command.api";
 import { useCommandsStore } from "~/store/commands/commands.store";
 import { FormErrors } from "~/types/FormErrors";
 import { JwtHelper } from "~/utils/helpers/jwtHelper";
+import { QueryKeys } from "~/utils/helpers/queryKeys";
 import { useForm } from "~/utils/hooks/useForm";
 
-export const useCreateCommandCubit = () => {
+export const useCreateCommandCubit = (closeAllModals: boolean) => {
+  const queryClient = useQueryClient();
   const { addCommand, setActiveCommand } = useCommandsStore();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -39,13 +42,18 @@ export const useCreateCommandCubit = () => {
         return;
       }
 
-      const newCommand = await createCommand(form.name!, form.description);
-      setActiveCommand(newCommand.id);
+      const newCommand = await _createCommand(form.name!, form.description);
+
       addCommand(newCommand);
-
+      setActiveCommand(newCommand.id);
       JwtHelper.addUserToken(newCommand.tokens, newCommand.id);
+      queryClient.refetchQueries({ queryKey: QueryKeys.UserCommands });
 
-      router.replace("home/home");
+      if (closeAllModals) router.dismissAll();
+      else {
+        router.back();
+        router.replace("home/home");
+      }
     } finally {
       setIsLoading(false);
     }

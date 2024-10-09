@@ -6,7 +6,7 @@ namespace EventPlus.Application.Minis.Commands.Get.GetOne;
 
 public class GetOneCommandRequest : IMinisRequest<CommandModel>
 { 
-    public required long Id { get; set; }
+    public long Id { get; set; }
 }
 
 internal sealed class GetOneCommandValidator : AbstractValidator<GetOneCommandRequest>

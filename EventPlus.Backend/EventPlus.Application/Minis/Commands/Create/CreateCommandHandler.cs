@@ -32,7 +32,7 @@ public class CreateCommandHandler(IServiceProvider serviceProvider, IJwtService 
                 CommandMemberRoles = [new CommandMemberRole { RoleId = adminRole.Id }]
             }
         };
-        commandEntity.LastActivity = DateTime.Now;
+        commandEntity.LastActivity = DateTime.UtcNow;
 
         var commandEntry = await Database.Set<Command>().AddAsync(commandEntity, ct);
 

@@ -5,6 +5,7 @@ import { ClassNameProps, classNames } from "~/utils/helpers/classNames";
 interface GridViewProps<T> {
   items?: T[];
   renderItem(item: T): JSX.Element;
+  isLoading?: boolean;
   loadingRenderItem?(): JSX.Element;
   loadingItemsCount?: number;
   columns?: number;
@@ -18,6 +19,7 @@ export const GridView = <T extends { id: any }>(
     styles,
     items,
     renderItem,
+    isLoading,
     loadingRenderItem,
     loadingItemsCount,
     columns = 3,
@@ -50,7 +52,7 @@ export const GridView = <T extends { id: any }>(
         ) : undefined
       }
     >
-      {refreshing && !!loadingRenderItem
+      {(isLoading ?? refreshing) && !!loadingRenderItem
         ? Array.from(Array(loadingItemsCount ?? 3).keys()).map((i) => (
             <View
               key={i}
